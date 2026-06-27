@@ -1,0 +1,2045 @@
+[
+  {
+    "model": "ad.category",
+    "pk": 1,
+    "fields": {
+      "parent": null,
+      "title": "املاک",
+      "slug": "real-estate"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 2,
+    "fields": {
+      "parent": null,
+      "title": "وسایل نقلیه",
+      "slug": "vehicles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 3,
+    "fields": {
+      "parent": null,
+      "title": "کالاهای دیجیتال",
+      "slug": "digital-goods"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 4,
+    "fields": {
+      "parent": null,
+      "title": "خانه و آشپزخانه",
+      "slug": "home-kitchen"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 5,
+    "fields": {
+      "parent": null,
+      "title": "خدمات",
+      "slug": "services"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 6,
+    "fields": {
+      "parent": null,
+      "title": "استخدام و کاریابی",
+      "slug": "jobs"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 7,
+    "fields": {
+      "parent": null,
+      "title": "وسایل شخصی",
+      "slug": "personal-goods"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 8,
+    "fields": {
+      "parent": null,
+      "title": "سرگرمی و فراغت",
+      "slug": "leisure"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 9,
+    "fields": {
+      "parent": null,
+      "title": "اجتماعی",
+      "slug": "community"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 10,
+    "fields": {
+      "parent": null,
+      "title": "حیوانات",
+      "slug": "pets"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 11,
+    "fields": {
+      "parent": null,
+      "title": "صنعتی، کشاورزی و تجاری",
+      "slug": "business-industrial"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 12,
+    "fields": {
+      "parent": 1,
+      "title": "فروش مسکونی",
+      "slug": "sale-residential"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 13,
+    "fields": {
+      "parent": 1,
+      "title": "اجاره مسکونی",
+      "slug": "rent-residential"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 14,
+    "fields": {
+      "parent": 1,
+      "title": "فروش اداری و تجاری",
+      "slug": "sale-commercial"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 15,
+    "fields": {
+      "parent": 1,
+      "title": "اجاره اداری و تجاری",
+      "slug": "rent-commercial"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 16,
+    "fields": {
+      "parent": 1,
+      "title": "اجاره کوتاه‌مدت و روزانه",
+      "slug": "short-term"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 17,
+    "fields": {
+      "parent": 1,
+      "title": "پروژه‌های ساخت‌وساز",
+      "slug": "construction-projects"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 18,
+    "fields": {
+      "parent": 1,
+      "title": "املاک کشاورزی",
+      "slug": "agricultural-realestate"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 19,
+    "fields": {
+      "parent": 12,
+      "title": "آپارتمان",
+      "slug": "apartment-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 20,
+    "fields": {
+      "parent": 12,
+      "title": "خانه و ویلا",
+      "slug": "villa-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 21,
+    "fields": {
+      "parent": 12,
+      "title": "زمین و کلنگی",
+      "slug": "land-oldhouse-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 22,
+    "fields": {
+      "parent": 13,
+      "title": "آپارتمان",
+      "slug": "apartment-rent"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 23,
+    "fields": {
+      "parent": 13,
+      "title": "خانه و ویلا",
+      "slug": "villa-rent"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 24,
+    "fields": {
+      "parent": 13,
+      "title": "هم‌خانه/هم‌اتاقی",
+      "slug": "roommate"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 25,
+    "fields": {
+      "parent": 14,
+      "title": "دفتر کار",
+      "slug": "office-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 26,
+    "fields": {
+      "parent": 14,
+      "title": "مغازه و غرفه",
+      "slug": "shop-kiosk-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 27,
+    "fields": {
+      "parent": 14,
+      "title": "انبار، سوله و کارگاه",
+      "slug": "warehouse-workshop-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 28,
+    "fields": {
+      "parent": 14,
+      "title": "زمین و املاک تجاری",
+      "slug": "commercial-land-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 29,
+    "fields": {
+      "parent": 15,
+      "title": "دفتر کار",
+      "slug": "office-rent"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 30,
+    "fields": {
+      "parent": 15,
+      "title": "مغازه و غرفه",
+      "slug": "shop-kiosk-rent"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 31,
+    "fields": {
+      "parent": 15,
+      "title": "انبار، سوله و کارگاه",
+      "slug": "warehouse-workshop-rent"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 32,
+    "fields": {
+      "parent": 15,
+      "title": "زمین تجاری",
+      "slug": "commercial-land-rent"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 33,
+    "fields": {
+      "parent": 16,
+      "title": "سوئیت و آپارتمان مبله",
+      "slug": "furnished-suite"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 34,
+    "fields": {
+      "parent": 16,
+      "title": "ویلا و باغ",
+      "slug": "villa-garden-daily"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 35,
+    "fields": {
+      "parent": 17,
+      "title": "پیش‌فروش",
+      "slug": "pre-sale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 36,
+    "fields": {
+      "parent": 17,
+      "title": "مشارکت در ساخت",
+      "slug": "construction-partnership"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 37,
+    "fields": {
+      "parent": 18,
+      "title": "زمین و باغ",
+      "slug": "farm-land-garden"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 38,
+    "fields": {
+      "parent": 18,
+      "title": "دامداری و مرغداری",
+      "slug": "dairy-poultry-realestate"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 39,
+    "fields": {
+      "parent": 2,
+      "title": "خودرو",
+      "slug": "cars"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 40,
+    "fields": {
+      "parent": 2,
+      "title": "موتورسیکلت",
+      "slug": "motorcycles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 41,
+    "fields": {
+      "parent": 2,
+      "title": "لوازم یدکی و جانبی",
+      "slug": "vehicle-parts"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 42,
+    "fields": {
+      "parent": 2,
+      "title": "وسایل نقلیه سنگین",
+      "slug": "heavy-vehicles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 43,
+    "fields": {
+      "parent": 2,
+      "title": "قایق و دریایی",
+      "slug": "boats-marine"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 44,
+    "fields": {
+      "parent": 2,
+      "title": "کرایه‌ای",
+      "slug": "vehicle-rental"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 45,
+    "fields": {
+      "parent": 2,
+      "title": "کمپر و کاروان",
+      "slug": "campers-caravans"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 46,
+    "fields": {
+      "parent": 2,
+      "title": "خدمات خودرویی",
+      "slug": "vehicle-services"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 47,
+    "fields": {
+      "parent": 39,
+      "title": "سواری",
+      "slug": "sedan"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 48,
+    "fields": {
+      "parent": 39,
+      "title": "شاسی‌بلند",
+      "slug": "suv"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 49,
+    "fields": {
+      "parent": 39,
+      "title": "وانت",
+      "slug": "pickup"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 50,
+    "fields": {
+      "parent": 39,
+      "title": "کلاسیک",
+      "slug": "classic-cars"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 51,
+    "fields": {
+      "parent": 39,
+      "title": "تصادفی",
+      "slug": "damaged-cars"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 52,
+    "fields": {
+      "parent": 39,
+      "title": "صفر",
+      "slug": "brand-new-cars"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 53,
+    "fields": {
+      "parent": 40,
+      "title": "اسکوتر",
+      "slug": "scooter"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 54,
+    "fields": {
+      "parent": 40,
+      "title": "کراس و آفرود",
+      "slug": "dirt-offroad"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 55,
+    "fields": {
+      "parent": 40,
+      "title": "کلاسیک",
+      "slug": "classic-motorcycles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 56,
+    "fields": {
+      "parent": 40,
+      "title": "برقی",
+      "slug": "electric-motorcycles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 57,
+    "fields": {
+      "parent": 41,
+      "title": "قطعات یدکی خودرو",
+      "slug": "car-parts"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 58,
+    "fields": {
+      "parent": 41,
+      "title": "لوازم جانبی خودرو",
+      "slug": "car-accessories"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 59,
+    "fields": {
+      "parent": 41,
+      "title": "قطعات موتورسیکلت",
+      "slug": "motorcycle-parts"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 60,
+    "fields": {
+      "parent": 41,
+      "title": "لاستیک و رینگ",
+      "slug": "tires-rims"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 61,
+    "fields": {
+      "parent": 41,
+      "title": "روغن و فیلتر",
+      "slug": "oil-filters"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 62,
+    "fields": {
+      "parent": 42,
+      "title": "کامیون و کشنده",
+      "slug": "trucks"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 63,
+    "fields": {
+      "parent": 42,
+      "title": "اتوبوس و مینی‌بوس",
+      "slug": "buses"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 64,
+    "fields": {
+      "parent": 42,
+      "title": "ماشین‌آلات راه‌سازی",
+      "slug": "construction-machinery"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 65,
+    "fields": {
+      "parent": 42,
+      "title": "لیفتراک",
+      "slug": "forklifts"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 66,
+    "fields": {
+      "parent": 44,
+      "title": "خودرو سواری",
+      "slug": "car-rental"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 67,
+    "fields": {
+      "parent": 44,
+      "title": "ون و مینی‌بوس",
+      "slug": "van-rental"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 68,
+    "fields": {
+      "parent": 44,
+      "title": "مراسم و تشریفات",
+      "slug": "ceremonial-car-rental"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 69,
+    "fields": {
+      "parent": 46,
+      "title": "بیمه و کارگزاری",
+      "slug": "vehicle-insurance"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 70,
+    "fields": {
+      "parent": 46,
+      "title": "خدمات رینگ و لاستیک",
+      "slug": "tire-services"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 71,
+    "fields": {
+      "parent": 46,
+      "title": "کارواش و دیتیلینگ",
+      "slug": "carwash-detailing"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 72,
+    "fields": {
+      "parent": 46,
+      "title": "امداد و یدک‌کش",
+      "slug": "roadside-assistance"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 73,
+    "fields": {
+      "parent": 3,
+      "title": "موبایل",
+      "slug": "mobile"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 74,
+    "fields": {
+      "parent": 3,
+      "title": "تبلت",
+      "slug": "tablet"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 75,
+    "fields": {
+      "parent": 3,
+      "title": "کامپیوتر و لپ‌تاپ",
+      "slug": "computers-laptops"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 76,
+    "fields": {
+      "parent": 3,
+      "title": "کنسول، بازی ویدئویی",
+      "slug": "gaming"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 77,
+    "fields": {
+      "parent": 3,
+      "title": "صوتی و تصویری",
+      "slug": "audio-video"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 78,
+    "fields": {
+      "parent": 3,
+      "title": "دوربین و عکاسی",
+      "slug": "cameras"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 79,
+    "fields": {
+      "parent": 3,
+      "title": "گجت و پوشیدنی",
+      "slug": "wearables"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 80,
+    "fields": {
+      "parent": 3,
+      "title": "شبکه و تجهیزات",
+      "slug": "networking"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 81,
+    "fields": {
+      "parent": 73,
+      "title": "گوشی موبایل",
+      "slug": "mobile-phones"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 82,
+    "fields": {
+      "parent": 73,
+      "title": "سیم‌کارت",
+      "slug": "sim-cards"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 83,
+    "fields": {
+      "parent": 73,
+      "title": "لوازم جانبی موبایل",
+      "slug": "mobile-accessories"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 84,
+    "fields": {
+      "parent": 74,
+      "title": "تبلت",
+      "slug": "tablets"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 85,
+    "fields": {
+      "parent": 74,
+      "title": "لوازم جانبی تبلت",
+      "slug": "tablet-accessories"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 86,
+    "fields": {
+      "parent": 75,
+      "title": "لپ‌تاپ",
+      "slug": "laptops"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 87,
+    "fields": {
+      "parent": 75,
+      "title": "کامپیوتر رومیزی",
+      "slug": "desktops"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 88,
+    "fields": {
+      "parent": 75,
+      "title": "مانیتور",
+      "slug": "monitors"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 89,
+    "fields": {
+      "parent": 75,
+      "title": "قطعات کامپیوتر",
+      "slug": "computer-components"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 90,
+    "fields": {
+      "parent": 75,
+      "title": "پرینتر و اسکنر",
+      "slug": "printers-scanners"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 91,
+    "fields": {
+      "parent": 75,
+      "title": "لوازم جانبی کامپیوتر",
+      "slug": "pc-accessories"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 92,
+    "fields": {
+      "parent": 76,
+      "title": "کنسول بازی",
+      "slug": "game-consoles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 93,
+    "fields": {
+      "parent": 76,
+      "title": "بازی و نرم‌افزار",
+      "slug": "video-games"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 94,
+    "fields": {
+      "parent": 76,
+      "title": "لوازم جانبی بازی",
+      "slug": "gaming-accessories"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 95,
+    "fields": {
+      "parent": 77,
+      "title": "تلویزیون",
+      "slug": "tvs"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 96,
+    "fields": {
+      "parent": 77,
+      "title": "سینمای خانگی و سیستم صوتی",
+      "slug": "home-theater-audio"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 97,
+    "fields": {
+      "parent": 77,
+      "title": "گیرنده دیجیتال و پخش",
+      "slug": "set-top-players"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 98,
+    "fields": {
+      "parent": 78,
+      "title": "دوربین عکاسی",
+      "slug": "photo-cameras"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 99,
+    "fields": {
+      "parent": 78,
+      "title": "لنز و تجهیزات",
+      "slug": "lenses-gear"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 100,
+    "fields": {
+      "parent": 78,
+      "title": "دوربین مداربسته",
+      "slug": "cctv"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 101,
+    "fields": {
+      "parent": 79,
+      "title": "ساعت و دستبند هوشمند",
+      "slug": "smart-watches-bands"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 102,
+    "fields": {
+      "parent": 79,
+      "title": "هدفون و هندزفری",
+      "slug": "headphones"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 103,
+    "fields": {
+      "parent": 80,
+      "title": "مودم و روتر",
+      "slug": "modems-routers"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 104,
+    "fields": {
+      "parent": 80,
+      "title": "اکسس‌پوینت و سوئیچ",
+      "slug": "access-points-switches"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 105,
+    "fields": {
+      "parent": 80,
+      "title": "تجهیزات کابل و شبکه",
+      "slug": "cables-network-gear"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 106,
+    "fields": {
+      "parent": 4,
+      "title": "لوازم برقی خانگی",
+      "slug": "home-appliances"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 107,
+    "fields": {
+      "parent": 4,
+      "title": "مبلمان و دکوراسیون",
+      "slug": "furniture-decor"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 108,
+    "fields": {
+      "parent": 4,
+      "title": "ظروف و لوازم آشپزخانه",
+      "slug": "kitchenware"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 109,
+    "fields": {
+      "parent": 4,
+      "title": "حمام و سرویس بهداشتی",
+      "slug": "bathroom"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 110,
+    "fields": {
+      "parent": 4,
+      "title": "حیاط و باغ",
+      "slug": "garden-yard"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 111,
+    "fields": {
+      "parent": 4,
+      "title": "ساختمانی و تأسیسات",
+      "slug": "home-improvement"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 112,
+    "fields": {
+      "parent": 106,
+      "title": "یخچال و فریزر",
+      "slug": "refrigerators"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 113,
+    "fields": {
+      "parent": 106,
+      "title": "ماشین لباسشویی",
+      "slug": "washing-machines"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 114,
+    "fields": {
+      "parent": 106,
+      "title": "ماشین ظرفشویی",
+      "slug": "dishwashers"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 115,
+    "fields": {
+      "parent": 106,
+      "title": "جاروبرقی",
+      "slug": "vacuum-cleaners"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 116,
+    "fields": {
+      "parent": 106,
+      "title": "مایکروویو و پخت‌وپز",
+      "slug": "microwaves-cookers"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 117,
+    "fields": {
+      "parent": 106,
+      "title": "تهویه و گرمایشی",
+      "slug": "hvac"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 118,
+    "fields": {
+      "parent": 107,
+      "title": "مبل و کاناپه",
+      "slug": "sofas"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 119,
+    "fields": {
+      "parent": 107,
+      "title": "میز و صندلی",
+      "slug": "tables-chairs"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 120,
+    "fields": {
+      "parent": 107,
+      "title": "تخت و سرویس خواب",
+      "slug": "beds-bedroom"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 121,
+    "fields": {
+      "parent": 107,
+      "title": "فرش و گلیم",
+      "slug": "carpets-rugs"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 122,
+    "fields": {
+      "parent": 107,
+      "title": "پرده و حصیر",
+      "slug": "curtains-blinds"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 123,
+    "fields": {
+      "parent": 107,
+      "title": "روشنایی و لوستر",
+      "slug": "lighting"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 124,
+    "fields": {
+      "parent": 107,
+      "title": "دکور و تزئینات",
+      "slug": "decor"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 125,
+    "fields": {
+      "parent": 108,
+      "title": "سرو و پذیرایی",
+      "slug": "serveware"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 126,
+    "fields": {
+      "parent": 108,
+      "title": "پخت‌وپز",
+      "slug": "cookware"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 127,
+    "fields": {
+      "parent": 108,
+      "title": "ابزار آشپزخانه",
+      "slug": "kitchen-tools"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 128,
+    "fields": {
+      "parent": 109,
+      "title": "روشویی و توالت",
+      "slug": "sanitary-ware"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 129,
+    "fields": {
+      "parent": 109,
+      "title": "وان و دوش",
+      "slug": "tubs-showers"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 130,
+    "fields": {
+      "parent": 109,
+      "title": "اکسسوری حمام",
+      "slug": "bath-accessories"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 131,
+    "fields": {
+      "parent": 110,
+      "title": "ابزار باغبانی",
+      "slug": "garden-tools"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 132,
+    "fields": {
+      "parent": 110,
+      "title": "مبلمان فضای باز",
+      "slug": "outdoor-furniture"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 133,
+    "fields": {
+      "parent": 110,
+      "title": "ایده و تزیینات باغ",
+      "slug": "garden-decor"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 134,
+    "fields": {
+      "parent": 111,
+      "title": "ابزارآلات و یراق",
+      "slug": "tools-hardware"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 135,
+    "fields": {
+      "parent": 111,
+      "title": "رنگ و چسب",
+      "slug": "paint-adhesives"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 136,
+    "fields": {
+      "parent": 111,
+      "title": "برق و روشنایی ساختمانی",
+      "slug": "electrical-supplies"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 137,
+    "fields": {
+      "parent": 111,
+      "title": "لوله‌کشی و تاسیسات",
+      "slug": "plumbing"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 138,
+    "fields": {
+      "parent": 5,
+      "title": "حمل‌ونقل و باربری",
+      "slug": "moving"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 139,
+    "fields": {
+      "parent": 5,
+      "title": "نظافت",
+      "slug": "cleaning"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 140,
+    "fields": {
+      "parent": 5,
+      "title": "تعمیرات",
+      "slug": "repairs"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 141,
+    "fields": {
+      "parent": 5,
+      "title": "زیبایی و سلامت",
+      "slug": "beauty-health"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 142,
+    "fields": {
+      "parent": 5,
+      "title": "آموزشی و تدریس",
+      "slug": "tutoring"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 143,
+    "fields": {
+      "parent": 5,
+      "title": "کامپیوتر و اینترنت",
+      "slug": "it-services"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 144,
+    "fields": {
+      "parent": 5,
+      "title": "رویداد و تشریفات",
+      "slug": "events"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 145,
+    "fields": {
+      "parent": 5,
+      "title": "حقوقی و مالی",
+      "slug": "legal-finance"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 146,
+    "fields": {
+      "parent": 5,
+      "title": "گردشگری و مهاجرت",
+      "slug": "travel-immigration"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 147,
+    "fields": {
+      "parent": 5,
+      "title": "چاپ و تبلیغات",
+      "slug": "printing-marketing"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 148,
+    "fields": {
+      "parent": 5,
+      "title": "خدمات حیوانات خانگی",
+      "slug": "pet-services"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 149,
+    "fields": {
+      "parent": 5,
+      "title": "خدمات خودرویی",
+      "slug": "auto-services"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 150,
+    "fields": {
+      "parent": 5,
+      "title": "پزشکی و پرستاری",
+      "slug": "medical-nursing"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 151,
+    "fields": {
+      "parent": 140,
+      "title": "تعمیر لوازم خانگی",
+      "slug": "appliance-repair"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 152,
+    "fields": {
+      "parent": 140,
+      "title": "تعمیر موبایل و کامپیوتر",
+      "slug": "device-repair"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 153,
+    "fields": {
+      "parent": 140,
+      "title": "تعمیرات ساختمان",
+      "slug": "home-repair"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 154,
+    "fields": {
+      "parent": 141,
+      "title": "آرایشگاه و پیرایش",
+      "slug": "barber-salon"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 155,
+    "fields": {
+      "parent": 141,
+      "title": "مراکز درمانی و ماساژ",
+      "slug": "clinic-massage"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 156,
+    "fields": {
+      "parent": 141,
+      "title": "پوست و لیزر",
+      "slug": "skin-laser"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 157,
+    "fields": {
+      "parent": 142,
+      "title": "زبان‌های خارجی",
+      "slug": "language-classes"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 158,
+    "fields": {
+      "parent": 142,
+      "title": "دروس مدرسه و کنکور",
+      "slug": "school-tutoring"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 159,
+    "fields": {
+      "parent": 142,
+      "title": "مهارت‌های فنی و هنری",
+      "slug": "skills-training"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 160,
+    "fields": {
+      "parent": 142,
+      "title": "برنامه‌نویسی و IT",
+      "slug": "coding-classes"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 161,
+    "fields": {
+      "parent": 143,
+      "title": "طراحی سایت و سئو",
+      "slug": "web-seo"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 162,
+    "fields": {
+      "parent": 143,
+      "title": "شبکه و دوربین",
+      "slug": "network-cctv"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 163,
+    "fields": {
+      "parent": 143,
+      "title": "نرم‌افزار و اتوماسیون",
+      "slug": "software-automation"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 164,
+    "fields": {
+      "parent": 144,
+      "title": "تشریفات مجالس",
+      "slug": "wedding-events"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 165,
+    "fields": {
+      "parent": 144,
+      "title": "اجاره تجهیزات",
+      "slug": "event-equipment"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 166,
+    "fields": {
+      "parent": 144,
+      "title": "خوراک و کیترینگ",
+      "slug": "catering"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 167,
+    "fields": {
+      "parent": 145,
+      "title": "وکالت و مشاوره حقوقی",
+      "slug": "legal-consulting"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 168,
+    "fields": {
+      "parent": 145,
+      "title": "حسابداری و مالیات",
+      "slug": "accounting-tax"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 169,
+    "fields": {
+      "parent": 145,
+      "title": "بیمه",
+      "slug": "insurance-services"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 170,
+    "fields": {
+      "parent": 146,
+      "title": "تور و بلیط",
+      "slug": "tours-tickets"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 171,
+    "fields": {
+      "parent": 146,
+      "title": "ویزا و اقامت",
+      "slug": "visa-immigration"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 172,
+    "fields": {
+      "parent": 6,
+      "title": "اداری و مدیریت",
+      "slug": "admin"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 173,
+    "fields": {
+      "parent": 6,
+      "title": "فروش و بازاریابی",
+      "slug": "sales"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 174,
+    "fields": {
+      "parent": 6,
+      "title": "مالی و حسابداری",
+      "slug": "finance"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 175,
+    "fields": {
+      "parent": 6,
+      "title": "کامپیوتر و فناوری",
+      "slug": "it"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 176,
+    "fields": {
+      "parent": 6,
+      "title": "تولید و صنعتی",
+      "slug": "manufacturing"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 177,
+    "fields": {
+      "parent": 6,
+      "title": "خدماتی",
+      "slug": "service"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 178,
+    "fields": {
+      "parent": 6,
+      "title": "آموزشی",
+      "slug": "education"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 179,
+    "fields": {
+      "parent": 6,
+      "title": "پزشکی و درمان",
+      "slug": "healthcare"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 180,
+    "fields": {
+      "parent": 6,
+      "title": "هنری و رسانه",
+      "slug": "media-art"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 181,
+    "fields": {
+      "parent": 6,
+      "title": "مهندسی",
+      "slug": "engineering"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 182,
+    "fields": {
+      "parent": 6,
+      "title": "راننده و پیک",
+      "slug": "driver-courier"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 183,
+    "fields": {
+      "parent": 6,
+      "title": "کاردان فنی",
+      "slug": "technician"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 184,
+    "fields": {
+      "parent": 6,
+      "title": "کار دانشجویی",
+      "slug": "student-jobs"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 185,
+    "fields": {
+      "parent": 6,
+      "title": "دورکاری",
+      "slug": "remote"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 186,
+    "fields": {
+      "parent": 6,
+      "title": "پاره‌وقت",
+      "slug": "part-time"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 187,
+    "fields": {
+      "parent": 7,
+      "title": "پوشاک",
+      "slug": "clothing"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 188,
+    "fields": {
+      "parent": 7,
+      "title": "کیف و کفش",
+      "slug": "bags-shoes"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 189,
+    "fields": {
+      "parent": 7,
+      "title": "زیورآلات",
+      "slug": "jewelry"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 190,
+    "fields": {
+      "parent": 7,
+      "title": "آرایشی و بهداشتی",
+      "slug": "cosmetics"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 191,
+    "fields": {
+      "parent": 7,
+      "title": "وسایل بچه و اسباب‌بازی",
+      "slug": "baby-toys"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 192,
+    "fields": {
+      "parent": 7,
+      "title": "سلامت و مراقبت شخصی",
+      "slug": "personal-care"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 193,
+    "fields": {
+      "parent": 7,
+      "title": "لوازم سفر",
+      "slug": "travel-gear"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 194,
+    "fields": {
+      "parent": 8,
+      "title": "کتاب و مجلات",
+      "slug": "books-magazines"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 195,
+    "fields": {
+      "parent": 8,
+      "title": "لوازم ورزشی",
+      "slug": "sports"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 196,
+    "fields": {
+      "parent": 8,
+      "title": "دوچرخه",
+      "slug": "bicycles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 197,
+    "fields": {
+      "parent": 8,
+      "title": "آلات موسیقی",
+      "slug": "musical-instruments"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 198,
+    "fields": {
+      "parent": 8,
+      "title": "کلکسیون و سکه",
+      "slug": "collectibles"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 199,
+    "fields": {
+      "parent": 8,
+      "title": "بلیت",
+      "slug": "tickets"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 200,
+    "fields": {
+      "parent": 8,
+      "title": "هنر و صنایع‌دستی",
+      "slug": "arts-crafts"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 201,
+    "fields": {
+      "parent": 9,
+      "title": "رویدادهای اجتماعی",
+      "slug": "community-events"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 202,
+    "fields": {
+      "parent": 9,
+      "title": "خیریه",
+      "slug": "charity"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 203,
+    "fields": {
+      "parent": 9,
+      "title": "گم‌شده‌ها",
+      "slug": "lost-found"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 204,
+    "fields": {
+      "parent": 9,
+      "title": "داوطلبی",
+      "slug": "volunteering"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 205,
+    "fields": {
+      "parent": 10,
+      "title": "سگ",
+      "slug": "dogs"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 206,
+    "fields": {
+      "parent": 10,
+      "title": "گربه",
+      "slug": "cats"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 207,
+    "fields": {
+      "parent": 10,
+      "title": "پرندگان",
+      "slug": "birds"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 208,
+    "fields": {
+      "parent": 10,
+      "title": "خزندگان و جونده‌ها",
+      "slug": "small-animals"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 209,
+    "fields": {
+      "parent": 10,
+      "title": "ماهی و آکواریوم",
+      "slug": "aquarium"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 210,
+    "fields": {
+      "parent": 10,
+      "title": "لوازم و خدمات",
+      "slug": "pet-accessories"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 211,
+    "fields": {
+      "parent": 11,
+      "title": "تجهیزات فروشگاهی",
+      "slug": "retail-equipment"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 212,
+    "fields": {
+      "parent": 11,
+      "title": "تجهیزات صنعتی",
+      "slug": "industrial-equipment"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 213,
+    "fields": {
+      "parent": 11,
+      "title": "ماشین‌آلات",
+      "slug": "machinery"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 214,
+    "fields": {
+      "parent": 11,
+      "title": "مواد اولیه",
+      "slug": "raw-materials"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 215,
+    "fields": {
+      "parent": 11,
+      "title": "کشاورزی و دامداری",
+      "slug": "agriculture"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 216,
+    "fields": {
+      "parent": 11,
+      "title": "تجهیزات پزشکی",
+      "slug": "medical-equipment"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 217,
+    "fields": {
+      "parent": 11,
+      "title": "عمده‌فروشی",
+      "slug": "wholesale"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 218,
+    "fields": {
+      "parent": 11,
+      "title": "دفاتر و کسب‌وکار آماده",
+      "slug": "turnkey-business"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 219,
+    "fields": {
+      "parent": 212,
+      "title": "کمپرسور و پمپ",
+      "slug": "compressors-pumps"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 220,
+    "fields": {
+      "parent": 212,
+      "title": "برش و جوش",
+      "slug": "cutting-welding"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 221,
+    "fields": {
+      "parent": 212,
+      "title": "ابزار اندازه‌گیری",
+      "slug": "measuring-tools"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 222,
+    "fields": {
+      "parent": 213,
+      "title": "راه‌سازی و معدنی",
+      "slug": "construction-mining-machinery"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 223,
+    "fields": {
+      "parent": 213,
+      "title": "کشاورزی",
+      "slug": "agri-machinery"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 224,
+    "fields": {
+      "parent": 213,
+      "title": "بسته‌بندی و تولید",
+      "slug": "packaging-production-machinery"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 225,
+    "fields": {
+      "parent": 215,
+      "title": "ادوات کشاورزی",
+      "slug": "farm-equipment"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 226,
+    "fields": {
+      "parent": 215,
+      "title": "دام و طیور",
+      "slug": "livestock"
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 227,
+    "fields": {
+      "parent": 215,
+      "title": "خوراک دام",
+      "slug": "feed"
+    }
+  }
+]

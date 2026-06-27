@@ -1,0 +1,40 @@
+<div>
+    {{ request.user }} CHAT LIST
+    <hr>
+    <ol>
+        {% for chat in chats %}
+        <li>
+            {{ chat.uuid }} / {{ chat.sender }} -> {{ chat.ad.user }}
+        </li>
+
+        <a href="{% url 'chat:chat-detail' chat.uuid %}">SEE</a>
+
+        <hr>
+        {% endfor %}
+    </ol>
+</div>
+
+
+<script>
+    const inboxSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/inbox/'
+    );
+
+    inboxSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+
+        if (data.type === 'new_message') {
+            const chatItem = document.querySelector(`a[href$="/chat/${data.chat_uuid}/"]`);
+            if (chatItem) {
+                // اگه چت هست، متن رو آپدیت کن
+                const msgPreview = chatItem.querySelector('p');
+                if (msgPreview) {
+                    msgPreview.innerText = data.text.length > 25 ? data.text.slice(0, 25) + '...' : data.text;
+                }
+            } else {
+                // اگه چت نیست، می‌تونی append کنی به لیست (اختیاری)
+                // یا فقط نوتیف بزنی
+            }
+        }
+    };
+</script>

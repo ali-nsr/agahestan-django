@@ -1,0 +1,759 @@
+[
+  {
+    "model": "ad.categoryfield",
+    "pk": 1,
+    "fields": {
+      "category": 12,
+      "key": "sale-residential-price",
+      "label": "قیمت (تومان)",
+      "type": "decimal",
+      "is_required": true,
+      "data": { "min": 0 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 2,
+    "fields": {
+      "category": 12,
+      "key": "sale-residential-area-m2",
+      "label": "متراژ (متر مربع)",
+      "type": "int",
+      "is_required": true,
+      "data": { "min": 1 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 3,
+    "fields": {
+      "category": 12,
+      "key": "sale-residential-city",
+      "label": "شهر",
+      "type": "str",
+      "is_required": true,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 4,
+    "fields": {
+      "category": 12,
+      "key": "sale-residential-neighborhood",
+      "label": "محله",
+      "type": "str",
+      "is_required": false,
+      "data": null
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 5,
+    "fields": {
+      "category": 19,
+      "key": "apartment-sale-rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": { "options": ["۱", "۲", "۳", "۴", "۵+"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 6,
+    "fields": {
+      "category": 19,
+      "key": "apartment-sale-year-built",
+      "label": "سال ساخت",
+      "type": "int",
+      "is_required": false,
+      "data": { "min": 1300, "max": 1600 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 7,
+    "fields": {
+      "category": 19,
+      "key": "apartment-sale-floor",
+      "label": "طبقه",
+      "type": "int",
+      "is_required": false,
+      "data": { "min": -2, "max": 200 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 8,
+    "fields": {
+      "category": 19,
+      "key": "apartment-sale-elevator",
+      "label": "آسانسور",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 9,
+    "fields": {
+      "category": 19,
+      "key": "apartment-sale-parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 10,
+    "fields": {
+      "category": 19,
+      "key": "apartment-sale-storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 11,
+    "fields": {
+      "category": 13,
+      "key": "rent-residential-deposit",
+      "label": "ودیعه (تومان)",
+      "type": "decimal",
+      "is_required": true,
+      "data": { "min": 0 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 12,
+    "fields": {
+      "category": 13,
+      "key": "rent-residential-rent-monthly",
+      "label": "اجاره ماهانه (تومان)",
+      "type": "decimal",
+      "is_required": true,
+      "data": { "min": 0 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 13,
+    "fields": {
+      "category": 22,
+      "key": "apartment-rent-rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": { "options": ["۱", "۲", "۳", "۴", "۵+"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 14,
+    "fields": {
+      "category": 24,
+      "key": "roommate-gender",
+      "label": "ترجیح جنسیت",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["فرقی ندارد", "آقا", "خانم"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 15,
+    "fields": {
+      "category": 24,
+      "key": "roommate-occupancy",
+      "label": "نوع هم‌خانه",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["دانشجو", "کارمند", "فرقی ندارد"] }
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 16,
+    "fields": {
+      "category": 20,
+      "key": "villa-sale-land-area-m2",
+      "label": "متراژ زمین (متر مربع)",
+      "type": "int",
+      "is_required": true,
+      "data": { "min": 1 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 17,
+    "fields": {
+      "category": 20,
+      "key": "villa-sale-built-area-m2",
+      "label": "زیربنا (متر مربع)",
+      "type": "int",
+      "is_required": true,
+      "data": { "min": 1 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 18,
+    "fields": {
+      "category": 20,
+      "key": "villa-sale-garden",
+      "label": "باغ/حیاط",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 19,
+    "fields": {
+      "category": 20,
+      "key": "villa-sale-pool",
+      "label": "استخر",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 20,
+    "fields": {
+      "category": 21,
+      "key": "land-sale-area-m2",
+      "label": "متراژ زمین (متر مربع)",
+      "type": "int",
+      "is_required": true,
+      "data": { "min": 1 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 21,
+    "fields": {
+      "category": 21,
+      "key": "land-sale-document-type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["شش دانگ", "مشاع", "قولنامه‌ای", "سایر"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 22,
+    "fields": {
+      "category": 21,
+      "key": "land-sale-usage",
+      "label": "کاربری",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["مسکونی", "تجاری", "اداری", "کشاورزی", "صنعتی", "سایر"] }
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 23,
+    "fields": {
+      "category": 39,
+      "key": "cars-year",
+      "label": "مدل (سال)",
+      "type": "int",
+      "is_required": true,
+      "data": { "min": 1960, "max": 2035 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 24,
+    "fields": {
+      "category": 39,
+      "key": "cars-mileage-km",
+      "label": "کارکرد (کیلومتر)",
+      "type": "int",
+      "is_required": false,
+      "data": { "min": 0 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 25,
+    "fields": {
+      "category": 39,
+      "key": "cars-brand",
+      "label": "برند",
+      "type": "str",
+      "is_required": true,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 26,
+    "fields": {
+      "category": 39,
+      "key": "cars-model",
+      "label": "مدل خودرو",
+      "type": "str",
+      "is_required": true,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 27,
+    "fields": {
+      "category": 39,
+      "key": "cars-fuel",
+      "label": "نوع سوخت",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["بنزینی", "دوگانه‌سوز", "گازوئیلی", "هیبرید", "برقی"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 28,
+    "fields": {
+      "category": 39,
+      "key": "cars-gearbox",
+      "label": "گیربکس",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["دنده‌ای", "اتومات"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 29,
+    "fields": {
+      "category": 39,
+      "key": "cars-color",
+      "label": "رنگ",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["سفید", "مشکی", "نقره‌ای", "خاکستری", "آبی", "قرمز", "سایر"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 30,
+    "fields": {
+      "category": 39,
+      "key": "cars-price",
+      "label": "قیمت (تومان)",
+      "type": "decimal",
+      "is_required": true,
+      "data": { "min": 0 }
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 31,
+    "fields": {
+      "category": 40,
+      "key": "motorcycles-engine-cc",
+      "label": "حجم موتور (سی‌سی)",
+      "type": "int",
+      "is_required": false,
+      "data": { "min": 0, "max": 2500 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 32,
+    "fields": {
+      "category": 40,
+      "key": "motorcycles-year",
+      "label": "مدل (سال)",
+      "type": "int",
+      "is_required": true,
+      "data": { "min": 1960, "max": 2035 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 33,
+    "fields": {
+      "category": 41,
+      "key": "vehicle-parts-condition",
+      "label": "وضعیت کالا",
+      "type": "choice",
+      "is_required": true,
+      "data": { "options": ["نو", "در حد نو", "کارکرده"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 34,
+    "fields": {
+      "category": 41,
+      "key": "vehicle-parts-compatible",
+      "label": "مناسب برای",
+      "type": "str",
+      "is_required": false,
+      "data": null
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 35,
+    "fields": {
+      "category": 73,
+      "key": "mobile-brand",
+      "label": "برند",
+      "type": "str",
+      "is_required": true,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 36,
+    "fields": {
+      "category": 81,
+      "key": "mobile-phones-storage",
+      "label": "حافظه داخلی",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["32GB", "64GB", "128GB", "256GB", "512GB", "1TB"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 37,
+    "fields": {
+      "category": 81,
+      "key": "mobile-phones-ram",
+      "label": "رم",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["2GB", "3GB", "4GB", "6GB", "8GB", "12GB", "16GB"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 38,
+    "fields": {
+      "category": 81,
+      "key": "mobile-phones-condition",
+      "label": "وضعیت",
+      "type": "choice",
+      "is_required": true,
+      "data": { "options": ["نو", "در حد نو", "کارکرده", "نیازمند تعمیر"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 39,
+    "fields": {
+      "category": 81,
+      "key": "mobile-phones-warranty",
+      "label": "گارانتی دارد",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 40,
+    "fields": {
+      "category": 75,
+      "key": "computers-laptops-brand",
+      "label": "برند",
+      "type": "str",
+      "is_required": true,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 41,
+    "fields": {
+      "category": 86,
+      "key": "laptops-cpu",
+      "label": "پردازنده (CPU)",
+      "type": "str",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 42,
+    "fields": {
+      "category": 86,
+      "key": "laptops-ram",
+      "label": "رم",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["4GB", "8GB", "16GB", "32GB", "64GB"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 43,
+    "fields": {
+      "category": 86,
+      "key": "laptops-storage",
+      "label": "حافظه",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["128GB SSD", "256GB SSD", "512GB SSD", "1TB SSD", "1TB HDD", "2TB HDD"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 44,
+    "fields": {
+      "category": 86,
+      "key": "laptops-screen-size",
+      "label": "اندازه صفحه (اینچ)",
+      "type": "decimal",
+      "is_required": false,
+      "data": { "min": 7, "max": 20 }
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 45,
+    "fields": {
+      "category": 95,
+      "key": "tvs-size-inch",
+      "label": "سایز (اینچ)",
+      "type": "int",
+      "is_required": true,
+      "data": { "min": 10, "max": 120 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 46,
+    "fields": {
+      "category": 95,
+      "key": "tvs-resolution",
+      "label": "رزولوشن",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["HD", "Full HD", "4K", "8K"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 47,
+    "fields": {
+      "category": 95,
+      "key": "tvs-smart",
+      "label": "هوشمند",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 48,
+    "fields": {
+      "category": 140,
+      "key": "repairs-service-type",
+      "label": "نوع تعمیرات",
+      "type": "choice",
+      "is_required": true,
+      "data": { "options": ["لوازم خانگی", "موبایل/کامپیوتر", "ساختمان", "سایر"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 49,
+    "fields": {
+      "category": 139,
+      "key": "cleaning-place-type",
+      "label": "محل نظافت",
+      "type": "choice",
+      "is_required": true,
+      "data": { "options": ["منزل", "اداری", "راه‌پله/مشاعات", "سایر"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 50,
+    "fields": {
+      "category": 139,
+      "key": "cleaning-area-m2",
+      "label": "متراژ (متر مربع)",
+      "type": "int",
+      "is_required": false,
+      "data": { "min": 1 }
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 51,
+    "fields": {
+      "category": 142,
+      "key": "tutoring-subject",
+      "label": "موضوع/درس",
+      "type": "str",
+      "is_required": true,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 52,
+    "fields": {
+      "category": 142,
+      "key": "tutoring-level",
+      "label": "سطح",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["ابتدایی", "متوسطه", "کنکور", "دانشگاهی", "عمومی"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 53,
+    "fields": {
+      "category": 142,
+      "key": "tutoring-mode",
+      "label": "شیوه برگزاری",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["حضوری", "آنلاین", "هردو"] }
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 54,
+    "fields": {
+      "category": 6,
+      "key": "jobs-title",
+      "label": "عنوان شغلی",
+      "type": "str",
+      "is_required": true,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 55,
+    "fields": {
+      "category": 6,
+      "key": "jobs-company",
+      "label": "نام شرکت/کارفرما",
+      "type": "str",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 56,
+    "fields": {
+      "category": 6,
+      "key": "jobs-employment-type",
+      "label": "نوع همکاری",
+      "type": "choice",
+      "is_required": true,
+      "data": { "options": ["تمام‌وقت", "پاره‌وقت", "پروژه‌ای", "کارآموزی", "دورکاری"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 57,
+    "fields": {
+      "category": 6,
+      "key": "jobs-experience-years",
+      "label": "سابقه (سال)",
+      "type": "int",
+      "is_required": false,
+      "data": { "min": 0, "max": 50 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 58,
+    "fields": {
+      "category": 6,
+      "key": "jobs-salary-from",
+      "label": "حقوق از (تومان)",
+      "type": "decimal",
+      "is_required": false,
+      "data": { "min": 0 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 59,
+    "fields": {
+      "category": 6,
+      "key": "jobs-salary-to",
+      "label": "حقوق تا (تومان)",
+      "type": "decimal",
+      "is_required": false,
+      "data": { "min": 0 }
+    }
+  },
+
+  {
+    "model": "ad.categoryfield",
+    "pk": 60,
+    "fields": {
+      "category": 10,
+      "key": "pets-age-months",
+      "label": "سن (ماه)",
+      "type": "int",
+      "is_required": false,
+      "data": { "min": 0, "max": 300 }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 61,
+    "fields": {
+      "category": 10,
+      "key": "pets-gender",
+      "label": "جنسیت",
+      "type": "choice",
+      "is_required": false,
+      "data": { "options": ["نر", "ماده", "نامشخص"] }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "pk": 62,
+    "fields": {
+      "category": 10,
+      "key": "pets-vaccinated",
+      "label": "واکسینه شده",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  }
+]

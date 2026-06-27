@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<style>
+    .green {
+        background-color: green;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .yellow {
+        background-color: yellow;
+    }
+</style>
+
+
+{% if request.user == chat.ad.user %}
+<h4 class="">در حال گفتگو با {{ chat.sender }}</h4>
+{% if chat.sender.is_online %}ONLINE{% else %}OFFLINE{% endif %}
+{% else %}
+<h4 class="">در حال گفتگو با {{ chat.ad.user }}</h4>
+{% if chat.ad.user.is_online %}ONLINE{% else %}OFFLINE{% endif %}
+{% endif %}
+<hr>
+
+<hr>
+
+
+{% for message in messages %}
+<p>
+    {{ message.sender }} -
+    <span style="color: green">
+            {{ message.text }}
+        </span>
+    {{ message.timestamp|timesince }} Ago
+
+    {% if message.is_seen %}
+    <span style="color: green">SEEN</span>
+    {% else %}
+    <span style="color: red">NOT SEEN</span>
+    {% endif %}
+</p>
+{% endfor %}
+
+
+<div id="chat-box">
+
+</div>
+
+
+<div>
+    <input id="msg" placeholder="متن پیام...">
+
+    <button id="sendbtn" type="submit">
+        ارسال پیام
+    </button>
+</div>
+
+
+<script>
+    const wsScheme = (window.location.protocol === "https:") ? "wss" : "ws";
+    const chatSocket = new WebSocket(
+            wsScheme + "://" + window.location.host + "/ws/chat/{{ chat.uuid }}/"
+    );
+
+
+    // frontend receiver just like django channels receiver function
+    // receives data from backend
+    chatSocket.onmessage = function (e) {
+        let data = JSON.parse(e.data)
+        $('#chat-box').html($('#chat-box').html() + '<br/>' + data.sender_username + ': ' + data.message);
+    }
+
+    // frontend requests to backend to accept connection
+    chatSocket.onopen = function (e) {
+        console.log('Websocket Connected');
+        $('#msg').removeClass('red');
+        $('#msg').addClass('green');
+    };
+
+    chatSocket.onclose = function (e) {
+        console.log('Websocket Disconnected');
+        $('#msg').removeClass('green');
+        $('#msg').addClass('red');
+    };
+
+    chatSocket.onerror = function (e) {
+        console.log('Websocket Error');
+        $('#msg').removeClass('green');
+        $('#msg').addClass('yellow');
+
+    };
+
+
+    $('#sendbtn').click(function (e) {
+        let msg = $('#msg').val();
+        chatSocket.send(msg);
+        $('#msg').val('');
+    });
+</script>
+
+
+</body>
+</html>
