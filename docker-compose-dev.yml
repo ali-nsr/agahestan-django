@@ -4,7 +4,7 @@ services:
     image: nginx:alpine
     restart: always
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/staticfiles  # ✅ استفاده از Named Volume
@@ -31,7 +31,7 @@ services:
       - db
       - redis
     ports:
-      - "8000:8000"
+      - "8001:8000"
     networks:
       - agahestan-network
 
@@ -46,7 +46,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - agahestan-network
 
@@ -73,8 +73,10 @@ services:
     container_name: redis
     restart: always
     ports:
-      - "6379:6379"
+      - "6380:6379"
     command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data_volume:/data
     networks:
       - agahestan-network
 
@@ -86,5 +88,6 @@ networks:
 
 volumes:
   postgres_data_agahestan:
+  redis_data_volume:
   static_volume:
   media_volume:

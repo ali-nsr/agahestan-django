@@ -21,5 +21,4 @@ COPY . /app
 
 # ایجاد پوشه برای فایل‌های استاتیک
 RUN mkdir -p staticfiles
-
-
+RUN python manage.py collectstatic --noinput
