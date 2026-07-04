@@ -22,5 +22,4 @@ COPY . /app
 # ایجاد پوشه برای فایل‌های استاتیک
 RUN mkdir -p staticfiles
 
-EXPOSE 8000
 
