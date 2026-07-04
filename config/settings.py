@@ -91,7 +91,7 @@ else:
             'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': 'db',
+            'HOST': 'db_agahestan',
             'PORT': '5432'
         }
     }

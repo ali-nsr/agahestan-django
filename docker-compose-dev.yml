@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: nginx
+    container_name: nginx_agahestan
     image: nginx:alpine
     restart: always
     ports:
@@ -15,7 +15,7 @@ services:
       - agahestan-network
 
   django:
-    container_name: django
+    container_name: django_agahestan
     restart: always
     build:
       context: .
@@ -37,7 +37,7 @@ services:
 
   db:
     image: postgres:16.9
-    container_name: db
+    container_name: db_agahestan
     restart: always
     volumes:
       - postgres_data_agahestan:/var/lib/postgresql/data/
@@ -51,7 +51,7 @@ services:
       - agahestan-network
 
   celery:
-    container_name: celery
+    container_name: celery_agahestan
     restart: always
     build:
       context: .
@@ -70,7 +70,7 @@ services:
 
   redis:
     image: redis
-    container_name: redis
+    container_name: redis_agahestan
     restart: always
     ports:
       - "6380:6379"
