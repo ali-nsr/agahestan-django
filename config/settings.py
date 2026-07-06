@@ -5,12 +5,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-sz5!r3=1td9xeic8r%e__w_@q)e=*wxk*zfwe63sjis&(7pnbq'
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['http://46.249.100.34']
     CSRF_TRUSTED_ORIGINS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
@@ -77,10 +77,10 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': 'db',
+            'NAME': 'postgres_agahestan',
+            'USER': 'postgres_agahestan',
+            'PASSWORD': 'qwe123QWE!@#',
+            'HOST': 'db_agahestan',
             'PORT': '5432'
         }
     }
@@ -88,9 +88,9 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
+            'NAME': 'postgres_agahestan',
+            'USER': 'postgres_agahestan',
+            'PASSWORD': 'qwe123QWE!@#',
             'HOST': 'db_agahestan',
             'PORT': '5432'
         }
@@ -139,7 +139,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # celery config
 if DEBUG:
-    CELERY_BROKER_URL = 'redis://redis:6379/1'
+    CELERY_BROKER_URL = 'redis://redis_agahestan:6379/1'
     CELERY_RESULT_BACKEND = 'django_celery_results.backends.database:DatabaseBackend'
     CELERY_ACCEPT_CONTENT = ['application/json']
     CELERY_TASK_SERIALIZER = 'json'
@@ -147,7 +147,7 @@ if DEBUG:
     CELERY_TIMEZONE = 'Asia/Tehran'
     CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 else:
-    CELERY_BROKER_URL = "redis://redis:6379/1"
+    CELERY_BROKER_URL = "redis://redis_agahestan:6379/1"
 
     CELERY_RESULT_BACKEND = "django-db"
     CELERY_ACCEPT_CONTENT = ["json"]
@@ -169,14 +169,14 @@ if DEBUG:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-            'LOCATION': 'redis://redis:6379/0'
+            'LOCATION': 'redis://redis_agahestan:6379/0'
         }
     }
 else:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-            'LOCATION': 'redis://redis:6379/0'
+            'LOCATION': 'redis://redis_agahestan:6379/0'
         }
     }
 # end caching configs
@@ -298,48 +298,44 @@ ELASTICSEARCH_DSL = {
 }
 
 # CORS headers
+if DEBUG == False:
+    CORS_ALLOW_ALL_ORIGINS = False
 
-CORS_ALLOW_ALL_ORIGINS = False
+    CORS_ALLOWED_ORIGINS = [
+        'http://46.249.100.34:8000',
+        'http://46.249.100.34:8080',
+        'http://46.249.100.34:3000'
+    ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "https://localhost:3000",
-    "http://127.0.0.1:3000",  # ← مهم
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-]
+    CORS_ALLOW_CREDENTIALS = True  # ← این true هست
 
-CORS_ALLOW_CREDENTIALS = True  # ← این true هست
+    # این رو هم اضافه کنید
+    CORS_ALLOW_METHODS = [
+        'DELETE',
+        'GET',
+        'OPTIONS',
+        'PATCH',
+        'POST',
+        'PUT',
+    ]
 
-# این رو هم اضافه کنید
-CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-]
+    CORS_ALLOW_HEADERS = [
+        'accept',
+        'accept-encoding',
+        'authorization',
+        'content-type',
+        'dnt',
+        'origin',
+        'user-agent',
+        'x-csrftoken',
+        'x-requested-with',
+    ]
 
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "https://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-]
+    CSRF_TRUSTED_ORIGINS = [
+        'http://46.249.100.34:8000',
+        'http://46.249.100.34:8080',
+        'http://46.249.100.34:3000'
+    ]
 
 # end cors headers
 
