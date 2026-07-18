@@ -58,6 +58,7 @@ class Neighborhood(models.Model):
 
 
 """
+python manage.py loaddata location.json
 python manage.py loaddata ad/fixtures/ad.json
 python manage.py loaddata ad/fixtures/category.json && python manage.py loaddata ad/fixtures/category_field.json && python manage.py loaddata location/fixtures/provinces.json && python manage.py loaddata location/fixtures/cities.json && python manage.py loaddata location/fixtures/neighborhoods.json
 """

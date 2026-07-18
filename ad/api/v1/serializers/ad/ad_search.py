@@ -12,6 +12,6 @@ class CategorySuggestionSerializer(serializers.ModelSerializer):
         rep = super().to_representation(instance)
         name = self.context.get('name')
         # rep['link'] = f'http://127.0.0.1:8000/ad/api/v1/iran/{instance.slug}/'
-        rep['link'] = f'https://django-main.liara.run//ad/api/v1/iran/{instance.slug}/'
+        rep['link'] = f'http://46.249.100.34:8080/ad/api/v1/iran/{instance.slug}/'
         rep['ads_in_category_count'] = instance.category_ads.filter(title__icontains=name).count()
         return rep

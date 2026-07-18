@@ -51,8 +51,8 @@ class AdListSerializer(PersianTimeMixin, serializers.ModelSerializer):
 
         if instance.thumbnail:
             # rep['thumbnail'] = 'http://127.0.0.1:8000'+instance.thumbnail.url
-            rep['thumbnail'] = 'https://django-main.liara.run' + instance.thumbnail.url
+            rep['thumbnail'] = 'http://46.249.100.34:8080' + instance.thumbnail.url
         else:
-            rep['thumbnail'] = 'https://django-main.liara.run/static/image/default.jpg'
+            rep['thumbnail'] = 'http://46.249.100.34:8080/static/image/default.jpg'
             # rep['thumbnail'] = 'http://127.0.0.1:8000/static/image/default.jpg'
         return rep

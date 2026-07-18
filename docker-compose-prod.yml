@@ -1,0 +1,113 @@
+services:
+  nginx_agahestan:
+    container_name: nginx_agahestan
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "8080:80"  # ✅ فقط این پورت برای کاربران خارجی نیاز است
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - static_volume_agahestan:/staticfiles  # ✅ استفاده از Named Volume
+      - media_volume_agahestan:/media
+    depends_on:
+      - django_agahestan
+    networks:
+      - agahestan-network
+
+  django_agahestan:
+    container_name: django_agahestan
+    restart: always
+    build:
+      context: ../backend/django_app
+      dockerfile: Dockerfile
+    command: gunicorn config.wsgi --bind 0.0.0.0:8000
+    volumes:
+      - ../backend/django_app:/app
+      - static_volume_agahestan:/app/staticfiles  # ✅ استفاده از Named Volume
+      - media_volume_agahestan:/app/media
+    # ❌ نیازی به ports نیست
+    # ports:
+    #   - "8001:8000"  # حذف کنید!
+    environment:
+      POSTGRES_HOST: db_agahestan  # ✅ اسم سرویس
+      POSTGRES_PORT: 5432
+      REDIS_HOST: redis_agahestan  # ✅ اسم سرویس
+      REDIS_PORT: 6379
+    depends_on:
+      - db_agahestan
+      - redis_agahestan
+    networks:
+      - agahestan-network
+
+  db_agahestan:
+    image: postgres:16.9
+    container_name: db_agahestan
+    restart: always
+    # ❌ پورت را حذف کنید
+    # ports:
+    #   - "5433:5432"  # حذف کنید!
+    volumes:
+      - postgres_data_agahestan:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=postgres_agahestan
+      - POSTGRES_USER=postgres_agahestan
+      - POSTGRES_PASSWORD=qwe123QWE!@#
+    networks:
+      - agahestan-network
+
+  redis_agahestan:
+    image: redis:alpine
+    container_name: redis_agahestan
+    restart: always
+    # ❌ پورت را حذف کنید
+    # ports:
+    #   - "6380:6379"  # حذف کنید!
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - ../backend/django_app:/app
+    networks:
+      - agahestan-network
+
+  celery_agahestan:
+    container_name: celery_agahestan
+    restart: always
+    build:
+      context: ../backend/django_app
+      dockerfile: Dockerfile
+    command: celery -A config worker --beat -l INFO
+    volumes:
+      - redis_data_volume_agahestan:/data
+    environment:
+      REDIS_HOST: redis_agahestan  # ✅ اسم سرویس
+      REDIS_PORT: 6379
+      POSTGRES_HOST: db_agahestan  # ✅ اسم سرویس
+      POSTGRES_PORT: 5432
+    depends_on:
+      - redis_agahestan
+      - db_agahestan
+      - django_agahestan
+    networks:
+      - agahestan-network
+
+  nextjs_agahestan:
+    container_name: nextjs_agahestan
+    restart: always
+    build:
+      context: ../frontend/nextjs_app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # ✅ فقط این پورت برای کاربران خارجی
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://nginx_agahestan:80  # ✅ از Nginx استفاده کنید
+    networks:
+      - agahestan-network
+
+networks:
+  agahestan-network:
+    driver: bridge
+
+  postgres_data_agahestan:
+  redis_data_volume_agahestan:
+  static_volume_agahestan:
+  media_volume_agahestan:

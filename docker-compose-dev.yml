@@ -83,6 +83,22 @@ services:
     networks:
       - agahestan-network
 
+
+  nextjs_agahestan:
+    container_name: nextjs_agahestan
+    restart: always
+    build:
+      context: ../frontend/nextjs_app
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://46.249.100.34:8080
+    ports:
+      - "3000:3000"
+    networks:
+      - agahestan-network
+
+
 networks:
   agahestan-network:
     driver: bridge

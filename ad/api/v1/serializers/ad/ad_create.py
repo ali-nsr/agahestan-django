@@ -32,7 +32,8 @@ class AdCreateSerializer(serializers.ModelSerializer):
                 ad = Ad.objects.create(
                     user_id=user_id,
                     category_id=category.id,
-                    status=Ad.Status.WAIT_TO_PAY if category.is_payable else Ad.Status.REVIEW,  # همیشه ایجاد میشه به عنوان پیش‌نویس
+                    # status=Ad.Status.WAIT_TO_PAY if category.is_payable else Ad.Status.REVIEW,  # همیشه ایجاد میشه به عنوان پیش‌نویس
+                    status=Ad.Status.PUBLISHED if category.is_payable else Ad.Status.PUBLISHED,  # همیشه ایجاد میشه به عنوان پیش‌نویس
                     expires_at=timezone.now() + timedelta(days=2),
                     **validated_data
                 )
