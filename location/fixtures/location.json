@@ -3,8 +3,56 @@
     "model": "location.province",
     "pk": 1,
     "fields": {
-      "name": "United Arab Emirates",
-      "slug": "united-arab-emirates"
+      "name": "Abu Dhabi",
+      "slug": "abu-dhabi"
+    }
+  },
+  {
+    "model": "location.province",
+    "pk": 2,
+    "fields": {
+      "name": "Dubai",
+      "slug": "dubai"
+    }
+  },
+  {
+    "model": "location.province",
+    "pk": 3,
+    "fields": {
+      "name": "Sharjah",
+      "slug": "sharjah"
+    }
+  },
+  {
+    "model": "location.province",
+    "pk": 4,
+    "fields": {
+      "name": "Ajman",
+      "slug": "ajman"
+    }
+  },
+  {
+    "model": "location.province",
+    "pk": 5,
+    "fields": {
+      "name": "Ras Al Khaimah",
+      "slug": "ras-al-khaimah"
+    }
+  },
+  {
+    "model": "location.province",
+    "pk": 6,
+    "fields": {
+      "name": "Fujairah",
+      "slug": "fujairah"
+    }
+  },
+  {
+    "model": "location.province",
+    "pk": 7,
+    "fields": {
+      "name": "Umm Al Quwain",
+      "slug": "umm-al-quwain"
     }
   },
   {
@@ -12,8 +60,8 @@
     "pk": 1,
     "fields": {
       "province": 1,
-      "name": "Dubai",
-      "slug": "dubai"
+      "name": "Abu Dhabi City",
+      "slug": "abu-dhabi-city"
     }
   },
   {
@@ -21,8 +69,8 @@
     "pk": 2,
     "fields": {
       "province": 1,
-      "name": "Abu Dhabi",
-      "slug": "abu-dhabi"
+      "name": "Al Ain",
+      "slug": "al-ain"
     }
   },
   {
@@ -30,44 +78,152 @@
     "pk": 3,
     "fields": {
       "province": 1,
-      "name": "Sharjah",
-      "slug": "sharjah"
+      "name": "Madinat Zayed",
+      "slug": "madinat-zayed"
     }
   },
   {
     "model": "location.city",
     "pk": 4,
     "fields": {
-      "province": 1,
-      "name": "Ajman",
-      "slug": "ajman"
+      "province": 2,
+      "name": "Dubai City",
+      "slug": "dubai-city"
     }
   },
   {
     "model": "location.city",
     "pk": 5,
     "fields": {
-      "province": 1,
-      "name": "Ras Al Khaimah",
-      "slug": "ras-al-khaimah"
+      "province": 2,
+      "name": "Jebel Ali",
+      "slug": "jebel-ali"
     }
   },
   {
     "model": "location.city",
     "pk": 6,
     "fields": {
-      "province": 1,
-      "name": "Fujairah",
-      "slug": "fujairah"
+      "province": 2,
+      "name": "Hatta",
+      "slug": "hatta"
     }
   },
   {
     "model": "location.city",
     "pk": 7,
     "fields": {
-      "province": 1,
-      "name": "Umm Al Quwain",
-      "slug": "umm-al-quwain"
+      "province": 3,
+      "name": "Sharjah City",
+      "slug": "sharjah-city"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 8,
+    "fields": {
+      "province": 3,
+      "name": "Khor Fakkan",
+      "slug": "khor-fakkan"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 9,
+    "fields": {
+      "province": 3,
+      "name": "Kalba",
+      "slug": "kalba"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 10,
+    "fields": {
+      "province": 4,
+      "name": "Ajman City",
+      "slug": "ajman-city"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 11,
+    "fields": {
+      "province": 4,
+      "name": "Masfout",
+      "slug": "masfout"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 12,
+    "fields": {
+      "province": 4,
+      "name": "Manama",
+      "slug": "manama-ajman"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 13,
+    "fields": {
+      "province": 5,
+      "name": "Ras Al Khaimah City",
+      "slug": "ras-al-khaimah-city"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 14,
+    "fields": {
+      "province": 5,
+      "name": "Al Jazirah Al Hamra",
+      "slug": "al-jazirah-al-hamra"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 15,
+    "fields": {
+      "province": 5,
+      "name": "Digdaga",
+      "slug": "digdaga"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 16,
+    "fields": {
+      "province": 6,
+      "name": "Fujairah City",
+      "slug": "fujairah-city"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 17,
+    "fields": {
+      "province": 6,
+      "name": "Dibba Al Fujairah",
+      "slug": "dibba-al-fujairah"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 18,
+    "fields": {
+      "province": 7,
+      "name": "Umm Al Quwain City",
+      "slug": "umm-al-quwain-city"
+    }
+  },
+  {
+    "model": "location.city",
+    "pk": 19,
+    "fields": {
+      "province": 7,
+      "name": "Falaj Al Mualla",
+      "slug": "falaj-al-mualla"
     }
   },
   {
@@ -75,62 +231,62 @@
     "pk": 1,
     "fields": {
       "city": 1,
-      "name": "Downtown Dubai",
-      "slug": "downtown-dubai"
-    }
-  },
-  {
-    "model": "location.neighborhood",
-    "pk": 2,
-    "fields": {
-      "city": 1,
-      "name": "Dubai Marina",
-      "slug": "dubai-marina"
-    }
-  },
-  {
-    "model": "location.neighborhood",
-    "pk": 3,
-    "fields": {
-      "city": 1,
-      "name": "Business Bay",
-      "slug": "business-bay"
-    }
-  },
-  {
-    "model": "location.neighborhood",
-    "pk": 4,
-    "fields": {
-      "city": 1,
-      "name": "Palm Jumeirah",
-      "slug": "palm-jumeirah"
-    }
-  },
-  {
-    "model": "location.neighborhood",
-    "pk": 5,
-    "fields": {
-      "city": 1,
-      "name": "Jumeirah",
-      "slug": "jumeirah"
-    }
-  },
-  {
-    "model": "location.neighborhood",
-    "pk": 6,
-    "fields": {
-      "city": 2,
       "name": "Al Reem Island",
       "slug": "al-reem-island"
     }
   },
   {
     "model": "location.neighborhood",
+    "pk": 2,
+    "fields": {
+      "city": 1,
+      "name": "Saadiyat Island",
+      "slug": "saadiyat-island"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 3,
+    "fields": {
+      "city": 1,
+      "name": "Khalidiya",
+      "slug": "khalidiya"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 4,
+    "fields": {
+      "city": 1,
+      "name": "Al Zahiyah",
+      "slug": "al-zahiyah"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 5,
+    "fields": {
+      "city": 1,
+      "name": "Mussafah",
+      "slug": "mussafah"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 6,
+    "fields": {
+      "city": 2,
+      "name": "Al Jimi",
+      "slug": "al-jimi"
+    }
+  },
+  {
+    "model": "location.neighborhood",
     "pk": 7,
     "fields": {
       "city": 2,
-      "name": "Saadiyat Island",
-      "slug": "saadiyat-island"
+      "name": "Al Mutarad",
+      "slug": "al-mutarad"
     }
   },
   {
@@ -138,251 +294,368 @@
     "pk": 8,
     "fields": {
       "city": 2,
-      "name": "Al Khalidiya",
-      "slug": "al-khalidiya"
+      "name": "Al Towayya",
+      "slug": "al-towayya"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 9,
     "fields": {
-      "city": 2,
-      "name": "Khalifa City",
-      "slug": "khalifa-city"
+      "city": 4,
+      "name": "Downtown Dubai",
+      "slug": "downtown-dubai"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 10,
     "fields": {
-      "city": 2,
-      "name": "Yas Island",
-      "slug": "yas-island"
+      "city": 4,
+      "name": "Dubai Marina",
+      "slug": "dubai-marina"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 11,
     "fields": {
-      "city": 3,
-      "name": "Al Nahda",
-      "slug": "al-nahda-sharjah"
+      "city": 4,
+      "name": "Business Bay",
+      "slug": "business-bay"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 12,
     "fields": {
-      "city": 3,
-      "name": "Al Majaz",
-      "slug": "al-majaz"
+      "city": 4,
+      "name": "Jumeirah",
+      "slug": "jumeirah"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 13,
     "fields": {
-      "city": 3,
-      "name": "Al Qasimia",
-      "slug": "al-qasimia"
+      "city": 4,
+      "name": "Deira",
+      "slug": "deira"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 14,
     "fields": {
-      "city": 3,
-      "name": "Muwaileh",
-      "slug": "muwaileh"
+      "city": 4,
+      "name": "Bur Dubai",
+      "slug": "bur-dubai"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 15,
     "fields": {
-      "city": 3,
-      "name": "Muwailih Commercial",
-      "slug": "muwailih-commercial"
+      "city": 5,
+      "name": "Jebel Ali Industrial Area",
+      "slug": "jebel-ali-industrial-area"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 16,
     "fields": {
-      "city": 4,
-      "name": "Al Rashidiya",
-      "slug": "al-rashidiya-ajman"
+      "city": 5,
+      "name": "Jebel Ali Village",
+      "slug": "jebel-ali-village"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 17,
     "fields": {
-      "city": 4,
-      "name": "Al Jurf",
-      "slug": "al-jurf"
+      "city": 6,
+      "name": "Hatta Hill Park Area",
+      "slug": "hatta-hill-park-area"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 18,
     "fields": {
-      "city": 4,
-      "name": "Al Nuaimiya",
-      "slug": "al-nuaimiya"
+      "city": 6,
+      "name": "Hatta Dam Area",
+      "slug": "hatta-dam-area"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 19,
     "fields": {
-      "city": 4,
-      "name": "Al Rawda",
-      "slug": "al-rawda-ajman"
+      "city": 7,
+      "name": "Al Majaz",
+      "slug": "al-majaz"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 20,
     "fields": {
-      "city": 4,
-      "name": "Ajman Downtown",
-      "slug": "ajman-downtown"
+      "city": 7,
+      "name": "Al Nahda",
+      "slug": "al-nahda-sharjah"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 21,
     "fields": {
-      "city": 5,
-      "name": "Al Nakheel",
-      "slug": "al-nakheel"
+      "city": 7,
+      "name": "Al Qasimia",
+      "slug": "al-qasimia"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 22,
     "fields": {
-      "city": 5,
-      "name": "Al Hamra Village",
-      "slug": "al-hamra-village"
+      "city": 7,
+      "name": "Muwaileh",
+      "slug": "muwaileh"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 23,
     "fields": {
-      "city": 5,
-      "name": "Mina Al Arab",
-      "slug": "mina-al-arab"
+      "city": 7,
+      "name": "Al Khan",
+      "slug": "al-khan"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 24,
     "fields": {
-      "city": 5,
-      "name": "Al Dhait",
-      "slug": "al-dhait"
+      "city": 8,
+      "name": "Al Haray",
+      "slug": "al-haray"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 25,
     "fields": {
-      "city": 5,
-      "name": "Julphar",
-      "slug": "julphar"
+      "city": 8,
+      "name": "Hay Al Zubara",
+      "slug": "hay-al-zubara"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 26,
     "fields": {
-      "city": 6,
-      "name": "Al Faseel",
-      "slug": "al-faseel"
+      "city": 9,
+      "name": "Kalba Corniche",
+      "slug": "kalba-corniche"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 27,
     "fields": {
-      "city": 6,
-      "name": "Kalba",
-      "slug": "kalba-fujairah"
+      "city": 9,
+      "name": "Sur Kalba",
+      "slug": "sur-kalba"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 28,
     "fields": {
-      "city": 6,
-      "name": "Dibba Al-Fujairah",
-      "slug": "dibba-al-fujairah"
+      "city": 10,
+      "name": "Al Nuaimiya",
+      "slug": "al-nuaimiya"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 29,
     "fields": {
-      "city": 6,
-      "name": "Sakamkam",
-      "slug": "sakamkam"
+      "city": 10,
+      "name": "Al Rashidiya",
+      "slug": "al-rashidiya-ajman"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 30,
     "fields": {
-      "city": 6,
-      "name": "Madhab",
-      "slug": "madhab"
+      "city": 10,
+      "name": "Al Jurf",
+      "slug": "al-jurf"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 31,
     "fields": {
-      "city": 7,
-      "name": "Al Salamah",
-      "slug": "al-salamah-uaq"
+      "city": 10,
+      "name": "Ajman Downtown",
+      "slug": "ajman-downtown"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 32,
     "fields": {
-      "city": 7,
-      "name": "Al Raas",
-      "slug": "al-raas-uaq"
+      "city": 11,
+      "name": "Masfout Center",
+      "slug": "masfout-center"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 33,
     "fields": {
-      "city": 7,
-      "name": "Al Humrah",
-      "slug": "al-humrah"
+      "city": 12,
+      "name": "Manama Center",
+      "slug": "manama-center-ajman"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 34,
     "fields": {
-      "city": 7,
-      "name": "Falaj Al Mualla",
-      "slug": "falaj-al-mualla"
+      "city": 13,
+      "name": "Al Nakheel",
+      "slug": "al-nakheel-rak"
     }
   },
   {
     "model": "location.neighborhood",
     "pk": 35,
     "fields": {
-      "city": 7,
+      "city": 13,
+      "name": "Al Dhait",
+      "slug": "al-dhait"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 36,
+    "fields": {
+      "city": 13,
+      "name": "Khuzam",
+      "slug": "khuzam"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 37,
+    "fields": {
+      "city": 13,
+      "name": "Julphar",
+      "slug": "julphar"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 38,
+    "fields": {
+      "city": 14,
+      "name": "Al Hamra Village",
+      "slug": "al-hamra-village"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 39,
+    "fields": {
+      "city": 14,
+      "name": "Marjan Island",
+      "slug": "marjan-island"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 40,
+    "fields": {
+      "city": 16,
+      "name": "Al Faseel",
+      "slug": "al-faseel"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 41,
+    "fields": {
+      "city": 16,
+      "name": "Madhab",
+      "slug": "madhab"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 42,
+    "fields": {
+      "city": 16,
+      "name": "Sakamkam",
+      "slug": "sakamkam"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 43,
+    "fields": {
+      "city": 17,
+      "name": "Dibba Center",
+      "slug": "dibba-center"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 44,
+    "fields": {
+      "city": 17,
+      "name": "Al Ghurfah",
+      "slug": "al-ghurfah"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 45,
+    "fields": {
+      "city": 18,
+      "name": "Al Raas",
+      "slug": "al-raas-uaq"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 46,
+    "fields": {
+      "city": 18,
+      "name": "Al Salamah",
+      "slug": "al-salamah-uaq"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 47,
+    "fields": {
+      "city": 18,
       "name": "Old Town",
       "slug": "old-town-uaq"
+    }
+  },
+  {
+    "model": "location.neighborhood",
+    "pk": 48,
+    "fields": {
+      "city": 19,
+      "name": "Falaj Center",
+      "slug": "falaj-center"
     }
   }
 ]
