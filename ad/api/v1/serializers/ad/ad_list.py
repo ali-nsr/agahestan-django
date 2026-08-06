@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.urls import reverse
 
 from ad.models import Ad, Category, Gallery
 from location.models import City
@@ -36,10 +37,22 @@ class AdListSerializer(PersianTimeMixin, serializers.ModelSerializer):
         model = Ad
         fields = ['title', 'category', 'city', 'price', 'absolute_url', 'time']
 
+    def get_host(self, obj):
+        request = self.context.get('request')
+        path = reverse('ad-detail', kwargs={'uuid': str(obj.uuid)})
+        # مثال path: /ad/api/v1/ads/<uuid>/
+
+        if request is None:
+            # fallback: آدرس نسبی برگردون
+            return path
+
+        return request.build_absolute_uri(path)
+
     def get_absolute_url(self, obj):
-        url = 'http://127.0.0.1:8000/ad/api/v1/ads/{}/'.format(obj.uuid)
-        # url = 'https://django-main.liara.run/ad/api/v1/ads/{}/'.format(obj.uuid)
-        return url
+        request = self.context.get('request')
+        path = reverse('ad:api:ad-detail', kwargs={'uuid': str(obj.uuid)})
+
+        return request.build_absolute_uri(path) if request else path
 
     def get_time(self, obj):
         return self.persian_timesince(obj.created_at)
@@ -49,10 +62,12 @@ class AdListSerializer(PersianTimeMixin, serializers.ModelSerializer):
         rep['category'] = CategorySerializer(instance.category).data
         rep['city'] = AdCitySerializer(instance.city).data
 
+        request = self.context.get('request')
+
         if instance.thumbnail:
-            # rep['thumbnail'] = 'http://127.0.0.1:8000'+instance.thumbnail.url
-            rep['thumbnail'] = 'http://46.249.100.34:8080' + instance.thumbnail.url
+            url = instance.thumbnail.url
         else:
-            rep['thumbnail'] = 'http://46.249.100.34:8080/static/image/default.jpg'
-            # rep['thumbnail'] = 'http://127.0.0.1:8000/static/image/default.jpg'
+            url = '/static/image/default.jpg'
+
+        rep['thumbnail'] = request.build_absolute_uri(url) if request else url
         return rep

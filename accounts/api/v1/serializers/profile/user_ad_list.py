@@ -1,3 +1,4 @@
+from django.urls import reverse
 from rest_framework import serializers
 
 from ad.models import Ad, Gallery
@@ -25,9 +26,9 @@ class UserAdListSerializer(serializers.ModelSerializer):
         return obj.get_status_display()
 
     def get_absolute_url(self, obj):
-        # url = 'http://127.0.0.1:8000/api/v1/ads/{}/detail/'.format(obj.id)
-        url = 'https://django-main.liara.run/api/v1/ads/{}/detail/'.format(obj.uuid)
-        return url
+        request = self.context.get('request')
+        path = reverse('ad:api:ad-detail', kwargs={'uuid': str(obj.uuid)})
+        return request.build_absolute_uri(path)
 
     def get_created_date(self, obj):
         res = datetime2jalali(obj.created_at).strftime('%y/%m/%d _ %H:%M:%S')
@@ -37,10 +38,23 @@ class UserAdListSerializer(serializers.ModelSerializer):
         rep = super().to_representation(instance)
 
         ad_images = instance.gallery.all()
+
+
         if ad_images:
             img = ad_images.filter(is_main=True).first()
             rep['thumbnail'] = GallerySerializer(img).data
         else:
             rep['thumbnail'] = 'https://django-main.liara.run/static/image/default.jpg'
             # rep['thumbnail'] = 'http://127.0.0.1:8000/static/image/default.jpg'
+
+        request = self.context.get('request')
+
+        if ad_images:
+            img = ad_images.filter(is_main=True).first()
+            url = GallerySerializer(img).data
+        else:
+            url = '/static/image/default.jpg'
+
+        rep['thumbnail'] = request.build_absolute_uri(url) if request else url
+
         return rep

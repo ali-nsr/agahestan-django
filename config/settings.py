@@ -5,16 +5,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-sz5!r3=1td9xeic8r%e__w_@q)e=*wxk*zfwe63sjis&(7pnbq'
 
-DEBUG = True
+DEBUG = False
+
 
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['http://46.249.100.34']
-    CSRF_TRUSTED_ORIGINS = ['localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['nutrikala.com', 'api.nutrikala.com', 'www.nutrikala.com', 'localhost:3000',
+                     'http://localhost:3000', '127.1.1.1:3000', 'http://127.1.1.1:3000']
+    CSRF_TRUSTED_ORIGINS = ['https://nutrikala.com', 'https://api.nutrikala.com', 'localhost:3000',
+                            'http://localhost:3000', '127.1.1.1:3000', 'http://127.1.1.1:3000']
 
 INSTALLED_APPS = [
-    'daphne',  # async server
+    # 'daphne',  # async server
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -22,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # apps
+    'channels',
     'accounts',
     'ad',
     'location',
@@ -33,7 +37,6 @@ INSTALLED_APPS = [
     'django_celery_results',
     'rest_framework_simplejwt',  # jwt
     'drf_yasg',
-    'channels',
     'django_filters',
     'corsheaders',
     'jalali_date',
@@ -69,17 +72,18 @@ TEMPLATES = [
 
 if DEBUG:
     WSGI_APPLICATION = 'config.wsgi.application'  # sync server
-    ASGI_APPLICATION = 'config.asgi.application'  # async server
+    # ASGI_APPLICATION = 'config.asgi.application'  # async server
 else:
-    ASGI_APPLICATION = 'config.asgi.application'  # async server
+    WSGI_APPLICATION = 'config.wsgi.application'  # sync server
+    # ASGI_APPLICATION = 'config.asgi.application'  # async server
 
 if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres_agahestan',
-            'USER': 'postgres_agahestan',
-            'PASSWORD': 'qwe123QWE!@#',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
             'HOST': 'db_agahestan',
             'PORT': '5432'
         }
@@ -88,10 +92,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres_agahestan',
-            'USER': 'postgres_agahestan',
-            'PASSWORD': 'qwe123QWE!@#',
-            'HOST': 'db_agahestan',
+            'NAME': 'postgresdix_db',
+            'USER': 'postgres',
+            'PASSWORD': 'skF2pEyUMl5qAUj4Mnob',
+            'HOST': 'postgres-kjr-service',
             'PORT': '5432'
         }
     }
@@ -119,16 +123,27 @@ USE_I18N = True
 
 USE_TZ = True
 
-# static
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+if DEBUG:
+    # static
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static'
+    ]
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# media
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+    # media
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media/'
+else:
+    STATIC_URL = '/static/'
+    # STATICFILES_DIRS = [
+    #     BASE_DIR / 'static'
+    # ]
+    STATIC_ROOT = BASE_DIR / 'static'
+
+    # media
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -147,21 +162,13 @@ if DEBUG:
     CELERY_TIMEZONE = 'Asia/Tehran'
     CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 else:
-    CELERY_BROKER_URL = "redis://redis_agahestan:6379/1"
-
-    CELERY_RESULT_BACKEND = "django-db"
-    CELERY_ACCEPT_CONTENT = ["json"]
-    CELERY_TASK_SERIALIZER = "json"
-    CELERY_RESULT_SERIALIZER = "json"
-    CELERY_TIMEZONE = "Asia/Tehran"
-
-    CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
-
-    # مهم: روی startup اگر redis دیر حاضر شد، exit نکنه
-    CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-
-    # مهم: این همون چیزی‌ه که publish/pidbox رو کم می‌کنه
-    CELERY_WORKER_ENABLE_REMOTE_CONTROL = False
+    CELERY_BROKER_URL = 'redis://default:xPZ6rPGmE5rOFonlkk5p@redis-ovv-service:6379/1'
+    CELERY_RESULT_BACKEND = 'django_celery_results.backends.database:DatabaseBackend'
+    CELERY_ACCEPT_CONTENT = ['application/json']
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
+    CELERY_TIMEZONE = 'Asia/Tehran'
+    CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 # caching configs
 
@@ -176,7 +183,7 @@ else:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-            'LOCATION': 'redis://redis_agahestan:6379/0'
+            'LOCATION': 'redis://default:xPZ6rPGmE5rOFonlkk5p@redis-ovv-service:6379/0'
         }
     }
 # end caching configs
@@ -265,46 +272,49 @@ if DEBUG:
 
 
 # channels
-if DEBUG:
-    CHANNEL_LAYERS = {
-        'default': {
-            'BACKEND': 'channels_redis.core.RedisChannelLayer',
-            'CONFIG': {
-                'hosts': ['redis://redis:6379/1'],
-            },
-        },
-    }
-else:
-    CHANNEL_LAYERS = {
-        'default': {
-            'BACKEND': 'channels_redis.core.RedisChannelLayer',
-            'CONFIG': {
-                'hosts': ['redis://redis:6379/1'],
-            },
-        },
-    }
-    # CHANNEL_LAYERS = {
-    #     "default": {
-    #         "BACKEND": "channels.layers.InMemoryChannelLayer"
-    #     }
-    # }
+# if DEBUG:
+#     CHANNEL_LAYERS = {
+#         'default': {
+#             'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#             'CONFIG': {
+#                 'hosts': ['redis://redis:6379/1'],
+#             },
+#         },
+#     }
+# else:
+#     CHANNEL_LAYERS = {
+#         'default': {
+#             'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#             'CONFIG': {
+#                 'hosts': ['redis://default:xPZ6rPGmE5rOFonlkk5p@redis-ovv-service:6379/1'],
+#             },
+#         },
+#     }
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
+#     }
+# }
 # end channels
 
 
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': 'http://elasticsearch:9200'
-    },
-}
+# ELASTICSEARCH_DSL = {
+#     'default': {
+#         'hosts': 'http://elasticsearch:9200'
+#     },
+# }
 
 # CORS headers
 if DEBUG == False:
     CORS_ALLOW_ALL_ORIGINS = False
 
     CORS_ALLOWED_ORIGINS = [
-        'http://46.249.100.34:8000',
-        'http://46.249.100.34:8080',
-        'http://46.249.100.34:3000'
+        'https://nutrikala.com',
+        'https://api.nutrikala.com',
+        'localhost:3000',
+        'http://localhost:3000',
+        '127.1.1.1:3000',
+        'http://127.1.1.1:3000'
     ]
 
     CORS_ALLOW_CREDENTIALS = True  # ← این true هست
@@ -332,9 +342,12 @@ if DEBUG == False:
     ]
 
     CSRF_TRUSTED_ORIGINS = [
-        'http://46.249.100.34:8000',
-        'http://46.249.100.34:8080',
-        'http://46.249.100.34:3000'
+        'https://nutrikala.com',
+        'https://api.nutrikala.com',
+        'localhost:3000',
+        'http://localhost:3000',
+        '127.1.1.1:3000',
+        'http://127.1.1.1:3000'
     ]
 
 # end cors headers

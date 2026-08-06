@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.core.cache import cache
-
+from django.utils import timezone
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
@@ -35,15 +35,15 @@ class AdListAPIView(generics.GenericAPIView):
         operation_summary='List ads by location/city/cities',
         operation_description=(
                 '''
-                ads list by 2 location. first one is 'iran' and second one is 'city_name' like 'tehran'
+                ads list by 2 location. first one is 'uae' and second one is 'city_name' like 'tehran'
                 or multiple cities like 'tehran,shiraz'. multiple cities separated by comma and without space
                 separator of cities param is '?city=tehran,shiraz'
                 '''
                 'Ads list by 2 location.\n\n'
                 'Examples:\n'
-                '- /ad/api/v1/iran/ads/\n'
+                '- /ad/api/v1/uae/ads/\n'
                 '- /ad/api/v1/tehran/ads/\n'
-                '- /ad/api/v1/iran/ads/?cities=tehran,shiraz\n'
+                '- /ad/api/v1/uae/ads/?cities=tehran,shiraz\n'
         ),
         manual_parameters=[city_param],tags=['Ad']
     )
@@ -51,7 +51,7 @@ class AdListAPIView(generics.GenericAPIView):
         qs = self.get_queryset()
         cid = request.GET.get('cities')
 
-        if city == 'iran':
+        if city.lower() == 'uae':
             if cid:
                 qs = qs.filter(city__slug__in=cid.split(','))
             else:

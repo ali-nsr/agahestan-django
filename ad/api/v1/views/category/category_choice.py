@@ -6,8 +6,6 @@ from rest_framework import status
 from ...serializers import CategoryChoiceSerializer
 from .....models import Category
 
-
-
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
@@ -27,11 +25,10 @@ class CategoryChoiceAPIView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
-
     def list(self, request, *args, **kwargs):
         categories = Category.objects.all().select_related('parent')
         tree = self.build_tree(categories)
-        serializer = self.get_serializer(tree, many=True)
+        serializer = self.get_serializer(tree, many=True, context={'request': request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def build_tree(self, categories):

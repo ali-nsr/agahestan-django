@@ -38,7 +38,7 @@ class CategoryListAPIView(generics.GenericAPIView):
         operation_summary='List ads by location/city',
         operation_description=(
                 '''
-                ads list by 2 location. first one is 'iran' and second one is 'city_name' like 'tehran'
+                ads list by 2 location. first one is 'uae' and second one is 'city_name' like 'tehran'
                 or multiple cities like 'tehran,shiraz'. multiple cities separated by comma and without space
                 separator of cities param is '?city=tehran,shiraz'
                 '''
@@ -47,7 +47,7 @@ class CategoryListAPIView(generics.GenericAPIView):
                 '- /ad/api/v1/{location}/{category}/\n'
                 '- /ad/api/v1/{location}/{category}/?category_field_key=value&...\n'
         ),
-        manual_parameters=[city_param, category_slug_param],tags=['Category']
+        manual_parameters=[city_param, category_slug_param], tags=['Category']
     )
     def get(self, request, city, category_slug):
         category = get_object_or_404(Category, slug=category_slug)
@@ -61,7 +61,7 @@ class CategoryListAPIView(generics.GenericAPIView):
         cid = request.query_params.get('cities', None)
         print(f'cities: {cid}')
 
-        if city == 'iran':
+        if city == 'uae':
             if cid:
                 # qs = qs.filter(city_id__in=cid)
                 qs = qs.filter(city__slug__in=cid.split(','))
@@ -71,9 +71,9 @@ class CategoryListAPIView(generics.GenericAPIView):
             qs = qs.filter(city__slug=city)
 
         # فیلتر قیمت
-        order_by_price = request.query_params.get('order_by_price')
-        if order_by_price:
-            qs = qs.filter(price__lte=order_by_price)
+        # order_by_price = request.query_params.get('order_by_price')
+        # if order_by_price:
+        #     qs = qs.filter(price__lte=order_by_price)
 
         # فیلتر داینامیک
         for key, value in request.query_params.items():

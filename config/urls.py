@@ -5,7 +5,7 @@ from django.conf import settings as conf_settings
 urlpatterns = [
     path('ad/', include('ad.urls', namespace='ad')),
     path('location/', include('location.urls', namespace='location')),
-    path('chat/', include('chat.urls', namespace='chat')),
+    # path('chat/', include('chat.urls', namespace='chat')),
     path('account/', include('accounts.urls', namespace='accounts')),
     path('social/', include('social.urls', namespace='social')),
 

@@ -9,13 +9,13 @@ class Follow(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='following_set',  # کسایی که این یوزر فالو کرده
-        verbose_name=_('follower')
+        verbose_name=_('Follower')
     )
     following = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='followers_set',  # کسایی که این یوزر رو فالو کردن
-        verbose_name=_('following')
+        verbose_name=_('Following')
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

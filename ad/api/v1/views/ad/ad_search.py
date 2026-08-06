@@ -4,12 +4,11 @@ from rest_framework import views
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
-from ...serializers import AdListSerializer,CategorySuggestionSerializer
-from ad.models import Ad,Category
+from ...serializers import AdListSerializer, CategorySuggestionSerializer
+from ad.models import Ad, Category
 
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-
 
 import functools
 import operator
@@ -27,10 +26,17 @@ class AdSearchGetAPIView(views.APIView):
         ), tags=['Ad']
     )
     def get(self, request, *args, **kwargs):
-        name = request.query_params.get('q')
-        qs = Ad.objects.filter(Q(title__icontains=name))
-        serializer = AdListSerializer(qs, many=True)
+        # name = request.query_params.get('q')
+        name = request.query_params.get('q').strip().split()
+
+        q = functools.reduce(
+            operator.or_,
+            (Q(title__icontains=word) for word in name),
+        )
+        qs = Ad.objects.filter(q)
+        serializer = AdListSerializer(qs, many=True, context={'request': request})
         return Response(serializer.data)
+
 
 class AdSearchAjaxAPIView(views.APIView):
     permission_classes = [AllowAny]
@@ -53,6 +59,5 @@ class AdSearchAjaxAPIView(views.APIView):
         # qs = Ad.objects.filter(Q(title__icontains=name))
         qs = Category.objects.filter(q)
         # qs = qs.filter(Q(ad__title__icontains=request.query_params.get('q').strip()))
-        serializer = CategorySuggestionSerializer(qs, many=True,context={'name':request.query_params.get('q')})
+        serializer = CategorySuggestionSerializer(qs, many=True, context={'name': request.query_params.get('q')})
         return Response(data=serializer.data)
-

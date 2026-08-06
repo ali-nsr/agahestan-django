@@ -4,8 +4,7 @@ from django.core.cache import cache
 
 import json
 
-from accounts.models import User
-from .models import AdChat, AdMessage
+
 from ad.models import Ad
 from asgiref.sync import sync_to_async
 
@@ -77,24 +76,36 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def save_message(self, sender_id, message):
+        from accounts.models import User
+        from .models import AdChat, AdMessage
+
         chat = AdChat.objects.get(uuid=self.chat_uuid)
         AdMessage.objects.create(chat=chat, sender_id=sender_id, text=message)
         chat.save()
 
     @database_sync_to_async
     def update_user_to_online(self, user_id):
+        from accounts.models import User
+        from .models import AdChat, AdMessage
+
         user = User.objects.get(id=user_id)
         user.is_online = True
         user.save()
 
     @database_sync_to_async
     def update_user_to_offline(self, user_id):
+        from accounts.models import User
+        from .models import AdChat, AdMessage
+
         user = User.objects.get(id=user_id)
         user.is_online = False
         user.save()
 
     @database_sync_to_async
     def mark_messages_as_seen(self, chat_uuid, user_id):
+        from accounts.models import User
+        from .models import AdChat, AdMessage
+
         chat = AdChat.objects.get(uuid=chat_uuid)
 
         # فقط پیام‌هایی که:

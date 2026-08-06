@@ -21,45 +21,45 @@ class AdManager(models.Manager):
 
 class Ad(models.Model):
     class Status(models.TextChoices):
-        DRAFT = 'draft', _('پیش‌نویس')
-        REVIEW = 'review', _('در حال بررسی')
-        PUBLISHED = 'published', _('منتشر شده')
-        REJECTED = 'rejected', _('رد شده')
-        EXPIRED = 'expired', _('منقضی شده')
-        ARCHIVED = 'archived', _('آرشیو')
-        WAIT_TO_PAY = 'wait_to_pay', _('در انتظار پرداخت')
+        DRAFT = 'draft', _('Draft')
+        REVIEW = 'review', _('Review')
+        PUBLISHED = 'published', _('Published')
+        REJECTED = 'rejected', _('Rejected')
+        EXPIRED = 'expired', _('Expired')
+        ARCHIVED = 'archived', _('Archived')
+        WAIT_TO_PAY = 'wait_to_pay', _('Wait To Pay')
 
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name=_('uuid'))
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('کاربر'))
-    title = models.CharField(max_length=100, verbose_name=_('عنوان'))
-    description = models.TextField(verbose_name=_('توضیحات'))
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name=_('UUID'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('User'))
+    title = models.CharField(max_length=100, verbose_name=_('Title'))
+    description = models.TextField(verbose_name=_('Description'))
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_ads',
-                                 verbose_name=_('دسته بندی'))
+                                 verbose_name=_('Category'))
     thumbnail = models.ImageField(upload_to='%Y/%m/%d/thumbnails/', null=True, blank=True, verbose_name=_('thumbnail'))
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='province_ads',
-                                 verbose_name=_('استان'))
+                                 verbose_name=_('Province'))
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='city_ads',
-                             verbose_name=_('شهر'))
+                             verbose_name=_('City'))
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE, null=True, blank=True,
                                      related_name='neighborhood_ads',
-                                     verbose_name=_('محله'))
-    address = models.CharField(max_length=100, verbose_name=_('آدرس'))
-    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT, verbose_name=_('وضعیت'))
-    price = models.PositiveBigIntegerField(verbose_name=_('قیمت'))
+                                     verbose_name=_('Neighborhood'))
+    address = models.CharField(max_length=100, verbose_name=_('Address'))
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT, verbose_name=_('Status'))
+    price = models.PositiveBigIntegerField(verbose_name=_('Price'))
     latitude = models.DecimalField(max_digits=22, decimal_places=16, null=True, blank=True,
-                                   verbose_name=_('عرض جغرافیایی'))
+                                   verbose_name=_('Latitude'))
     longitude = models.DecimalField(max_digits=22, decimal_places=16, null=True, blank=True,
-                                    verbose_name=_('طول جغرافیایی'))
-    is_negotiable = models.BooleanField(default=False, verbose_name=_('قابل مذاکره'))
-    is_paid = models.BooleanField(default=False, verbose_name=_('پرداخت شده / نشده'))
-    published_at = models.DateTimeField(null=True, blank=True, verbose_name=_('زمان انتشار'))
-    expires_at = models.DateTimeField(verbose_name=_('تاریخ انقضا'))
-    bumped_at = models.DateTimeField(null=True, blank=True, verbose_name=_('نردبان/بامپ'))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
-    views_count = models.PositiveIntegerField(default=0, verbose_name=_('بازدید'))
-    chats_count = models.PositiveIntegerField(default=0, verbose_name=_('گفت‌وگو'))
-    attributes_cache = models.JSONField(null=True, blank=True, verbose_name=_('داده ‌های کش‌ شده'))
+                                    verbose_name=_('Longitude'))
+    is_negotiable = models.BooleanField(default=False, verbose_name=_('Is Negotiable'))
+    is_paid = models.BooleanField(default=False, verbose_name=_('Is Paid'))
+    published_at = models.DateTimeField(null=True, blank=True, verbose_name=_('Published At'))
+    expires_at = models.DateTimeField(verbose_name=_('Expires At'))
+    bumped_at = models.DateTimeField(null=True, blank=True, verbose_name=_('Bumped At'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created At'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated At'))
+    views_count = models.PositiveIntegerField(default=0, verbose_name=_('Views Count'))
+    chats_count = models.PositiveIntegerField(default=0, verbose_name=_('Chats Count'))
+    attributes_cache = models.JSONField(null=True, blank=True, verbose_name=_('Attributes Cache'))
 
     objects = AdManager()
 
@@ -68,8 +68,8 @@ class Ad(models.Model):
 
     class Meta:
         db_table = 'ads'
-        verbose_name = _('آگهی')
-        verbose_name_plural = _('آگهی ها')
+        verbose_name = _('Ad')
+        verbose_name_plural = _('Ads')
 
         indexes = [
             models.Index(fields=['uuid']),
@@ -134,14 +134,14 @@ class Ad(models.Model):
 
 
 class Gallery(models.Model):
-    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='gallery', verbose_name=_('آگهی'))
-    image = models.ImageField(upload_to='ads/%Y/%m/%d/', verbose_name=_('تصویر'))
-    is_main = models.BooleanField(default=False, verbose_name=_('تصویر اصلی'))
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='gallery', verbose_name=_('Ad'))
+    image = models.ImageField(upload_to='ads/%Y/%m/%d/', verbose_name=_('Image'))
+    is_main = models.BooleanField(default=False, verbose_name=_('Is Main'))
 
     class Meta:
         db_table = 'galleries'
-        verbose_name = _('تصویر آگهی')
-        verbose_name_plural = _('تصاویر آگهی')
+        verbose_name = _('Gallery')
+        verbose_name_plural = _('Galleries')
         indexes = [models.Index(fields=['ad', 'is_main'])]
         constraints = [
             # فقط یک تصویر اصلی برای هر آگهی
@@ -195,13 +195,13 @@ class CategoryManager(models.Manager):
 
 class Category(models.Model):
     parent = models.ForeignKey('self', default=None, null=True, blank=True, on_delete=models.CASCADE,
-                               related_name='children', verbose_name=_('والد'))
-    title = models.CharField(max_length=50, verbose_name=_('عنوان'))
-    slug = models.SlugField(max_length=50, unique=True, allow_unicode=True, verbose_name=_('آدرس URL'))
-    icon = models.ImageField(upload_to='category/icon/', null=True, blank=True, verbose_name='آیکون')
-    is_payable = models.BooleanField(default=False, verbose_name=_('پولی / رایگان'))
-    is_special = models.BooleanField(default=False, verbose_name=_('مخصوص'))
-    price = models.PositiveBigIntegerField(default=0, verbose_name=_('مبلغ'))
+                               related_name='children', verbose_name=_('Parent'))
+    title = models.CharField(max_length=50, verbose_name=_('Title'))
+    slug = models.SlugField(max_length=50, unique=True, allow_unicode=True, verbose_name=_('Slug'))
+    icon = models.ImageField(upload_to='category/icon/', null=True, blank=True, verbose_name='Icon')
+    is_payable = models.BooleanField(default=False, verbose_name=_('Is Payable'))
+    is_special = models.BooleanField(default=False, verbose_name=_('Is Special'))
+    price = models.PositiveBigIntegerField(default=0, verbose_name=_('Price'))
 
     objects = CategoryManager()
 
@@ -215,8 +215,8 @@ class Category(models.Model):
 
     class Meta:
         db_table = 'categories'
-        verbose_name = _('دسته بندی')
-        verbose_name_plural = _('دسته بندی ها')
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
         ordering = ['id']
 
     def get_category_fields(self):
@@ -227,27 +227,27 @@ class Category(models.Model):
 
 class CategoryField(models.Model):
     class FieldType(models.TextChoices):
-        INTEGER = 'int', _('عدد صحیح')
-        DECIMAL = 'decimal', _('عدد اعشاری')
-        BOOLEAN = 'bool', _('درست / نادرست')
-        STRING = 'str', _('رشته متنی کوتاه')
-        TEXT = 'text', _('متن بلند')
-        CHOICE = 'choice', _('انتخابی (لیستی)')
-        MULTI_CHOICE = 'multi_choice', _('چندانتخابی')
+        INTEGER = 'int', _('Integer')
+        DECIMAL = 'decimal', _('Decimal')
+        BOOLEAN = 'bool', _('Boolean')
+        STRING = 'str', _('String')
+        TEXT = 'text', _('Text')
+        CHOICE = 'choice', _('Choice')
+        MULTI_CHOICE = 'multi_choice', _('Multi Choice')
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('دسته'))
-    key = models.SlugField(max_length=100, unique=True, verbose_name=_('کلید'))
-    label = models.CharField(max_length=100, verbose_name=_('برچسب'))
-    type = models.CharField(max_length=20, choices=FieldType.choices, verbose_name=_('نوع'))
-    is_required = models.BooleanField(default=True, verbose_name=_('فیلد اجباری'))
-    data = models.JSONField(null=True, blank=True, verbose_name=_('داده کمکی'))
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_('Category'))
+    key = models.SlugField(max_length=100, unique=True, verbose_name=_('Key'))
+    label = models.CharField(max_length=100, verbose_name=_('Label'))
+    type = models.CharField(max_length=20, choices=FieldType.choices, verbose_name=_('Type'))
+    is_required = models.BooleanField(default=True, verbose_name=_('Is Required'))
+    data = models.JSONField(null=True, blank=True, verbose_name=_('Data'))
 
     # پیشنهاد: {"options":[...], "unit":"m2", "min":0, "max":1000, "widget":"range"}
 
     class Meta:
         db_table = 'category_fields'
-        verbose_name = _('فیلد دسته')
-        verbose_name_plural = _('فیلدهای دسته')
+        verbose_name = _('Category Field')
+        verbose_name_plural = _('Category Fields')
         indexes = [
             models.Index(fields=['category'])
         ]
@@ -257,14 +257,14 @@ class CategoryField(models.Model):
 
 
 class AdAttribute(models.Model):
-    category_field = models.ForeignKey(CategoryField, on_delete=models.CASCADE, verbose_name=_('فیلد دسته بندی'))
-    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='ad_attributes', verbose_name=_('آگهی'))
-    value = models.CharField(max_length=50, verbose_name=_('مقدار'))
+    category_field = models.ForeignKey(CategoryField, on_delete=models.CASCADE, verbose_name=_('Category Field'))
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='ad_attributes', verbose_name=_('Ad'))
+    value = models.CharField(max_length=50, verbose_name=_('Value'))
 
     class Meta:
         db_table = 'ad_attributes'
-        verbose_name = _('مقدار آگهی')
-        verbose_name_plural = _('مقدار آگهی')
+        verbose_name = _('Ad Attribute')
+        verbose_name_plural = _('Ad Attributes')
 
         indexes = [
             models.Index(fields=['ad', 'category_field']),
@@ -278,44 +278,44 @@ class AdAttribute(models.Model):
 class AdViews(models.Model):
     ip = models.CharField(max_length=20, verbose_name=_('IP'))
     user_agent = models.TextField(verbose_name=_('User Agent'))
-    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, verbose_name=_('آگهی'))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, verbose_name=_('Ad'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created At'))
 
     class Meta:
         db_table = 'ad_views'
-        verbose_name = 'بازدید آگهی'
-        verbose_name_plural = 'بازدید های آگهی'
+        verbose_name = 'Ad View'
+        verbose_name_plural = 'Ad Views'
 
     def __str__(self):
         return self.ad.title
 
 
 class AdReportReason(models.Model):
-    reason = models.CharField(max_length=50, verbose_name=_('دلیل گزارش'))
+    reason = models.CharField(max_length=50, verbose_name=_('Report Reason'))
 
     def __str__(self):
         return str(self.id)
 
     class Meta:
         db_table = 'ad_report_reasons'
-        verbose_name = _('دلیل گزارش')
-        verbose_name_plural = _('دلیل های گزارش')
+        verbose_name = _('Report Reason')
+        verbose_name_plural = _('Report Reasons')
 
 
 class AdReport(models.Model):
-    reason = models.ForeignKey(AdReportReason, on_delete=models.CASCADE, verbose_name=_('دلیل گزارش'))
-    reporter = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('گزارش دهنده'))
-    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, verbose_name=_('آگهی'))
-    description = models.TextField(null=True, blank=True, verbose_name=_('توضیحات'))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+    reason = models.ForeignKey(AdReportReason, on_delete=models.CASCADE, verbose_name=_('Report Reason'))
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Reported'))
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, verbose_name=_('Ad'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created At'))
 
     def __str__(self):
         return f'{self.reporter} - {self.ad}'
 
     class Meta:
         db_table = 'ad_reports'
-        verbose_name = 'گزارش'
-        verbose_name_plural = 'گزارش ها'
+        verbose_name = 'Report'
+        verbose_name_plural = 'Reports'
 
 # python manage.py loaddata ad/fixtures/ad.json
 # python manage.py loaddata ad/fixtures/category.json

@@ -81,7 +81,7 @@ class AdDetailSerializer(PersianTimeMixin, serializers.ModelSerializer):
     def get_contact(self, obj):
         return {
             "phone": obj.user.phone,
-            "message": "ارسال پیام"
+            "message": "Send Message"
         }
 
     def get_seller(self, obj):
@@ -92,7 +92,7 @@ class AdDetailSerializer(PersianTimeMixin, serializers.ModelSerializer):
         return {
             'id': obj.user.id,
             'name': obj.user.phone,
-            'join_date': self.persian_timesince(obj.user.created_at),
+            'join_date': obj.user.created_at,
             'avatar': obj.user.profile.image.url if obj.user.profile.image else None,
             'followers_count': user_followers,
             'followings_count': user_followings,
