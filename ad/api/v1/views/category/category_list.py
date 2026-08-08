@@ -17,7 +17,10 @@ class CategoryListAPIView(generics.GenericAPIView):
     permission_classes = [AllowAny]
     pagination_class = DefaultPagination
     serializer_class = AdListSerializer
-    queryset = Ad.objects.all()
+
+    def get_queryset(self):
+        return Ad.objects.filter(status=Ad.Status.PUBLISHED).select_related('category', 'province', 'city',
+                                                                            'neighborhood').order_by('-id')
 
     city_param = openapi.Parameter(
         name='city',
@@ -52,21 +55,20 @@ class CategoryListAPIView(generics.GenericAPIView):
     def get(self, request, city, category_slug):
         category = get_object_or_404(Category, slug=category_slug)
 
-        qs = Ad.objects.filter(
+        qs = self.get_queryset().filter(
             Q(category=category) | Q(category__parent=category) | Q(category__parent__parent=category) | Q(
                 category__parent__parent__parent=category)
-        ).select_related('category', 'province', 'city', 'neighborhood')
-        # cid = request.GET.getlist('city')
-        # cid = request.GET.get('cities').strip()
+        )
+
         cid = request.query_params.get('cities', None)
-        print(f'cities: {cid}')
+        # cid = request.GET.get('cities', None)
+        city = city.lower()
 
         if city == 'uae':
             if cid:
-                # qs = qs.filter(city_id__in=cid)
                 qs = qs.filter(city__slug__in=cid.split(','))
             else:
-                qs = qs
+                qs = qs.all()
         else:
             qs = qs.filter(city__slug=city)
 
@@ -76,18 +78,19 @@ class CategoryListAPIView(generics.GenericAPIView):
         #     qs = qs.filter(price__lte=order_by_price)
 
         # فیلتر داینامیک
-        for key, value in request.query_params.items():
-            if key != 'cities':
-                print(f'filters: key: {key}, value: {value}')
+        if request.query_params.items():
+            for key, value in request.query_params.items():
+                if key != 'page' and key != 'per_page' and key!='city':
+                    print(f'filters: key: {key}, value: {value}')
 
-                ad_ids = AdAttribute.objects.filter(
-                    category_field__key=key.strip(),
-                    value__iexact=value.strip()
-                ).values_list('ad_id', flat=True)
+                    ad_ids = AdAttribute.objects.filter(
+                        category_field__key=key.strip(),
+                        value__iexact=value.strip()
+                    ).values_list('ad_id', flat=True)
 
-                qs = qs.filter(id__in=ad_ids)
+                    qs = qs.filter(id__in=ad_ids)
 
         # اینجا پاجینیشن فعال میشه 👇
         page = self.paginate_queryset(qs)
         serializer = self.get_serializer(page, many=True)
-        return self.get_paginated_response(serializer.data)
+        return self.get_paginated_response(data=serializer.data)

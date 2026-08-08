@@ -7,7 +7,6 @@ SECRET_KEY = 'django-insecure-sz5!r3=1td9xeic8r%e__w_@q)e=*wxk*zfwe63sjis&(7pnbq
 
 DEBUG = False
 
-
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
@@ -203,6 +202,9 @@ if DEBUG:
     }
 else:
     REST_FRAMEWORK = {
+        "DEFAULT_RENDERER_CLASSES": (
+            "rest_framework.renderers.JSONRenderer",
+        ),
         "DEFAULT_FILTER_BACKENDS": [
             "django_filters.rest_framework.DjangoFilterBackend",
         ],
