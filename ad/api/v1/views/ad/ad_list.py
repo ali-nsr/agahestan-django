@@ -1,14 +1,14 @@
 from django.shortcuts import get_object_or_404
-from django.core.cache import cache
-from django.utils import timezone
 from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.permissions import AllowAny
 
 from ...serializers import AdListSerializer
 from utils.paginations import DefaultPagination
-from .....models import Ad, AdAttribute
+from .....models import Ad
 from location.models import City
-
+from utils.response_mixin import ResponseMixin
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
@@ -45,9 +45,10 @@ class AdListAPIView(generics.GenericAPIView):
                 '- /ad/api/v1/tehran/ads/\n'
                 '- /ad/api/v1/uae/ads/?cities=tehran,shiraz\n'
         ),
-        manual_parameters=[city_param],tags=['Ad']
+        manual_parameters=[city_param], tags=['Ad']
     )
     def get(self, request, city):
+        
         qs = self.get_queryset()
         cid = request.GET.get('cities')
 

@@ -6,19 +6,21 @@ from ad.models import Category
 
 class CategoryChoiceSerializer(serializers.ModelSerializer):
     children = serializers.ListField(child=serializers.DictField(), read_only=True)
-
-    # icon = serializers.SerializerMethodField()
+    icon = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
         fields = ['id', 'title', 'slug', 'icon', 'children', 'is_special', 'is_payable']
 
-    # def get_icon(self, obj):
-    #     request = self.context.get('request', None)
-    #     if obj.icon:
-    #         # در صورتی که شیء request در context وجود داشته باشد، آدرس کامل ساخته می‌شود
-    #         if request is not None:
-    #             return request
-    #         # در غیر این صورت، مسیر نسبی رسانه برگردانده می‌شود
-    #         return request
-    #     return None
+
+    # def to_representation(self, instance):
+    #     rep = super(CategoryChoiceSerializer, self).to_representation(instance)
+    #     rep['image'] = instance.icon.url if instance.icon else None
+    #     return rep
+    def get_icon(self, obj):
+        # چون ورودی سریالایزر دیکشنری است، obj یک دیکشنری خواهد بود
+        request = self.context.get('request', None)
+        icon_url = obj.get('icon')
+        if request:
+            return request.build_absolute_uri(icon_url)
+        return icon_url

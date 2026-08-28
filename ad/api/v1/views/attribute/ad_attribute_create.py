@@ -52,17 +52,27 @@ class AdAttributeUpdateView(views.APIView):
 
         if ad.user != request.user:
             raise PermissionDenied('شما مالک این آگهی نیستید')
+        if request.data:
+            serializer = AdAttributeUpdateSerializer(
+                instance=ad,
+                data=request.data
+            )
+            serializer.is_valid(raise_exception=True)
+            ad = serializer.save()
 
-        serializer = AdAttributeUpdateSerializer(
-            instance=ad,
-            data=request.data
-        )
-        serializer.is_valid(raise_exception=True)
-        ad = serializer.save()
-
-        return Response(data={
-            'status': True,
-            'message': 'اتریبیوت ها آپدیت شد',
-            'ad_id': ad.id,
-            'ad_uuid': ad.uuid
-        })
+            return Response(data={
+                'status': True,
+                'message': 'اتریبیوت ها آپدیت شد',
+                'ad_id': ad.id,
+                'ad_uuid': ad.uuid
+            })
+        else:
+            ad.ad_attributes.all().delete()
+            ad.save()
+            return Response(data={
+                'status': True,
+                'message': 'اتریبیوت ها آپدیت شد',
+                'ad_id': ad.id,
+                'ad_uuid': ad.uuid
+            })
+        

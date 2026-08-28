@@ -34,14 +34,34 @@ class AdRetrieveAPIView(generics.GenericAPIView):
     )
     def get(self, request, uuid):
         # ۱. دریافت آگهی با استفاده از queryset بهینه شده (در صورت نبودن خطای 404 استاندارد بازمی‌گردد)
-        ad = get_object_or_404(self.get_queryset(), uuid=uuid)
+        try:
+            ad = self.get_queryset().get(uuid=uuid)
 
-        # ۲. ثبت بازدید آگهی به صورت بهینه
-        self._record_view(request, ad)
+            # ۲. ثبت بازدید آگهی به صورت بهینه
+            self._record_view(request, ad)
 
-        # ۳. سریالایز کردن داده‌ها
-        serializer = self.get_serializer(ad, context={'request': request, 'user': request.user})
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            # ۳. سریالایز کردن داده‌ها
+            serializer = self.get_serializer(ad, context={'request': request, 'user': request.user})
+            return Response(
+                {
+                    'success': True,
+                    'message': None,
+                    'data': serializer.data,
+                    'ad_id': ad.id,
+                    'ad_uuid': ad.uuid,
+                    'status': status.HTTP_200_OK
+                },
+                status=status.HTTP_200_OK
+            )
+        except Ad.DoesNotExist:
+            return Response(
+                {
+                    'success': False,
+                    'message': 'Ad not fount',
+                    'status': status.HTTP_404_NOT_FOUND
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
 
     def _record_view(self, request, ad):
         """
@@ -54,14 +74,14 @@ class AdRetrieveAPIView(generics.GenericAPIView):
         else:
             ip = request.META.get('REMOTE_ADDR')
 
-        user_agent = request.headers.get('User-Agent', '')[:255] # محدود کردن طول برای دیتابیس
+        user_agent = request.headers.get('User-Agent', '')[:255]  # محدود کردن طول برای دیتابیس
 
         # استفاده از get_or_create برای جلوگیری از مسابقه (Race Condition) و بهینه‌سازی
         created = AdViews.objects.get_or_create(
             ip=ip,
             user_agent=user_agent,
             ad_id=ad.id
-        )[1] # اندیس ۱ مقدار Boolean ایجاد شدن را برمی‌گرداند
+        )[1]  # اندیس ۱ مقدار Boolean ایجاد شدن را برمی‌گرداند
 
         if created:
             # استفاده از F() برای افزایش امن و همزمان تعداد بازدید بدون نیاز به ذخیره کامل مدل

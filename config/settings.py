@@ -10,10 +10,10 @@ DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['nutrikala.com', 'api.nutrikala.com', 'www.nutrikala.com', 'localhost:3000',
-                     'http://localhost:3000', '127.1.1.1:3000', 'http://127.1.1.1:3000']
-    CSRF_TRUSTED_ORIGINS = ['https://nutrikala.com', 'https://api.nutrikala.com', 'localhost:3000',
-                            'http://localhost:3000', '127.1.1.1:3000', 'http://127.1.1.1:3000']
+    ALLOWED_HOSTS = ['nutrikala.com', 'api.nutrikala.com', 'www.nutrikala.com',
+                     'http://localhost:3000', 'http://127.1.1.1:3000']
+    CSRF_TRUSTED_ORIGINS = ['https://nutrikala.com', 'https://api.nutrikala.com',
+                            'http://localhost:3000', 'http://127.1.1.1:3000']
 
 INSTALLED_APPS = [
     # 'daphne',  # async server
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'location',
     'social',
     'chat',
+    'utils',
     # packages
     'rest_framework',
     'django_celery_beat',
@@ -91,7 +92,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgresdix_db',
+            'NAME': 'agahestan_db',
             'USER': 'postgres',
             'PASSWORD': 'skF2pEyUMl5qAUj4Mnob',
             'HOST': 'postgres-kjr-service',
@@ -190,6 +191,7 @@ else:
 # rest framework settings
 if DEBUG:
     REST_FRAMEWORK = {
+        # 'EXCEPTION_HANDLER': 'utils.exceptions.custom_exception_handler',
         "DEFAULT_FILTER_BACKENDS": [
             "django_filters.rest_framework.DjangoFilterBackend",
         ],
@@ -202,6 +204,7 @@ if DEBUG:
     }
 else:
     REST_FRAMEWORK = {
+        # 'EXCEPTION_HANDLER': 'utils.exceptions.custom_exception_handler',
         "DEFAULT_RENDERER_CLASSES": (
             "rest_framework.renderers.JSONRenderer",
         ),
@@ -313,9 +316,7 @@ if DEBUG == False:
     CORS_ALLOWED_ORIGINS = [
         'https://nutrikala.com',
         'https://api.nutrikala.com',
-        'localhost:3000',
         'http://localhost:3000',
-        '127.1.1.1:3000',
         'http://127.1.1.1:3000'
     ]
 
@@ -346,9 +347,7 @@ if DEBUG == False:
     CSRF_TRUSTED_ORIGINS = [
         'https://nutrikala.com',
         'https://api.nutrikala.com',
-        'localhost:3000',
         'http://localhost:3000',
-        '127.1.1.1:3000',
         'http://127.1.1.1:3000'
     ]
 

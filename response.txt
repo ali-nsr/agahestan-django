@@ -1,0 +1,29 @@
+ok response
+    {
+      'success': True,
+      'message': message,
+      'data': data,
+      'status_code': status_code
+    }
+
+error response
+    {
+        'success': False,
+        'message': message,
+        'data': data or {},
+        'status_code': status_code
+    }
+
+pagination response
+    {
+        'success': True,
+        'message': message,
+        'data': {
+            'results': data,
+            'count': count,
+            'next': next_link,
+            'previous': previous_link,
+            'total_pages': total_pages
+        },
+        'status_code': HTTP_200_OK
+    }

@@ -1,0 +1,9 @@
+{
+    "success": false,
+    "message": "price: Price must be greater than zero",
+    "errors": {
+        "price": ["Price must be greater than zero"],
+        "title": ["Title must be at least 3 characters long"]
+    },
+    "status_code": 400
+}

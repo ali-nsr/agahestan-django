@@ -5,11 +5,11 @@ from ad.models import Ad, AdAttribute, CategoryField
 
 
 class AdAttributeSerializer(serializers.Serializer):
-    category_field_id = serializers.IntegerField()
-    value = serializers.JSONField()
+    category_field_id = serializers.IntegerField(allow_null=True)
+    value = serializers.JSONField(allow_null=True)
 
 class AdAttributeUpdateSerializer(serializers.Serializer):
-    attributes = AdAttributeSerializer(many=True)
+    attributes = AdAttributeSerializer(many=True, allow_null=True)
 
     def validate(self, attrs):
         for attr in attrs['attributes']:

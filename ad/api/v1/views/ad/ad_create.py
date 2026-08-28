@@ -1,4 +1,4 @@
-from rest_framework import views
+from rest_framework import views, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated,AllowAny
 
@@ -62,7 +62,7 @@ class AdCreateView(views.APIView):
         return Response(
             {
                 'success': True,
-                'message': 'آگهی ساخته شد',
+                'message': 'Ad created successfully',
                 'ad_id': ad.id,
                 'ad_uuid':ad.uuid
             },

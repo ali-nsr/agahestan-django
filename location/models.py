@@ -17,8 +17,6 @@ class Province(models.Model):
         indexes = [models.Index(fields=['slug'])]  # unique خودش ایندکس می‌سازد؛ این صرفاً صریح‌ترش می‌کند
 
 
-
-
 class City(models.Model):
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='cities', verbose_name=_('Province'))
     name = models.CharField(max_length=50, verbose_name=_('Name'))
@@ -56,9 +54,4 @@ class Neighborhood(models.Model):
             models.UniqueConstraint(fields=['city', 'name'], name='uniq_neighborhood_name_per_city')
         ]
 
-
-"""
-python manage.py loaddata location.json
-python manage.py loaddata ad/fixtures/ad.json
-python manage.py loaddata ad/fixtures/category.json && python manage.py loaddata ad/fixtures/category_field.json && python manage.py loaddata location/fixtures/provinces.json && python manage.py loaddata location/fixtures/cities.json && python manage.py loaddata location/fixtures/neighborhoods.json
-"""
+# python manage.py loaddata location.json && python manage.py loaddata category.json && python manage.py loaddata category_field.json && python manage.py loaddata ad.json && python manage.py loaddata ad_attribute.json

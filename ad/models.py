@@ -166,7 +166,7 @@ class CategoryManager(models.Manager):
         # فقط یک کوئری
         rows = list(
             self.all()
-            .values('id', 'title', 'slug', 'parent_id')
+            .values('id', 'title', 'slug', 'parent_id', 'icon')
             .order_by('id')
         )
 

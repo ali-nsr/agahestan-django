@@ -11,6 +11,17 @@ from accounts.models import Bookmark
 from ad.models import Ad
 
 
+def response(success=True, message=None, status_code=200):
+    return Response(
+        {
+            'success': success,
+            'message': message,
+            'status': status_code
+        },
+        status=status_code
+    )
+
+
 class BookmarkApiView(views.APIView):
     permission_classes = [IsAuthenticated]
 

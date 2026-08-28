@@ -3,6 +3,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 from PIL import Image
 import io
+import os
 
 from ad.models import Gallery, Ad
 
@@ -18,20 +19,23 @@ def update_ad_thumbnail_async(gallery_id):
         # تصویر را با PIL باز کن
         img = Image.open(image_file)
 
-        # تبدیل به RGB برای جلوگیری از خطا روی PNG با آلفا
-        if img.mode != 'RGB':
+        # تبدیل فرمت رنگی (WebP از شفافیت پشتیبانی می‌کند، اما اگر اصرار به حذف کانال آلفا دارید RGB کنید)
+        if img.mode not in ('RGB', 'RGBA'):
             img = img.convert('RGB')
 
         # ری‌سایز 300x300
         img = img.resize((300, 300), Image.Resampling.LANCZOS)
 
-        # ذخیره داخل buffer
+        # ذخیره داخل buffer به صورت WebP واقعی
         buffer = io.BytesIO()
-        img.save(buffer, format='JPEG', quality=85)
+        # کیفیت ۸۵ برای WebP بسیار عالی و سبک است
+        img.save(buffer, format='WEBP', quality=85, method=6)
         buffer.seek(0)
 
-        # ساخت نام جدید
-        thumbnail_name = f"thumb_{image_file.name.split('/')[-1]}"
+        # استخراج نام فایل بدون پسوند قدیمی و اضافه کردن .webp
+        original_filename = os.path.basename(image_file.name)
+        name_without_ext, _ = os.path.splitext(original_filename)
+        thumbnail_name = f"thumb_{name_without_ext}.webp"
 
         # ذخیره داخل فیلد thumbnail
         ad.thumbnail.save(thumbnail_name, ContentFile(buffer.read()), save=True)
