@@ -1,0 +1,170 @@
+[
+  {
+    "model": "ad.category",
+    "pk": 500,
+    "fields": {
+      "parent": null,
+      "title": "وسایل نقلیه",
+      "slug": "vehicles",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 501,
+    "fields": {
+      "parent": 500,
+      "title": "خودرو",
+      "slug": "vehicles-cars",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 502,
+    "fields": {
+      "parent": 500,
+      "title": "موتورسیکلت",
+      "slug": "vehicles-motorcycles",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 503,
+    "fields": {
+      "parent": 500,
+      "title": "ماشین سنگین",
+      "slug": "vehicles-heavy-machinery",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 504,
+    "fields": {
+      "parent": 500,
+      "title": "ماشین اجاره‌ای",
+      "slug": "vehicles-rental",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 505,
+    "fields": {
+      "parent": 500,
+      "title": "لوازم جانبی خودرو",
+      "slug": "vehicles-spare-parts",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 506,
+    "fields": {
+      "parent": 500,
+      "title": "قایق و سایر وسایل نقلیه",
+      "slug": "vehicles-boats-others",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 507,
+    "fields": {
+      "parent": 501,
+      "title": "خودرو سواری",
+      "slug": "vehicles-cars-sedan",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 508,
+    "fields": {
+      "parent": 501,
+      "title": "وانت",
+      "slug": "vehicles-cars-pickup",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 509,
+    "fields": {
+      "parent": 501,
+      "title": "خودرو کلاسیک",
+      "slug": "vehicles-cars-classic",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 510,
+    "fields": {
+      "parent": 503,
+      "title": "کامیون و کشنده",
+      "slug": "vehicles-heavy-trucks",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 511,
+    "fields": {
+      "parent": 503,
+      "title": "ماشین‌آلات کشاورزی و عمرانی",
+      "slug": "vehicles-heavy-agricultural",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 512,
+    "fields": {
+      "parent": 505,
+      "title": "قطعات یدکی",
+      "slug": "vehicles-spare-parts-components",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 513,
+    "fields": {
+      "parent": 505,
+      "title": "لوازم جانبی و تزئینات",
+      "slug": "vehicles-spare-parts-accessories",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  }
+]

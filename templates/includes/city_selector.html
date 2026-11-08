@@ -1,0 +1,460 @@
+{% load static %}
+
+<li class="add-listing">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#citySelectModal" class="cp-trigger">
+        <i class="fas fa-location-dot"></i>
+        <span>انتخاب شهر</span>
+        {% if selected_cities %}
+            <span class="cp-trigger-badge">{{ selected_cities|length }}</span>
+        {% endif %}
+    </a>
+</li>
+
+<div class="modal fade" id="citySelectModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content cp-modal">
+            <form method="get" action="{% url 'ad:city-select' %}">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
+                <!-- ═══ Header ═══ -->
+                <div class="modal-header cp-header">
+                    <div class="cp-header-main">
+                        <div class="cp-header-icon">
+                            <i class="fas fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <h5 class="cp-title">انتخاب شهر</h5>
+                            <p class="cp-subtitle">
+                                {% if selected_cities %}
+                                    {{ selected_cities|length }} شهر انتخاب شده
+                                {% else %}
+                                    می‌توانید چند شهر از استان‌های مختلف انتخاب کنید
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" class="cp-close" data-bs-dismiss="modal" aria-label="بستن">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- ═══ Body ═══ -->
+                <div class="modal-body cp-body">
+                    <select name="cities" id="cityMultiSelect" multiple style="width:100%">
+                        {% regroup cities by province.name as city_groups %}
+                        {% for group in city_groups %}
+                            <optgroup label="{{ group.grouper }} ({{ group.list|length }})">
+                                {% for city in group.list %}
+                                    <option value="{{ city.slug }}"
+                                            {% if city.slug in selected_cities %}selected{% endif %}>
+                                        {{ city.name }}
+                                    </option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- ═══ Footer ═══ -->
+                <div class="modal-footer cp-footer">
+                    <a href="{{ request.path }}" class="cp-btn cp-btn-ghost">
+                        <i class="fas fa-rotate-left"></i>
+                        پاک کردن
+                    </a>
+                    <button type="submit" class="cp-btn cp-btn-primary">
+                        <i class="fas fa-check"></i>
+                        تأیید
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+/* ═══════════════════════════════════════════
+   City Picker — Refined
+   ═══════════════════════════════════════════ */
+
+/* ── Trigger ── */
+.cp-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    transition: background .15s;
+    position: relative;
+}
+.cp-trigger:hover { background: rgba(79,70,229,.06); }
+.cp-trigger i { color: #4f46e5; font-size: 13px; }
+.cp-trigger-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: #fff;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(79,70,229,.35);
+}
+
+/* ═══ Modal ═══ */
+.cp-modal {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, .22), 0 0 0 1px rgba(15,23,42,.04);
+    background: #fff;
+}
+
+/* ── Header ── */
+.cp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    background: linear-gradient(135deg, #fafbfc 0%, #fff 100%);
+}
+.cp-header-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.cp-header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    color: #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(79,70,229,.15);
+}
+.cp-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 3px;
+    line-height: 1.3;
+}
+.cp-subtitle {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.4;
+}
+.cp-close {
+    background: #f1f5f9;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background .15s, color .15s, transform .15s;
+}
+.cp-close:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    transform: rotate(90deg);
+}
+
+/* ── Body ── */
+.cp-body {
+    padding: 22px 24px;
+    background: #fff;
+}
+
+/* ── Footer ── */
+.cp-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 24px;
+    border-top: 1px solid #f1f5f9;
+    background: #fafbfc;
+}
+.cp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .18s;
+    text-decoration: none;
+    border: none;
+    line-height: 1;
+}
+.cp-btn-ghost {
+    background: #fff;
+    color: #64748b;
+    border: 1.5px solid #e2e8f0;
+}
+.cp-btn-ghost:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #334155;
+}
+.cp-btn-primary {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(79,70,229,.3);
+}
+.cp-btn-primary:hover {
+    background: linear-gradient(135deg, #4338ca, #4f46e5);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(79,70,229,.4);
+    transform: translateY(-1px);
+}
+.cp-btn-primary:active { transform: translateY(0); }
+
+/* ═══════════════════════════════════════════
+   Select2 Theme
+   ═══════════════════════════════════════════ */
+.cp-modal .select2-container { width: 100% !important; }
+
+/* Container (چیپ‌ها + سرچ) */
+.cp-modal .select2-container--default .select2-selection--multiple {
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    min-height: 52px;
+    padding: 6px 10px !important;
+    background: #fff;
+    transition: border-color .15s, box-shadow .15s;
+}
+.cp-modal .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #4f46e5 !important;
+    box-shadow: 0 0 0 4px rgba(79,70,229,.12) !important;
+}
+.cp-modal .select2-container--default.select2-container--open .select2-selection--multiple {
+    border-color: #4f46e5 !important;
+}
+
+/* Chip (شهر انتخاب‌شده) */
+.cp-modal .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background: #eef2ff !important;
+    border: 1px solid #c7d2fe !important;
+    color: #4338ca !important;
+    padding: 5px 10px 5px 6px !important;
+    border-radius: 20px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin: 4px 4px 4px 0 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 1px 2px rgba(79,70,229,.08);
+}
+.cp-modal .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #6366f1 !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    margin: 0 0 0 4px !important;
+    padding: 0 !important;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: none !important;
+    background: transparent !important;
+    order: 2;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.cp-modal .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    color: #fff !important;
+    background: #ef4444 !important;
+}
+
+/* Placeholder سرچ داخلی */
+.cp-modal .select2-container--default .select2-selection--multiple .select2-search__field {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 4px !important;
+    margin: 4px 0 !important;
+    color: #334155;
+}
+.cp-modal .select2-container--default .select2-selection--multiple .select2-search__field::placeholder {
+    color: #94a3b8;
+}
+
+/* Dropdown */
+.cp-modal .select2-container--default .select2-dropdown {
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, .15) !important;
+    overflow: hidden;
+    margin-top: 6px;
+}
+
+/* Search box داخل dropdown */
+.cp-modal .select2-container--default .select2-search--dropdown {
+    padding: 10px;
+    background: #fff;
+    border-bottom: 1px solid #f1f5f9;
+}
+.cp-modal .select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 9px 12px !important;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    background: #f8fafc;
+}
+.cp-modal .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+    border-color: #4f46e5 !important;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(79,70,229,.1);
+}
+
+/* ── Group header (استان) ── */
+.cp-modal .select2-container--default .select2-results__group {
+    padding: 12px 14px 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #4f46e5;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    border-top: 1px solid #f1f5f9;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+.cp-modal .select2-container--default .select2-results__group::before {
+    content: '\f279';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 10px;
+    color: #a5b4fc;
+}
+.cp-modal .select2-container--default .select2-results__options > .select2-results__group:first-child {
+    border-top: none;
+}
+
+/* ── Options ── */
+.cp-modal .select2-container--default .select2-results__option {
+    padding: 9px 14px 9px 20px;
+    font-size: 13px;
+    color: #334155;
+    transition: background .1s;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.cp-modal .select2-container--default .select2-results__option::before {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    transition: background .1s;
+}
+
+/* Hover */
+.cp-modal .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: #eef2ff !important;
+    color: #4f46e5 !important;
+    font-weight: 600;
+}
+.cp-modal .select2-container--default .select2-results__option--highlighted[aria-selected]::before {
+    background: #4f46e5;
+}
+
+/* Selected in dropdown */
+.cp-modal .select2-container--default .select2-results__option[aria-selected="true"] {
+    background: #f0fdf4 !important;
+    color: #059669 !important;
+    font-weight: 700;
+}
+.cp-modal .select2-container--default .select2-results__option[aria-selected="true"]::before {
+    background: #10b981;
+}
+.cp-modal .select2-container--default .select2-results__option[aria-selected="true"]::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 14px;
+    font-size: 11px;
+    color: #10b981;
+}
+
+/* ── Scrollbar ── */
+.cp-modal .select2-results__options::-webkit-scrollbar { width: 6px; }
+.cp-modal .select2-results__options::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 3px;
+}
+.cp-modal .select2-results__options::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 576px) {
+    .cp-header { padding: 16px 18px; }
+    .cp-body { padding: 16px 18px; }
+    .cp-footer { padding: 14px 18px; }
+    .cp-modal { border-radius: 16px; }
+    .cp-header-icon { width: 38px; height: 38px; font-size: 15px; }
+    .cp-btn { padding: 10px 18px; font-size: 12px; }
+}
+</style>
+
+<script>
+$(function () {
+    var $select = $('#cityMultiSelect');
+    if (!$select.length) return;
+
+    if ($.fn.select2) {
+        $select.select2({
+            placeholder: 'شهرها را جستجو یا انتخاب کنید',
+            allowClear: true,
+            dir: 'rtl',
+            width: '100%',
+            dropdownParent: $('#citySelectModal'),
+            closeOnSelect: false,
+            language: {
+                noResults: function () { return 'شهری یافت نشد'; },
+                searching: function () { return 'در حال جستجو...'; },
+                inputTooShort: function () { return 'نام شهر را بنویسید'; }
+            }
+        });
+
+        // وقتی مودال باز شد، Select2 رو refresh کن (برای رندر بهتر)
+        $('#citySelectModal').on('shown.bs.modal', function () {
+            $select.select2('close');
+        });
+    }
+});
+</script>

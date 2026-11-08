@@ -1,23 +1,168 @@
-<div>
-    {{ request.user }} CHAT LIST
-    <hr>
-    <ol>
-        {% for chat in chats %}
-        <li>
-            {{ chat.uuid }} / {{ chat.sender }} -> {{ chat.ad.user }}
-        </li>
+{% extends 'accounts/dashboard/base.html' %}
 
-        <a href="{% url 'chat:chat-detail' chat.uuid %}">SEE</a>
 
-        <hr>
-        {% endfor %}
-    </ol>
-</div>
+{% block dashboard %}
+    <div class="goodup-dashboard-content">
+        <div class="dashboard-tlbar d-block mb-5">
+            <div class="row">
+                <div class="colxl-12 col-lg-12 col-md-12">
+                    <h1 class="ft-medium fs-lg">پیام ها</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item text-muted"><a href="#">خانه</a></li>
+                            <li class="breadcrumb-item text-muted"><a href="#">داشبورد</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="theme-cl">پیام ها</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-widg-bar d-block">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="_dashboard_content bg-white rounded mb-4">
+
+                        <div class="_dashboard_content_body">
+                            <!-- Convershion -->
+                            <div class="messages-container margin-top-0">
+                                <div class="messages-headline">
+                                    <h4 class="">شادی عظیمی</h4>
+                                    <a href="#" class="message-action"><i class="ti-trash"></i> حذف پیام ها</a>
+                                </div>
+
+                                <div class="messages-container-inner">
+
+                                    <!-- Messages -->
+                                    <div class="dash-msg-inbox">
+                                        <ul>
+                                            {% for chat in chats %}
+                                                {#                                                <li class="active-message">#}
+                                                <li>
+                                                    <a href="{% url 'chat:chat-detail' chat.uuid %}">
+                                                        {#                                                        <div class="dash-msg-avatar">#}
+                                                        {#                                                            <img src="assets/img/t-2.png" alt="">#}
+                                                        {#                                                            <span class="_user_status offline"></span>#}
+                                                        {#                                                        </div>#}
+
+                                                        <div class="message-by">
+                                                            <div class="message-by-headline">
+                                                                <h5>
+                                                                    {{ chat.sender.phone }}
+                                                                </h5>
+                                                                <span>
+                                                                    {{ chat.created_at|timesince }}
+                                                                </span>
+                                                            </div>
+                                                            <p>
+                                                                {{ chat.messages.last.text|truncatechars:10 }}
+                                                            </p>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+                                    <!-- Messages / End -->
+
+                                    <!-- Message Content -->
+                                    <div class="dash-msg-content">
+
+                                        <div class="message-plunch">
+                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
+                                            <div class="dash-msg-text"><p>سلام، برخلاف تصور عمومی، لورم ایپسوم یک متن
+                                                تصادفی نیست. ریشه در یک قطعه لاتین کلاسیک دارد</p></div>
+                                        </div>
+
+                                        <div class="message-plunch me">
+                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>
+                                            <div class="dash-msg-text"><p>طراحان رایانه ای علی الخصوص طراحان خلاقی و
+                                                فرهنگ پیشرو در زبان فارسی ایجاد کرد</p></div>
+                                        </div>
+
+                                        <div class="message-plunch">
+                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
+                                            <div class="dash-msg-text"><p>اگر می خواهید از گذرگاه لورم ایپسوم استفاده
+                                                کنید، باید مطمئن شوید که هیچ چیز شرم آور وجود ندارد.</p></div>
+                                        </div>
+
+                                        <div class="message-plunch me">
+                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>
+                                            <div class="dash-msg-text"><p>لطفاً برای کمک به پرداخت هزینه هاستینگ و
+                                                صورتحساب پهنای باند، مبلغ کمی را اهدا کنید</p></div>
+                                        </div>
+
+                                        <div class="message-plunch">
+                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
+                                            <div class="dash-msg-text"><p>برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای
+                                                متنوع با هدف بهبود ابزارهای کاربردی می باشد</p></div>
+                                        </div>
+
+                                        <div class="message-plunch me">
+                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>
+                                            <div class="dash-msg-text"><p>برای طراحان رایانه ای علی الخصوص طراحان خلاقی
+                                                و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="message-plunch">
+                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
+                                            <div class="dash-msg-text"><p>جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
+                                                اساسا مورد استفاده قرار گیرد</p></div>
+                                        </div>
+
+                                        <!-- Reply Area -->
+                                        <div class="clearfix"></div>
+                                        <div class="message-reply">
+                                            <textarea cols="40" rows="3" class="form-control with-light"
+                                                      placeholder="متن پیام..."></textarea>
+                                            <button type="submit" class="btn theme-bg text-white">ارسال پیام</button>
+                                        </div>
+
+                                    </div>
+                                    <!-- Message Content -->
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- footer -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="py-3">© 2022 Goodup ارائه شده در سایت <a href="https://rtl-theme.com/">راست چین</a></div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{#<div>#}
+{#    {{ request.user }} CHAT LIST#}
+{#    <hr>#}
+{#    <ol>#}
+{#        {% for chat in chats %}#}
+{#            <li>#}
+{#                {{ chat.uuid }} / {{ chat.sender }} -> {{ chat.ad.user }}#}
+{#            </li>#}
+{##}
+{#            <a href="{% url 'chat:chat-detail' chat.uuid %}">SEE</a>#}
+{##}
+{#            <hr>#}
+{#        {% endfor %}#}
+{#    </ol>#}
+{#</div>#}
 
 
 <script>
     const inboxSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/inbox/'
+        'ws://' + window.location.host + '/ws/inbox/'
     );
 
     inboxSocket.onmessage = function (e) {

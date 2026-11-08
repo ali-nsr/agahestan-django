@@ -1,0 +1,936 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load ad_tags %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #4f46e5;
+        --primary-dark: #4338ca;
+        --success: #10b981;
+        --danger: #ef4444;
+        --border: #e5e7eb;
+        --bg: #f9fafb;
+        --text: #111827;
+        --text-muted: #6b7280;
+        --radius: 16px;
+    }
+
+    body { background: var(--bg); }
+
+    .ad-detail-wrap {
+        padding: 24px 0 80px;
+    }
+
+    /* ═══ Breadcrumb ═══ */
+    .breadcrumb-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+    }
+    .breadcrumb-nav a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color .2s;
+    }
+    .breadcrumb-nav a:hover { color: var(--primary); }
+    .breadcrumb-nav i { font-size: 10px; opacity: .5; }
+
+    /* ═══ Header ═══ */
+    .ad-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    .ad-title {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--text);
+        margin: 0 0 10px;
+        line-height: 1.4;
+    }
+    .ad-meta {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+        color: var(--text-muted);
+        font-size: 13px;
+    }
+    .ad-meta span { display: inline-flex; align-items: center; gap: 5px; }
+    .ad-cat-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+        color: var(--primary);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    /* ═══ Gallery Grid ═══ */
+    .ad-gallery-wrap {
+        position: relative;
+        margin-bottom: 24px;
+    }
+
+    .gallery-grid {
+        display: grid;
+        gap: 6px;
+        border-radius: var(--radius);
+        overflow: hidden;
+        height: 460px;
+    }
+    .gallery-grid.grid-single {
+        grid-template-columns: 1fr;
+    }
+    .gallery-grid.grid-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+    .gallery-grid.grid-3 {
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .gallery-grid.grid-3 .gallery-cell:first-child {
+        grid-row: 1 / 3;
+    }
+    .gallery-grid.grid-4 {
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .gallery-grid.grid-4 .gallery-cell:first-child {
+        grid-row: 1 / 3;
+    }
+    .gallery-grid.grid-hero {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .gallery-grid.grid-hero .hero-main {
+        grid-row: 1 / 3;
+    }
+
+    .gallery-cell {
+        position: relative;
+        overflow: hidden;
+        background: #f3f4f6;
+        cursor: pointer;
+        transition: opacity .2s;
+    }
+    .gallery-cell img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .4s ease;
+        display: block;
+    }
+    .gallery-cell:hover img {
+        transform: scale(1.04);
+    }
+    .gallery-cell:hover {
+        opacity: .92;
+    }
+
+    .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, .55);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        transition: background .2s;
+    }
+    .gallery-overlay i { font-size: 22px; }
+    .gallery-cell:hover .gallery-overlay { background: rgba(0, 0, 0, .7); }
+
+    .gallery-empty {
+        background: #fff;
+        border-radius: var(--radius);
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #9ca3af;
+        gap: 12px;
+        border: 2px dashed var(--border);
+    }
+    .gallery-empty i { font-size: 48px; }
+    .gallery-empty p { margin: 0; font-size: 14px; }
+
+    .gallery-show-all {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        background: rgba(255, 255, 255, .95);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 9px 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all .2s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+        z-index: 5;
+    }
+    .gallery-show-all:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        transform: translateY(-1px);
+    }
+
+    /* ═══ Layout Grid ═══ */
+    .ad-content-grid {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 24px;
+        align-items: start;
+    }
+
+    /* ═══ Card base ═══ */
+    .content-card {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .04);
+    }
+    .content-card-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0 0 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .content-card-title i {
+        color: var(--primary);
+        font-size: 15px;
+    }
+
+    /* ═══ Description ═══ */
+    .ad-description {
+        font-size: 14px;
+        line-height: 2;
+        color: #374151;
+        white-space: pre-line;
+    }
+
+    /* ═══ Attributes ═══ */
+    .attrs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+    }
+    .attr-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px 14px;
+        background: #f9fafb;
+        border: 1px solid #eef1f6;
+        border-radius: 10px;
+    }
+    .attr-item-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: #eef2ff;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+    .attr-item-body {
+        flex: 1;
+        min-width: 0;
+    }
+    .attr-item-label {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 2px;
+        font-weight: 500;
+    }
+    .attr-item-value {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+        word-break: break-word;
+    }
+    .attr-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .attr-chip {
+        background: #eef2ff;
+        color: var(--primary);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 20px;
+    }
+
+    /* ═══ Price Card (Sticky) ═══ */
+    .sidebar { position: sticky; top: 100px; }
+
+    .price-card {
+        background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%);
+        border-radius: var(--radius);
+        padding: 24px;
+        color: #fff;
+        margin-bottom: 16px;
+        box-shadow: 0 8px 24px rgba(79, 70, 229, .25);
+    }
+    .price-card-label {
+        font-size: 12px;
+        opacity: .85;
+        margin-bottom: 6px;
+        display: block;
+    }
+    .price-card-value {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 4px;
+    }
+    .price-card-value small {
+        font-size: 14px;
+        font-weight: 500;
+        opacity: .85;
+        margin-right: 4px;
+    }
+    .price-card-sub {
+        font-size: 13px;
+        opacity: .85;
+        margin-top: 8px;
+    }
+    .price-negotiable {
+        display: inline-block;
+        background: rgba(255, 255, 255, .2);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 6px;
+    }
+
+    /* ═══ Contact Card ═══ */
+    .contact-card {
+        background: #fff;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        padding: 20px;
+        margin-bottom: 16px;
+    }
+    .seller-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 16px;
+    }
+    .seller-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+    .seller-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0 0 3px;
+    }
+    .seller-role {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .btn-contact {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 13px;
+        border-radius: 12px;
+        border: none;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all .2s;
+        text-decoration: none;
+    }
+    .btn-call {
+        background: var(--success);
+        color: #fff;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 14px rgba(16, 185, 129, .25);
+    }
+    .btn-call:hover { background: #059669; color: #fff; transform: translateY(-1px); }
+
+    .btn-chat {
+        background: #fff;
+        color: var(--primary);
+        border: 1.5px solid var(--primary);
+    }
+    .btn-chat:hover { background: #eef2ff; color: var(--primary); }
+
+    .seller-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+    }
+    .btn-action-icon {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--text-muted);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .2s;
+    }
+    .btn-action-icon:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    /* ═══ Safety Notice ═══ */
+    .safety-notice {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: var(--radius);
+        padding: 16px;
+        font-size: 12px;
+        line-height: 1.8;
+        color: #78350f;
+    }
+    .safety-notice-title {
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .safety-notice ul {
+        margin: 0;
+        padding-right: 18px;
+    }
+
+    /* ═══ Location Card ═══ */
+    .location-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px;
+        background: #f9fafb;
+        border-radius: 10px;
+    }
+    .location-row i {
+        color: var(--primary);
+        font-size: 18px;
+        margin-top: 2px;
+    }
+    .location-row-text {
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.7;
+    }
+    .location-row-text strong {
+        color: var(--text);
+        font-weight: 700;
+    }
+
+    /* ═══════════════════════════════════════════
+       LIGHTBOX
+       ═══════════════════════════════════════════ */
+    .glb {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity .25s;
+    }
+    .glb.open {
+        display: flex;
+        opacity: 1;
+    }
+    .glb-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, .95);
+    }
+
+    .glb-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, .1);
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        z-index: 10;
+        transition: background .2s;
+    }
+    .glb-close:hover { background: rgba(255, 255, 255, .25); }
+
+    .glb-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, .12);
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 10;
+        transition: background .2s;
+    }
+    .glb-nav:hover { background: rgba(255, 255, 255, .3); }
+    .glb-prev { right: 20px; }
+    .glb-next { left: 20px; }
+    .glb-nav:disabled { opacity: .3; cursor: not-allowed; }
+
+    .glb-stage {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 100px;
+        max-width: 100%;
+        width: 100%;
+        z-index: 5;
+    }
+    .glb-image {
+        max-width: 100%;
+        max-height: calc(100vh - 200px);
+        object-fit: contain;
+        border-radius: 8px;
+        animation: glbFade .25s ease;
+    }
+    @keyframes glbFade {
+        from { opacity: 0; transform: scale(.98); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .glb-counter {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, .15);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 20px;
+        z-index: 10;
+    }
+
+    .glb-thumbs {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 12px 20px 20px;
+        max-width: 100%;
+        scrollbar-width: thin;
+        z-index: 5;
+    }
+    .glb-thumbs::-webkit-scrollbar { height: 6px; }
+    .glb-thumbs::-webkit-scrollbar-thumb { background: rgba(255,255,255,.3); border-radius: 3px; }
+
+    .glb-thumb {
+        flex: 0 0 auto;
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        opacity: .4;
+        border: 2px solid transparent;
+        transition: all .2s;
+    }
+    .glb-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .glb-thumb:hover { opacity: .8; }
+    .glb-thumb.active {
+        opacity: 1;
+        border-color: #fff;
+        box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    /* ═══ Responsive ═══ */
+    @media (max-width: 992px) {
+        .ad-content-grid { grid-template-columns: 1fr; }
+        .sidebar { position: static; }
+    }
+    @media (max-width: 768px) {
+        .ad-title { font-size: 20px; }
+        .gallery-grid { height: 300px; }
+        .gallery-grid.grid-3,
+        .gallery-grid.grid-4,
+        .gallery-grid.grid-hero {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+        .gallery-grid .gallery-cell:first-child {
+            grid-row: auto;
+            grid-column: 1 / -1;
+        }
+        .gallery-grid.grid-single { height: 300px; }
+        .content-card { padding: 18px; }
+        .price-card-value { font-size: 22px; }
+        .glb-prev { right: 10px; }
+        .glb-next { left: 10px; }
+        .glb-stage { padding: 60px 60px; }
+        .attrs-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ad-detail-wrap">
+    <div class="container">
+
+        <!-- ═══ Breadcrumb ═══ -->
+        <nav class="breadcrumb-nav">
+            <a href="{% url 'ad:index' %}">خانه</a>
+            <i class="fas fa-chevron-left"></i>
+            <a href="{% url 'ad:index' %}">{{ ad.category.parent.title|default:'آگهی‌ها' }}</a>
+            <i class="fas fa-chevron-left"></i>
+            <a href="{% url 'ad:index' %}">{{ ad.category.title }}</a>
+            <i class="fas fa-chevron-left"></i>
+            <span>{{ ad.title|truncatechars:40 }}</span>
+        </nav>
+
+        <!-- ═══ Header ═══ -->
+        <div class="ad-header">
+            <div style="flex:1; min-width:0;">
+                <h1 class="ad-title">{{ ad.title }}</h1>
+                <div class="ad-meta">
+                    <span class="ad-cat-badge">
+                        <i class="fas fa-tag"></i>
+                        {{ ad.category.title }}
+                    </span>
+                    <span>
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ ad.province.name }}، {{ ad.city.name }}
+                    </span>
+                    <span>
+                        <i class="far fa-clock"></i>
+                        {{ ad.created_at|timesince }} پیش
+                    </span>
+                    <span>
+                        <i class="far fa-eye"></i>
+                        {{ ad.views_count }} بازدید
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ Gallery ═══ -->
+        {% include 'ad/components/ad_gallery.html' %}
+
+        <!-- ═══ Content Grid ═══ -->
+        <div class="ad-content-grid">
+
+            <!-- ─── Main Column ─── -->
+            <div>
+
+                <!-- Description -->
+                <div class="content-card">
+                    <h2 class="content-card-title">
+                        <i class="fas fa-align-right"></i>
+                        توضیحات آگهی
+                    </h2>
+                    <p class="ad-description">{{ ad.description }}</p>
+                </div>
+
+                <!-- Attributes -->
+                {% if ad.ad_attributes.all %}
+                <div class="content-card">
+                    <h2 class="content-card-title">
+                        <i class="fas fa-list-ul"></i>
+                        ویژگی‌ها
+                    </h2>
+                    <div class="attrs-grid">
+                        {% for attr in ad.ad_attributes.all %}
+                            <div class="attr-item">
+                                <div class="attr-item-icon">
+                                    <i class="fas {{ attr.category_field.type|attr_icon }}"></i>
+                                </div>
+                                <div class="attr-item-body">
+                                    <div class="attr-item-label">{{ attr.category_field.label }}</div>
+                                    {% if attr.category_field.type == 'multi_choice' %}
+                                        <div class="attr-chips">
+                                            {% for val in attr.value|split_comma %}
+                                                <span class="attr-chip">{{ val }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        <div class="attr-item-value">{{ attr.value }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Location -->
+                <div class="content-card">
+                    <h2 class="content-card-title">
+                        <i class="fas fa-map-marked-alt"></i>
+                        موقعیت
+                    </h2>
+                    <div class="location-row">
+                        <i class="fas fa-location-dot"></i>
+                        <div class="location-row-text">
+                            <strong>{{ ad.province.name }}</strong>،
+                            <strong>{{ ad.city.name }}</strong>
+                            {% if ad.neighborhood %}
+                                ، {{ ad.neighborhood.name }}
+                            {% endif %}
+                            <br>
+                            {{ ad.address }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ─── Sidebar ─── -->
+            <aside class="sidebar">
+
+                <!-- Price Card -->
+                <div class="price-card">
+                    <span class="price-card-label">
+                        {% if 'rent' in ad.category.slug %}ودیعه{% else %}قیمت{% endif %}
+                    </span>
+                    {% if ad.price %}
+                        <div class="price-card-value">
+                            {{ ad.price|floatformat:"0" }}
+                            <small>تومان</small>
+                        </div>
+                    {% else %}
+                        <div class="price-card-value">توافقی</div>
+                    {% endif %}
+
+                    {% if ad.is_negotiable %}
+                        <span class="price-negotiable">
+                            <i class="fas fa-handshake"></i> قابل مذاکره
+                        </span>
+                    {% endif %}
+
+                    <div class="price-card-sub">
+                        <i class="fas fa-shield-alt"></i>
+                        معامله امن با احراز هویت
+                    </div>
+                </div>
+
+                <!-- Contact Card -->
+                <div class="contact-card">
+                    <div class="seller-info">
+                        <div class="seller-avatar">
+                            {{ ad.user.get_full_name|default:ad.user.phone|first|upper }}
+                        </div>
+                        <div>
+                            <div class="seller-name">{{ ad.user.get_full_name|default:ad.user.phone }}</div>
+                            <div class="seller-role">
+                                <i class="fas fa-user-circle"></i> کاربر آگهی‌دهنده
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="tel:{{ ad.user.phone_number|default:'' }}" class="btn-contact btn-call">
+                        <i class="fas fa-phone-alt"></i>
+                        تماس با فروشنده
+                    </a>
+                    <button type="button" class="btn-contact btn-chat">
+                        <i class="fas fa-comments"></i>
+                        ارسال پیام
+                    </button>
+
+                    <div class="seller-actions">
+                        <button type="button" class="btn-action-icon">
+                            <i class="far fa-heart"></i> ذخیره
+                        </button>
+                        <button type="button" class="btn-action-icon">
+                            <i class="fas fa-share-alt"></i> اشتراک
+                        </button>
+                        <button type="button" class="btn-action-icon">
+                            <i class="fas fa-flag"></i> گزارش
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Safety Notice -->
+                <div class="safety-notice">
+                    <div class="safety-notice-title">
+                        <i class="fas fa-shield-alt"></i>
+                        نکات ایمنی
+                    </div>
+                    <ul>
+                        <li>قبل از بازدید ملک، قرارداد را بررسی کنید.</li>
+                        <li>هیچ‌گاه بیعانه قبل از دیدن ملک پرداخت نکنید.</li>
+                        <li>پرداخت را در حضور شاهد یا مشاور انجام دهید.</li>
+                    </ul>
+                </div>
+
+            </aside>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(function () {
+    // ═══════════════════════════════════════
+    // LIGHTBOX
+    // ═══════════════════════════════════════
+    const images = JSON.parse(document.getElementById('glbData').textContent || '[]');
+    const $lightbox = $('#galleryLightbox');
+    const $img = $('#glbImage');
+    const $counter = $('#glbCounter');
+    const $prev = $('#glbPrev');
+    const $next = $('#glbNext');
+    const $thumbs = $('#glbThumbs');
+
+    let current = 0;
+
+    if (images.length === 0) return;
+
+    // ساخت thumbnail ها
+    images.forEach((img, i) => {
+        $thumbs.append(`
+            <div class="glb-thumb ${i === 0 ? 'active' : ''}" data-index="${i}">
+                <img src="${img.url}" alt="">
+            </div>
+        `);
+    });
+
+    function render(idx) {
+        if (idx < 0 || idx >= images.length) return;
+        current = idx;
+        $img.attr('src', images[idx].url);
+        $counter.text(`${idx + 1} / ${images.length}`);
+        $prev.prop('disabled', idx === 0);
+        $next.prop('disabled', idx === images.length - 1);
+        $thumbs.find('.glb-thumb').removeClass('active').eq(idx).addClass('active');
+
+        // اسکرول thumbnail فعال به دید
+        const $active = $thumbs.find('.glb-thumb').eq(idx);
+        if ($active.length) {
+            $thumbs[0].scrollTo({
+                left: $active[0].offsetLeft - $thumbs[0].clientWidth / 2 + $active[0].clientWidth / 2,
+                behavior: 'smooth',
+            });
+        }
+    }
+
+    function open(idx = 0) {
+        $lightbox.addClass('open').attr('aria-hidden', 'false');
+        $('body').css('overflow', 'hidden');
+        render(idx);
+    }
+
+    function close() {
+        $lightbox.removeClass('open').attr('aria-hidden', 'true');
+        $('body').css('overflow', '');
+    }
+
+    // باز کردن از کلیک روی گالری
+    $(document).on('click', '.gallery-cell', function () {
+        const idx = parseInt($(this).data('index')) || 0;
+        open(idx);
+    });
+    $('#showAllImages').on('click', () => open(0));
+
+    // بستن
+    $('#glbClose, #glbBackdrop').on('click', close);
+
+    // ناوبری
+    $prev.on('click', () => render(current - 1));
+    $next.on('click', () => render(current + 1));
+
+    $thumbs.on('click', '.glb-thumb', function () {
+        render(parseInt($(this).data('index')));
+    });
+
+    // کیبورد
+    $(document).on('keydown', function (e) {
+        if (!$lightbox.hasClass('open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') render(current - 1);
+        if (e.key === 'ArrowLeft') render(current + 1);
+    });
+
+    // سوایپ موبایل
+    let touchStartX = 0;
+    $lightbox.on('touchstart', e => {
+        touchStartX = e.originalEvent.touches[0].clientX;
+    });
+    $lightbox.on('touchend', e => {
+        const dx = e.originalEvent.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) < 50) return;
+        if (dx > 0) render(current - 1);
+        else render(current + 1);
+    });
+});
+</script>
+{% endblock %}

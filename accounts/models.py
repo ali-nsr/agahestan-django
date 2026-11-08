@@ -7,14 +7,14 @@ from .manager import UserManager
 
 class User(AbstractBaseUser):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name=_('UUID'))
-    phone = models.CharField(max_length=11, unique=True, verbose_name=_('Phone'))
-    is_superuser = models.BooleanField(default=False, verbose_name=_('Is Superuser'))
-    is_active = models.BooleanField(default=True, verbose_name=_('Is Active'))
-    is_verified = models.BooleanField(default=False, verbose_name=_('Is Verified'))
-    temp_code = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('Temp Code'))
-    is_online = models.BooleanField(default=False, verbose_name=_('Is Online'))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created At'))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated At'))
+    phone = models.CharField(max_length=11, unique=True, verbose_name=_('موبایل'))
+    is_superuser = models.BooleanField(default=False, verbose_name=_('مدیر'))
+    is_active = models.BooleanField(default=True, verbose_name=_('فعال'))
+    is_verified = models.BooleanField(default=False, verbose_name=_('تایید شده'))
+    temp_code = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('کد موقت'))
+    is_online = models.BooleanField(default=False, verbose_name=_('آنلاین'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
 
     objects = UserManager()
 
@@ -23,12 +23,11 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
 
     class Meta:
-        db_table = 'users'
         indexes = [
             models.Index(fields=['uuid'])
         ]
-        verbose_name = _('User')
-        verbose_name_plural = _('Users')
+        verbose_name = _('کاربر')
+        verbose_name_plural = _('کابر ها')
 
     def __str__(self):
         return self.phone
@@ -57,51 +56,62 @@ class User(AbstractBaseUser):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name=_('User'))
-    first_name = models.CharField(max_length=250, verbose_name=_('First Name'))
-    last_name = models.CharField(max_length=250, verbose_name=_('Last Name'))
-    image = models.ImageField(upload_to='profile/%Y/%m/%d/', verbose_name=_('Image'))
-    email = models.EmailField(max_length=250, verbose_name=_('Email'))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name=_('کاربر'))
+    first_name = models.CharField(max_length=250, verbose_name=_('نام'))
+    last_name = models.CharField(max_length=250, verbose_name=_('نام خانوادگی'))
+    image = models.ImageField(upload_to='profile/%Y/%m/%d/', verbose_name=_('تصویر'))
+    email = models.EmailField(max_length=250, verbose_name=_('ایمیل'))
 
     def __str__(self):
         return self.user.phone
 
     class Meta:
-        db_table = 'profiles'
-        verbose_name = _('Profile')
-        verbose_name_plural = _('Profiles')
+        verbose_name = _('پروفایل')
+        verbose_name_plural = _('پروفایل ها')
 
+
+# class OTP(models.Model):
+#     phone = models.CharField(max_length=11, verbose_name='Phone')
+#     code = models.CharField(max_length=6, verbose_name='Code')
+#     created_at = models.DateTimeField(verbose_name='Created At')
+#     expires_at = models.DateTimeField(verbose_name='Expires At')
+#     is_used = models.BooleanField(default=False, verbose_name='Is Used')
+#
+#     def __str__(self):
+#         return f"{self.phone} - {self.code}"
+#
+#     class Meta:
+#         db_table = 'otp'
+#         verbose_name = 'OTP'
+#         verbose_name_plural = 'OTP'
 
 class OTP(models.Model):
-    phone = models.CharField(max_length=11, verbose_name='Phone')
-    code = models.CharField(max_length=6, verbose_name='Code')
-    created_at = models.DateTimeField(verbose_name='Created At')
-    expires_at = models.DateTimeField(verbose_name='Expires At')
-    is_used = models.BooleanField(default=False, verbose_name='Is Used')
+    username = models.CharField(max_length=50, verbose_name=_('نام کاربری'))
+    code = models.CharField(max_length=255, verbose_name=_('کد'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+    expires_at = models.DateTimeField(verbose_name=_('تاریخ انقضا'))
+    is_used = models.BooleanField(default=False, verbose_name=_('استفاده شده'))
 
     def __str__(self):
-        return f"{self.phone} - {self.code}"
+        return f"{self.username} - {self.code}"
 
     class Meta:
-        db_table = 'otp'
-        verbose_name = 'OTP'
-        verbose_name_plural = 'OTP'
-
+        verbose_name = _('OTP کد')
+        verbose_name_plural = _('OTP کد های')
 
 class Bookmark(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks', verbose_name=_('User'))
-    ad = models.ForeignKey('ad.Ad', on_delete=models.CASCADE, related_name='bookmarks', verbose_name=_('Ad'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks', verbose_name=_('کاربر'))
+    ad = models.ForeignKey('ad.Ad', on_delete=models.CASCADE, related_name='bookmarks', verbose_name=_('آگهی'))
 
     def __str__(self):
         return f'{self.user.phone} - {self.ad}'
 
     class Meta:
-        db_table = 'bookmarks'
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'ad'],
                 name='unique_user_ad_bookmark'
             )
         ]
-        verbose_name = _('Bookmark')
-        verbose_name_plural = _('Bookmarks')
+        verbose_name = _('نشان')
+        verbose_name_plural = _('نشان ها')

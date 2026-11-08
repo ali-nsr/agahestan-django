@@ -1,0 +1,290 @@
+[
+  {
+    "model": "ad.category",
+    "pk": 1,
+    "fields": {
+      "parent": null,
+      "title": "املاک",
+      "slug": "real-estate",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 2,
+    "fields": {
+      "parent": 1,
+      "title": "فروش مسکونی",
+      "slug": "residential-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 3,
+    "fields": {
+      "parent": 2,
+      "title": "آپارتمان",
+      "slug": "apartment-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 4,
+    "fields": {
+      "parent": 2,
+      "title": "خانه و ویلایی",
+      "slug": "house-villa-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 5,
+    "fields": {
+      "parent": 2,
+      "title": "زمین و کلنگی",
+      "slug": "land-old-building-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 6,
+    "fields": {
+      "parent": 1,
+      "title": "اجاره مسکونی",
+      "slug": "residential-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 7,
+    "fields": {
+      "parent": 6,
+      "title": "آپارتمان",
+      "slug": "apartment-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 8,
+    "fields": {
+      "parent": 6,
+      "title": "خانه و ویلایی",
+      "slug": "house-villa-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 9,
+    "fields": {
+      "parent": 6,
+      "title": "اجاره کوتاه‌مدت (سوئیت و اقامتگاه)",
+      "slug": "short-term-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 10,
+    "fields": {
+      "parent": 1,
+      "title": "فروش اداری و تجاری",
+      "slug": "commercial-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 11,
+    "fields": {
+      "parent": 10,
+      "title": "دفتر کار و مطب",
+      "slug": "office-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 12,
+    "fields": {
+      "parent": 10,
+      "title": "مغازه",
+      "slug": "shop-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 13,
+    "fields": {
+      "parent": 10,
+      "title": "غرفه",
+      "slug": "stall-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 14,
+    "fields": {
+      "parent": 10,
+      "title": "صنعتی، سوله، انبار و کارگاه",
+      "slug": "industrial-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 15,
+    "fields": {
+      "parent": 10,
+      "title": "کشاورزی و دامداری",
+      "slug": "agricultural-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 16,
+    "fields": {
+      "parent": 1,
+      "title": "اجاره اداری و تجاری",
+      "slug": "commercial-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 17,
+    "fields": {
+      "parent": 16,
+      "title": "دفتر کار و مطب",
+      "slug": "office-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 18,
+    "fields": {
+      "parent": 16,
+      "title": "مغازه",
+      "slug": "shop-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 19,
+    "fields": {
+      "parent": 16,
+      "title": "غرفه",
+      "slug": "stall-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 20,
+    "fields": {
+      "parent": 16,
+      "title": "صنعتی، سوله، انبار و کارگاه",
+      "slug": "industrial-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 21,
+    "fields": {
+      "parent": 16,
+      "title": "کشاورزی و دامداری",
+      "slug": "agricultural-rent",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 22,
+    "fields": {
+      "parent": 1,
+      "title": "پروژه‌های ساخت‌وساز",
+      "slug": "construction-projects",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 23,
+    "fields": {
+      "parent": 22,
+      "title": "پیش‌فروش",
+      "slug": "pre-sale",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "pk": 24,
+    "fields": {
+      "parent": 22,
+      "title": "مشارکت در ساخت",
+      "slug": "construction-partnership",
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  }
+]

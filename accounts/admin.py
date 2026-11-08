@@ -35,7 +35,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(OTP)
 class OTPAdmin(admin.ModelAdmin):
-    list_display = ('phone', 'code', 'created_at', 'expires_at')
+    list_display = ('username', 'code', 'created_at', 'expires_at')
 
 
 admin.site.register(User, UserAdmin)

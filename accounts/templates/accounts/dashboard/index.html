@@ -1,0 +1,458 @@
+{% extends 'accounts/dashboard/base.html' %}
+
+{% block dashboard %}
+    <div class="goodup-dashboard-content">
+            <div class="dashboard-tlbar d-block mb-5">
+                <div class="row">
+                    <div class="colxl-12 col-lg-12 col-md-12">
+                        <h1 class="ft-medium fs-4">سلام مهرداد</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item text-muted"><a href="#">خانه</a></li>
+                                <li class="breadcrumb-item"><a href="#" class="theme-cl">داشبورد</a></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-widg-bar d-block">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 mb-3">
+                        <div class="alert bg-inverse text-light d-flex align-items-center" role="alert">
+                            <p class="p-0 m-0 ft-medium full-width">آگهی <a href="#" class="text-success">هتل لاله پارک
+                                تبریز</a> تایید شد!</p>
+                            <button type="button" class="btn-close text-light" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <div class="dsd-boxed-widget py-5 px-4 bg-danger rounded">
+                            <h2 class="ft-medium mb-1 fs-xl text-light count">46</h2>
+                            <p class="p-0 m-0 text-light fs-md">آگهی های فعال</p>
+                            <i class="lni lni-empty-file"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <div class="dsd-boxed-widget py-5 px-4 bg-success rounded">
+                            <h2 class="ft-medium mb-1 fs-xl text-light count">2615</h2>
+                            <p class="p-0 m-0 text-light fs-md">تعداد بازدیدها</p>
+                            <i class="lni lni-eye"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <div class="dsd-boxed-widget py-5 px-4 bg-warning rounded">
+                            <h2 class="ft-medium mb-1 fs-xl text-light count">312</h2>
+                            <p class="p-0 m-0 text-light fs-md">تعداد نظرات</p>
+                            <i class="lni lni-comments"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <div class="dsd-boxed-widget py-5 px-4 bg-purple rounded">
+                            <h2 class="ft-medium mb-1 fs-xl text-light count">410</h2>
+                            <p class="p-0 m-0 text-light fs-md">تعداد رزروها</p>
+                            <i class="lni lni-wallet"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- row -->
+                <div class="row">
+
+                    <!-- Area Chart -->
+                    <div class="col-md-8 col-sm-12">
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h4 class="mb-0">نمودار</h4>
+                            </div>
+                            <div class="dash-card-body">
+                                <div class="chart" id="revenue-chart"
+                                     style="height: 365px; direction: ltr; position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                    <svg height="365" version="1.1" width="622.662" xmlns="http://www.w3.org/2000/svg"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         style="overflow: hidden; position: relative; left: -0.9375px; top: -0.799988px;">
+                                        <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with
+                                            Raphaël 2.2.0
+                                        </desc>
+                                        <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
+                                        <text x="32.53750038146973" y="321.6000003814697" text-anchor="end"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal">
+                                            <tspan dy="4.400006294250488"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0
+                                            </tspan>
+                                        </text>
+                                        <path fill="none" stroke="#e0e0e0"
+                                              d="M45.03750038146973,321.6000003814697H397.663" stroke-width="0.5"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                                        <text x="32.53750038146973" y="247.4500002861023" text-anchor="end"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal">
+                                            <tspan dy="4.400000095367432"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">75
+                                            </tspan>
+                                        </text>
+                                        <path fill="none" stroke="#e0e0e0"
+                                              d="M45.03750038146973,247.4500002861023H397.663" stroke-width="0.5"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                                        <text x="32.53750038146973" y="173.30000019073486" text-anchor="end"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal">
+                                            <tspan dy="4.399993896484375"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">150
+                                            </tspan>
+                                        </text>
+                                        <path fill="none" stroke="#e0e0e0"
+                                              d="M45.03750038146973,173.30000019073486H397.663" stroke-width="0.5"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                                        <text x="32.53750038146973" y="99.15000009536743" text-anchor="end"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal">
+                                            <tspan dy="4.39999532699585"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">225
+                                            </tspan>
+                                        </text>
+                                        <path fill="none" stroke="#e0e0e0"
+                                              d="M45.03750038146973,99.15000009536743H397.663" stroke-width="0.5"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                                        <text x="32.53750038146973" y="25" text-anchor="end" font-family="IRANSans"
+                                              font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal">
+                                            <tspan dy="4.399999618530273"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">300
+                                            </tspan>
+                                        </text>
+                                        <path fill="none" stroke="#e0e0e0" d="M45.03750038146973,25H397.663"
+                                              stroke-width="0.5"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                                        <text x="397.663" y="334.1000003814697" text-anchor="middle"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal" transform="matrix(1,0,0,1,0,9.2)">
+                                            <tspan dy="4.400006294250488"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1396
+                                            </tspan>
+                                        </text>
+                                        <text x="309.56696484547325" y="334.1000003814697" text-anchor="middle"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal" transform="matrix(1,0,0,1,0,9.2)">
+                                            <tspan dy="4.400006294250488"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1394
+                                            </tspan>
+                                        </text>
+                                        <text x="221.35025019073487" y="334.1000003814697" text-anchor="middle"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal" transform="matrix(1,0,0,1,0,9.2)">
+                                            <tspan dy="4.400006294250488"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1392
+                                            </tspan>
+                                        </text>
+                                        <text x="133.25421503620814" y="334.1000003814697" text-anchor="middle"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal" transform="matrix(1,0,0,1,0,9.2)">
+                                            <tspan dy="4.400006294250488"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1390
+                                            </tspan>
+                                        </text>
+                                        <text x="45.03750038146973" y="334.1000003814697" text-anchor="middle"
+                                              font-family="IRANSans" font-size="12px" stroke="none" fill="#888888"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: IRANSans; font-size: 12px; font-weight: normal;"
+                                              font-weight="normal" transform="matrix(1,0,0,1,0,9.2)">
+                                            <tspan dy="4.400006294250488"
+                                                   style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1388
+                                            </tspan>
+                                        </text>
+                                        <path fill="#e2e5ea" stroke="none"
+                                              d="M45.03750038146973,193.07333354949952L89.20619745894477,321.6000003814697L177.3022326134715,242.50666694641114L265.5189472682099,252.39333362579345L309.56696484547325,217.79000024795533L353.61498242273666,74.43333339691162L397.663,143.6400001525879L397.663,321.6000003814697L45.03750038146973,321.6000003814697Z"
+                                              fill-opacity="0.4"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 0.4;"></path>
+                                        <path fill="none" stroke="#b4becb"
+                                              d="M45.03750038146973,193.07333354949952L89.20619745894477,321.6000003814697L177.3022326134715,242.50666694641114L265.5189472682099,252.39333362579345L309.56696484547325,217.79000024795533L353.61498242273666,74.43333339691162L397.663,143.6400001525879"
+                                              stroke-width="0"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                                        <circle cx="45.03750038146973" cy="193.07333354949952" r="0" fill="#b4becb"
+                                                stroke="#b4becb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="89.20619745894477" cy="321.6000003814697" r="0" fill="#b4becb"
+                                                stroke="#b4becb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="177.3022326134715" cy="242.50666694641114" r="0" fill="#b4becb"
+                                                stroke="#b4becb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="265.5189472682099" cy="252.39333362579345" r="0" fill="#b4becb"
+                                                stroke="#b4becb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="309.56696484547325" cy="217.79000024795533" r="0" fill="#b4becb"
+                                                stroke="#b4becb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="353.61498242273666" cy="74.43333339691162" r="0" fill="#b4becb"
+                                                stroke="#b4becb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="397.663" cy="143.6400001525879" r="0" fill="#b4becb"
+                                                stroke="#b4becb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <path fill="#f4a0c6" stroke="none"
+                                              d="M45.03750038146973,222.73333358764648L89.20619745894477,321.6000003814697L177.3022326134715,262.2800003051758L265.5189472682099,123.86666679382324L309.56696484547325,232.62000026702881L353.61498242273666,173.30000019073486L397.663,173.30000019073486L397.663,321.6000003814697L45.03750038146973,321.6000003814697Z"
+                                              fill-opacity="0.4"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 0.4;"></path>
+                                        <path fill="none" stroke="#f45ca1"
+                                              d="M45.03750038146973,222.73333358764648L89.20619745894477,321.6000003814697L177.3022326134715,262.2800003051758L265.5189472682099,123.86666679382324L309.56696484547325,232.62000026702881L353.61498242273666,173.30000019073486L397.663,173.30000019073486"
+                                              stroke-width="0"
+                                              style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                                        <circle cx="45.03750038146973" cy="222.73333358764648" r="0" fill="#f45ca1"
+                                                stroke="#009efb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="89.20619745894477" cy="321.6000003814697" r="0" fill="#f45ca1"
+                                                stroke="#009efb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="177.3022326134715" cy="262.2800003051758" r="0" fill="#f45ca1"
+                                                stroke="#009efb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="265.5189472682099" cy="123.86666679382324" r="0" fill="#f45ca1"
+                                                stroke="#009efb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="309.56696484547325" cy="232.62000026702881" r="0" fill="#f45ca1"
+                                                stroke="#009efb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="353.61498242273666" cy="173.30000019073486" r="0" fill="#f45ca1"
+                                                stroke="#009efb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                        <circle cx="397.663" cy="173.30000019073486" r="0" fill="#f45ca1"
+                                                stroke="#009efb" stroke-width="1"
+                                                style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle>
+                                    </svg>
+                                    <div class="morris-hover morris-default-style" style="display: none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Donut Chart -->
+                    <div class="col-md-4 col-sm-12">
+                        <div class="dash-card">
+                            <div class="dash-card-header">
+                                <h4>دنبال کننده ها</h4>
+                            </div>
+                            <div class="ground-list ground-hover-list">
+                                <div class="ground ground-list-single">
+                                    <a href="#">
+                                        <img class="ground-avatar" src="assets/img/t-1.png" alt="...">
+                                        <span class="profile-status bg-online pull-right"></span>
+                                    </a>
+
+                                    <div class="ground-content">
+                                        <h6><a href="#">حسین علیزاده</a></h6>
+                                        <small class="text-fade"><i class="fas fa-map-marker-alt ms-1"></i>نیویورک،
+                                            آمریکا</small>
+                                    </div>
+                                </div>
+
+                                <div class="ground ground-list-single">
+                                    <a href="#">
+                                        <img class="ground-avatar" src="assets/img/t-2.png" alt="...">
+                                        <span class="profile-status bg-offline pull-right"></span>
+                                    </a>
+
+                                    <div class="ground-content">
+                                        <h6><a href="#">مریم امیری</a></h6>
+                                        <small class="text-fade"><i class="fas fa-map-marker-alt ms-1"></i>کانادا،
+                                            آمریکا</small>
+                                    </div>
+                                </div>
+
+                                <div class="ground ground-list-single">
+                                    <a href="#">
+                                        <img class="ground-avatar" src="assets/img/t-3.png" alt="...">
+                                        <span class="profile-status bg-working pull-right"></span>
+                                    </a>
+
+                                    <div class="ground-content">
+                                        <h6><a href="#">علی حسینی</a></h6>
+                                        <small class="text-fade"><i class="fas fa-map-marker-alt ms-1"></i>برزیل، آمریکا</small>
+                                    </div>
+                                </div>
+
+                                <div class="ground ground-list-single">
+                                    <a href="#">
+                                        <img class="ground-avatar" src="assets/img/t-4.png" alt="...">
+                                        <span class="profile-status bg-busy pull-right"></span>
+                                    </a>
+
+                                    <div class="ground-content">
+                                        <h6><a href="#">شیما صمدی</a></h6>
+                                        <small class="text-fade"><i class="fas fa-map-marker-alt ms-1"></i>اسپانیا،
+                                            آمریکا</small>
+                                    </div>
+                                </div>
+
+                                <div class="ground ground-list-single">
+                                    <a href="#">
+                                        <img class="ground-avatar" src="assets/img/t-5.png" alt="...">
+                                        <span class="profile-status bg-online pull-right"></span>
+                                    </a>
+
+                                    <div class="ground-content">
+                                        <h6><a href="#">مسعود حقیقی</a></h6>
+                                        <small class="text-fade"><i
+                                                class="fas fa-map-marker-alt ms-1"></i>کالیفرنیا</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="goodup-dashboard-grouping-list with-icons">
+                            <h4>فعالیت های اخیر</h4>
+                            <ul>
+                                <li>
+                                    <i class="dsd-icon-uiyo ti-layers text-purple bg-light-purple"></i> آگهی های شما
+                                    <strong><a href="#">هتل قصر طلایی</a></strong> تایید شده است!
+                                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                                </li>
+
+                                <li>
+                                    <i class="dsd-icon-uiyo ti-star text-success bg-light-success"></i> مهشید صادقی
+                                    امتیاز
+                                    <div class="grping-list-rates high" data-rating="5.0"></div>
+                                    برای آگهی<strong><a href="#"> سالن زیبایی</a></strong> ثبت کرد.
+                                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                                </li>
+
+                                <li>
+                                    <i class="dsd-icon-uiyo ti-heart text-warning bg-light-warning"></i>یک نفر
+                                    آگهی<strong><a href="#"> هتل لاله</a></strong> را به علاقه مندی ها ی خود اضافه کرد!
+                                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                                </li>
+
+                                <li>
+                                    <i class="dsd-icon-uiyo ti-star text-info bg-light-info"></i> متین مهدوی امتیاز
+                                    <div class="grping-list-rates mid" data-rating="3.8"></div>
+                                    برای <strong><a href="#">کلوپ آنجلیکا استانبول</a></strong> ثبت کرد.
+                                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                                </li>
+
+                                <li>
+                                    <i class="dsd-icon-uiyo ti-heart text-danger bg-light-danger"></i>یک نفر
+                                    آگهی<strong><a href="#"> هتل پردیس</a></strong> را به علاقه مندی ها ی خود اضافه کرد!
+                                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                                </li>
+
+                                <li>
+                                    <i class="dsd-icon-uiyo ti-star text-success bg-light-success"></i> مهرداد راد
+                                    امتیاز
+                                    <div class="grping-list-rates high" data-rating="4.7"></div>
+                                    برای آگهی<strong><a href="#"> مرکز خرید پالادیوم</a></strong> ثبت کرد.
+                                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                                </li>
+
+                                <li>
+                                    <i class="dsd-icon-uiyo ti-star text-purple bg-light-purple"></i> رضا مرادی امتیاز
+                                    <div class="grping-list-rates low" data-rating="2.8"></div>
+                                    برای آگهی<strong><a href="#"> باشگاه بدنسازی باران</a></strong> ثبت کرد.
+                                    <a href="#" class="close-list-item"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12">
+                        <div class="goodup-dashboard-grouping-list invoices with-icons">
+                            <h4>صورت حساب ها</h4>
+                            <ul>
+
+                                <li><i class="dsd-icon-uiyo ti-files text-warning bg-light-warning"></i>
+                                    <strong>پکیج مقدماتی</strong>
+                                    <ul>
+                                        <li class="unpaid">پرداخت نشده</li>
+                                        <li>شماره سفارش: #LS5410</li>
+                                        <li>تاریخ: 22 آبان 1400</li>
+                                    </ul>
+                                    <div class="buttons-to-right">
+                                        <a href="javascript:void(0);" class="button gray">مشاهده صورت حساب</a>
+                                    </div>
+                                </li>
+
+                                <li><i class="dsd-icon-uiyo ti-files text-success bg-light-success"></i>
+                                    <strong>پکیج اقتصادی</strong>
+                                    <ul>
+                                        <li class="paid">پرداخت شده</li>
+                                        <li>شماره سفارش: #LS5410</li>
+                                        <li>تاریخ: 22 آبان 1400</li>
+                                    </ul>
+                                    <div class="buttons-to-right">
+                                        <a href="javascript:void(0);" class="button gray">مشاهده صورت حساب</a>
+                                    </div>
+                                </li>
+
+                                <li><i class="dsd-icon-uiyo ti-files text-danger bg-light-danger"></i>
+                                    <strong>پکیج پیشرفته</strong>
+                                    <ul>
+                                        <li class="pending">در انتظار پرداخت</li>
+                                        <li>شماره سفارش: #LS5410</li>
+                                        <li>تاریخ: 22 آبان 1400</li>
+                                    </ul>
+                                    <div class="buttons-to-right">
+                                        <a href="javascript:void(0);" class="button gray">مشاهده صورت حساب</a>
+                                    </div>
+                                </li>
+
+                                <li><i class="dsd-icon-uiyo ti-files text-success bg-light-success"></i>
+                                    <strong>پکیج شرکتی</strong>
+                                    <ul>
+                                        <li class="cancel">کنسل</li>
+                                        <li>شماره سفارش: #LS5410</li>
+                                        <li>تاریخ: 22 آبان 1400</li>
+                                    </ul>
+                                    <div class="buttons-to-right">
+                                        <a href="javascript:void(0);" class="button gray">مشاهده صورت حساب</a>
+                                    </div>
+                                </li>
+
+                                <li><i class="dsd-icon-uiyo ti-files text-warning bg-light-warning"></i>
+                                    <strong>پکیج شخصی</strong>
+                                    <ul>
+                                        <li class="paid">پرداخت شده</li>
+                                        <li>شماره سفارش: #LS5410</li>
+                                        <li>تاریخ: 22 آبان 1400</li>
+                                    </ul>
+                                    <div class="buttons-to-right">
+                                        <a href="javascript:void(0);" class="button gray">مشاهده صورت حساب</a>
+                                    </div>
+                                </li>
+
+                                <li><i class="dsd-icon-uiyo ti-files text-info bg-light-info"></i>
+                                    <strong>پکیج اقتصادی</strong>
+                                    <ul>
+                                        <li class="unpaid">پرداخت نشده</li>
+                                        <li>شماره سفارش: #LS5410</li>
+                                        <li>تاریخ: 22 آبان 1400</li>
+                                    </ul>
+                                    <div class="buttons-to-right">
+                                        <a href="javascript:void(0);" class="button gray">مشاهده صورت حساب</a>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+{% endblock %}

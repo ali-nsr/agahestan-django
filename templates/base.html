@@ -1,0 +1,154 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <!-- Meta Data -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Goodup - قالب ثبت آگهی و دایرکتوری HTML</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '' %}img/favicon.png">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+<body dir="rtl">
+
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader"></div>
+
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Top header  -->
+    <!-- ============================================================== -->
+    <!-- Start Navigation -->
+    {% include 'header.html' %}
+    <!-- End Navigation -->
+    <div class="clearfix"></div>
+    <!-- ============================================================== -->
+    <!-- Top header  -->
+    <!-- ============================================================== -->
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- ============================ Footer Start ================================== -->
+    {% include 'footer.html' %}
+    <!-- ============================ Footer End ================================== -->
+
+
+    <!-- Log In Modal -->
+    {#<div class="modal fade" id="location" tabindex="-1" role="dialog" aria-labelledby="locationmodal" aria-hidden="true">#}
+    {#    <div class="modal-dialog login-pop-form" role="document">#}
+    {#        <div class="modal-content" id="locationmodal">#}
+    {#            <div class="modal-headers">#}
+    {#                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">#}
+    {#                    <span class="ti-close"></span>#}
+    {#                </button>#}
+    {#            </div>#}
+    {##}
+    {#            <div class="modal-body p-5">#}
+    {#                <div class="text-center mb-4">#}
+    {#                    <h6 class="m-0 ft-medium">انتخاب شهر</h6>#}
+    {#                    <p>#}
+    {#                        یک یا چند شهر را انتخاب کنید#}
+    {#                    </p>#}
+    {#                </div>#}
+    {##}
+    {#                <form action="{% url 'ad:mod_cookies' %}" method="get" class="submit-form">#}
+    {#                    <div class="form-group">#}
+    {#                        <label class="mb-1">#}
+    {#                            انتخاب شهر#}
+    {#                        </label>#}
+    {#                        <select class="js-basic-single form-control w-100" name="city"#}
+    {#                                style="width: 250px;">#}
+    {#                            <option value="uae">همه شهر ها</option>#}
+    {#                            {% for city in cities %}#}
+    {#                                <option value="{{ city.id }}">{{ city.name }}</option>#}
+    {#                            {% endfor %}#}
+    {#                        </select>#}
+    {#                    </div>#}
+    {##}
+    {#                    <div class="form-group">#}
+    {#                        <button type="submit" class="btn btn-md full-width theme-bg text-light rounded ft-medium">#}
+    {#                            جستجو#}
+    {#                        </button>#}
+    {#                    </div>#}
+    {#                </form>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#</div>#}
+    <!-- End Modal -->
+
+
+    <a id="tops-button" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+
+
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/slick.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/dropzone.js' %}"></script>
+<script src="{% static 'js/counterup.js' %}"></script>
+<script src="{% static 'js/lightbox.js' %}"></script>
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/daterangepicker.js' %}"></script>
+<script src="{% static 'js/lightbox.js' %}"></script>
+<script src="{% static 'js/jQuery.style.switcher.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+
+<!-- Select2 -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<link href="{% static 'select2.min.css' %}" rel="stylesheet"/>
+<script src="{% static 'select2.min.js' %}"></script>
+<!-- End Select2 -->
+
+
+<script>
+    $(function () {
+        if ($('#cityMultiSelect').length && $.fn.select2) {
+            $('#cityMultiSelect').select2({
+                dropdownParent: $('#citySelectModal'),
+                placeholder: 'شهرها را انتخاب کنید',
+                allowClear: true,
+                dir: 'rtl',
+                width: '100%',
+            });
+        }
+    });
+</script>
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+
+</html>

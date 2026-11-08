@@ -34,7 +34,7 @@ def chat_detail(request, chat_uuid):
     messages = chat.messages.all().order_by('timestamp')
     return render(request, 'chat/chat_detail.html', {
         'chat': chat,
-        'messages': messages,
+        'chat_messages': messages,
     })
 
 

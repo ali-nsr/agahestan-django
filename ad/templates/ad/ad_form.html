@@ -1,0 +1,909 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+    :root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --success: #10b981;
+    --border: #e5e7eb;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --bg: #f9fafb;
+}
+
+body { background: var(--bg); }
+
+.create-ad-wrapper { padding: 32px 0 80px; }
+
+/* ─── Header ─── */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.page-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 6px;
+}
+.page-cat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    color: var(--primary);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+.btn-change-cat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 9px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    transition: all .2s;
+    background: #fff;
+    font-weight: 500;
+}
+.btn-change-cat:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ─── Error Box ─── */
+.error-box {
+    background: #fef2f2;
+    border: 1.5px solid #fecaca;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+}
+.error-box-title {
+    color: #991b1b;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.error-list {
+    margin: 0;
+    padding-right: 20px;
+    color: #991b1b;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* ─── Card ─── */
+.form-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: box-shadow .2s;
+}
+.form-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+
+.form-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #f9fafb, #ffffff);
+}
+.form-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.form-card-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 2px;
+    color: var(--text);
+}
+.form-card-header p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0;
+}
+.form-card-body { padding: 24px; }
+
+/* ─── Fields ─── */
+.field-group { margin-bottom: 20px; }
+.field-group:last-child { margin-bottom: 0; }
+.field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+.required { color: #ef4444; }
+.field-help { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+.field-error { color: #ef4444; font-size: 12px; margin-top: 5px; }
+
+.form-control, .form-select {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    transition: all .2s;
+    background: #fff;
+    color: var(--text);
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79,70,229,.1);
+    outline: none;
+}
+
+/* ─── Price ─── */
+.price-row { display: flex; gap: 10px; }
+.price-row .form-control { flex: 1; }
+
+.negotiable-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    background: #f9fafb;
+    transition: all .2s;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 600;
+    user-select: none;
+    color: var(--text-muted);
+}
+.negotiable-toggle:hover { border-color: #d1d5db; }
+.negotiable-toggle input { display: none; }
+.toggle-track {
+    width: 34px; height: 18px;
+    background: #d1d5db;
+    border-radius: 10px;
+    position: relative;
+    transition: background .2s;
+}
+.toggle-thumb {
+    position: absolute;
+    top: 2px; right: 2px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform .25s;
+}
+.negotiable-toggle input:checked ~ .toggle-track { background: var(--primary); }
+.negotiable-toggle input:checked ~ .toggle-track .toggle-thumb {
+    transform: translateX(-16px);
+}
+.price-preview {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 700;
+    margin-top: 8px;
+    min-height: 16px;
+}
+.price-row.is-negotiable .form-control {
+    background: #f3f4f6;
+    color: #9ca3af;
+}
+
+/* ─── Upload Zone ─── */
+.upload-zone {
+    display: block;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f9fafb;
+    cursor: pointer;
+    transition: all .2s;
+}
+.upload-zone:hover, .upload-zone.dragover {
+    border-color: var(--primary);
+    background: #eef2ff;
+}
+.upload-icon {
+    font-size: 42px;
+    color: #9ca3af;
+    margin-bottom: 12px;
+    transition: color .2s;
+}
+.upload-zone:hover .upload-icon,
+.upload-zone.dragover .upload-icon { color: var(--primary); }
+.upload-text strong { display: block; color: var(--text); font-size: 15px; margin-bottom: 4px; }
+.upload-text span { color: var(--text-muted); font-size: 13px; }
+.upload-hint { font-size: 12px; color: #9ca3af; margin-top: 10px; }
+
+/* ─── Image Grid ─── */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+.image-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2.5px solid var(--border);
+    background: #f9fafb;
+    cursor: pointer;
+    transition: all .2s;
+    animation: pop .3s ease;
+}
+@keyframes pop { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
+.image-item:hover { border-color: #d1d5db; }
+.image-item.is-main {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79,70,229,.15);
+}
+.image-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.image-badge-main {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    display: none;
+}
+.image-item.is-main .image-badge-main { display: block; }
+.image-select-hint {
+    position: absolute;
+    bottom: 6px; left: 6px; right: 6px;
+    background: rgba(0,0,0,.65);
+    color: #fff;
+    font-size: 10px;
+    padding: 5px;
+    border-radius: 6px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .2s;
+}
+.image-item:hover .image-select-hint { opacity: 1; }
+.image-item.is-main .image-select-hint { display: none; }
+.image-remove {
+    position: absolute;
+    top: 6px; left: 6px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,.6);
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+    z-index: 2;
+}
+.image-remove:hover { background: #ef4444; }
+
+/* ─── Actions ─── */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 32px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--success), #059669);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 0 4px 14px rgba(16,185,129,.3);
+}
+.btn-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(16,185,129,.4);
+}
+.btn-submit:disabled { opacity: .7; cursor: not-allowed; }
+.btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    padding: 13px 24px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s;
+}
+.btn-cancel:hover { border-color: #d1d5db; color: var(--text); }
+
+/* ─── Select2 Theme ─── */
+.select2-container--default .select2-selection--multiple,
+.select2-container--default .select2-selection--single {
+    border: 1.5px solid var(--border) !important;
+    border-radius: 10px !important;
+    min-height: 44px;
+    padding: 4px 8px;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple,
+.select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(79,70,229,.1);
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background: var(--primary) !important;
+    border: none !important;
+    color: #fff !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+    font-size: 12px;
+    margin: 4px 4px 4px 0;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #fff !important;
+    margin-left: 6px;
+    border: none !important;
+}
+.select2-dropdown {
+    border: 1.5px solid var(--border) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+    overflow: hidden;
+}
+.select2-results__option--highlighted {
+    background: var(--primary) !important;
+}
+
+@media (max-width: 768px) {
+    .page-title { font-size: 20px; }
+    .form-card-body { padding: 18px; }
+    .form-card-header { padding: 14px 16px; }
+    .form-actions { flex-direction: column-reverse; }
+    .btn-submit, .btn-cancel { justify-content: center; width: 100%; }
+    .image-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    .price-row { flex-direction: column; }
+}
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="create-ad-wrapper">
+    <div class="container">
+
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">ثبت آگهی</h1>
+                <span class="page-cat-badge">
+                    <i class="fas fa-tag"></i> {{ category.title }}
+                </span>
+            </div>
+            <a href="{% url 'ad:choose-category' %}" class="btn-change-cat">
+                <i class="fas fa-exchange-alt"></i> تغییر دسته
+            </a>
+        </div>
+
+        {# پیام‌ها #}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+
+        {# ═══ نمایش خطاهای کلی ═══ #}
+        {% if form.errors or cat_form.errors %}
+            <div class="error-box">
+                <div class="error-box-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    لطفاً خطاهای زیر را برطرف کنید:
+                </div>
+                <ul class="error-list">
+                    {% for field, errs in form.errors.items %}
+                        {% for err in errs %}
+                            <li>{{ field }}: {{ err }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for field, errs in cat_form.errors.items %}
+                        {% for err in errs %}
+                            <li>{{ field }}: {{ err }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" id="adForm" novalidate>
+            {% csrf_token %}
+            <input type="hidden" name="main_image_index" id="mainImageIndex" value="0">
+
+            {# ═══ ویژگی‌های دسته ═══ #}
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon"><i class="fas fa-list-ul"></i></div>
+                    <div>
+                        <h3>ویژگی‌های {{ category.title }}</h3>
+                        <p>فیلدهای ستاره‌دار الزامی هستند</p>
+                    </div>
+                </div>
+                <div class="form-card-body">
+                    {% include 'ad/components/category_fields.html' %}
+                </div>
+            </div>
+
+            {# ═══ اطلاعات آگهی ═══ #}
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon"><i class="fas fa-file-alt"></i></div>
+                    <div>
+                        <h3>اطلاعات آگهی</h3>
+                        <p>عنوان واضح و توضیحات کامل</p>
+                    </div>
+                </div>
+                <div class="form-card-body">
+                    <div class="field-group">
+                        <label class="field-label">عنوان <span class="required">*</span></label>
+                        {{ form.title }}
+                        {% if form.title.errors %}<div class="field-error">{{ form.title.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">توضیحات <span class="required">*</span></label>
+                        {{ form.description }}
+                        {% if form.description.errors %}<div class="field-error">{{ form.description.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">
+                            <span class="price-label">قیمت</span> (تومان) <span class="required">*</span>
+                        </label>
+                        <div class="price-row" id="priceRow">
+                            {{ form.price }}
+                            <label class="negotiable-toggle" for="id_is_negotiable">
+                                {{ form.is_negotiable }}
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                <span>توافقی</span>
+                            </label>
+                        </div>
+                        <div class="price-preview" id="pricePreview"></div>
+                        {% if 'rent' in category.slug %}
+                            <div class="field-help">این مقدار به‌عنوان <strong>ودیعه</strong> ذخیره می‌شود.</div>
+                        {% endif %}
+                        {% if form.price.errors %}<div class="field-error">{{ form.price.errors.0 }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {# ═══ موقعیت ═══ #}
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <h3>موقعیت ملک</h3>
+                        <p>موقعیت دقیق، بازدید بیشتر</p>
+                    </div>
+                </div>
+                <div class="form-card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="field-group">
+                                <label class="field-label">استان <span class="required">*</span></label>
+                                {{ form.province }}
+                                {% if form.province.errors %}<div class="field-error">{{ form.province.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="field-group">
+                                <label class="field-label">شهر <span class="required">*</span></label>
+                                {{ form.city }}
+                                {% if form.city.errors %}<div class="field-error">{{ form.city.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="field-group">
+                                <label class="field-label">محله</label>
+                                {{ form.neighborhood }}
+                                {% if form.neighborhood.errors %}<div class="field-error">{{ form.neighborhood.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">آدرس <span class="required">*</span></label>
+                        {{ form.address }}
+                        {% if form.address.errors %}<div class="field-error">{{ form.address.errors.0 }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {# ═══ تصاویر ═══ #}
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon"><i class="fas fa-images"></i></div>
+                    <div>
+                        <h3>تصاویر آگهی</h3>
+                        <p>روی هر تصویر کلیک کنید تا «عکس اصلی» شود</p>
+                    </div>
+                </div>
+                <div class="form-card-body">
+                    {# ─── Label دور ناحیه آپلود، کلیک تضمینی ─── #}
+                    <label for="id_images" class="upload-zone" id="uploadZone">
+                        <input type="file" name="images" id="id_images"
+                               multiple accept="image/*" style="display:none">
+                        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <div class="upload-text">
+                            <strong>برای انتخاب کلیک کنید</strong>
+                            <span>یا فایل‌ها را اینجا رها کنید</span>
+                        </div>
+                        <div class="upload-hint">حداکثر ۱۰ تصویر، هر کدام تا ۵ مگابایت</div>
+                    </label>
+
+                    <div class="image-grid" id="imageGrid"></div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'ad:choose-category' %}" class="btn-cancel">انصراف</a>
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="fas fa-check"></i> ثبت آگهی
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+window.CITIES_API = "{% url 'ad:cities-by-province' %}";
+window.NEIGHBORHOODS_API = "{% url 'ad:neighborhoods-by-city' %}";
+</script>
+<script>
+$(function () {
+
+    // ═══════════════════════════════════════════
+    // SELECT2 برای انتخاب‌های چندگانه / تک
+    // ═══════════════════════════════════════════
+    if (window.jQuery && $.fn.select2) {
+        $('.select2-multi').each(function () {
+            $(this).select2({
+                placeholder: $(this).data('placeholder') || 'انتخاب کنید',
+                allowClear: true,
+                width: '100%',
+                dir: 'rtl',
+                closeOnSelect: false,
+                language: {
+                    noResults: () => 'نتیجه‌ای یافت نشد',
+                    searching: () => 'در حال جستجو...',
+                }
+            });
+        });
+
+        $('.select2-single').each(function () {
+            $(this).select2({
+                placeholder: 'انتخاب کنید',
+                allowClear: true,
+                width: '100%',
+                dir: 'rtl',
+            });
+        });
+    }
+
+    // ═══════════════════════════════════════════
+    // CASCADE: استان → شهر → محله
+    // ═══════════════════════════════════════════
+    $('#id_province').on('change', function () {
+        const p = $(this).val();
+        const $city = $('#id_city').empty().append('<option value="">انتخاب کنید...</option>');
+        $('#id_neighborhood').empty().append('<option value="">انتخاب کنید...</option>');
+        if (!p) return;
+        $.get(window.CITIES_API, { province_id: p }, function (data) {
+            data.forEach(c => $city.append(`<option value="${c.id}">${c.name}</option>`));
+        });
+    });
+
+    $('#id_city').on('change', function () {
+        const c = $(this).val();
+        const $nh = $('#id_neighborhood').empty().append('<option value="">انتخاب کنید...</option>');
+        if (!c) return;
+        $.get(window.NEIGHBORHOODS_API, { city_id: c }, function (data) {
+            data.forEach(n => $nh.append(`<option value="${n.id}">${n.name}</option>`));
+        });
+    });
+
+    // ═══════════════════════════════════════════
+    // قیمت: کاما + پیش‌نمایش + حفظ موقعیت مکان‌نما
+    // ═══════════════════════════════════════════
+    const $price = $('#id_price');
+    const $preview = $('#pricePreview');
+    const $negotiable = $('#id_is_negotiable');
+    const $priceRow = $('#priceRow');
+
+    function formatWithCommas(digits) {
+        return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function toWords(num) {
+        num = parseInt(num);
+        if (!num) return '';
+        if (num >= 1_000_000_000) return `${(num / 1_000_000_000).toFixed(1)} میلیارد تومان`;
+        if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(0)} میلیون تومان`;
+        if (num >= 1_000) return `${(num / 1_000).toFixed(0)} هزار تومان`;
+        return `${num} تومان`;
+    }
+
+    $price.on('input', function () {
+        const cursorPos = this.selectionStart;
+        const oldVal = this.value;
+        const oldLen = oldVal.length;
+
+        const digits = oldVal.replace(/\D/g, '');
+        const formatted = formatWithCommas(digits);
+
+        this.value = formatted;
+
+        // حفظ موقعیت مکان‌نما
+        const newLen = formatted.length;
+        const diff = newLen - oldLen;
+        const newPos = Math.max(0, Math.min(cursorPos + diff, newLen));
+        this.setSelectionRange(newPos, newPos);
+
+        $preview.text(digits ? toWords(digits) : '');
+    });
+
+    function syncNegotiable() {
+        const isN = $negotiable.is(':checked');
+        $priceRow.toggleClass('is-negotiable', isN);
+        if (isN) {
+            $price.val('').prop('disabled', true);
+            $preview.text('قیمت توافقی');
+        } else {
+            $price.prop('disabled', false);
+            $preview.text('');
+        }
+    }
+    $negotiable.on('change', syncNegotiable);
+    syncNegotiable();
+
+    // ═══════════════════════════════════════════
+    // گالری تصاویر
+    // ═══════════════════════════════════════════
+    const $zone = $('#uploadZone');
+    const $input = $('#id_images');
+    const $grid = $('#imageGrid');
+    const $mainIndex = $('#mainImageIndex');
+    const MAX = 10;
+    let files = [];
+    let mainIdx = 0;
+
+    function render() {
+        $grid.empty();
+        if (!files.length) return;
+
+        files.forEach((file, i) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const isMain = i === mainIdx;
+                $grid.append(`
+                    <div class="image-item ${isMain ? 'is-main' : ''}" data-index="${i}">
+                        <img src="${e.target.result}" alt="">
+                        <span class="image-badge-main">
+                            <i class="fas fa-star"></i> اصلی
+                        </span>
+                        <button type="button" class="image-remove" data-index="${i}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="image-select-hint">کلیک = اصلی</div>
+                    </div>
+                `);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        $mainIndex.val(mainIdx);
+    }
+
+    function syncInput() {
+        const dt = new DataTransfer();
+        files.forEach(f => dt.items.add(f));
+        $input[0].files = dt.files;
+    }
+
+    function addFiles(newFiles) {
+        const imgs = newFiles.filter(f => f.type.startsWith('image/'));
+        const combined = [...files, ...imgs].slice(0, MAX);
+        if (combined.length > files.length + imgs.length) {
+            alert(`حداکثر ${MAX} تصویر مجاز است.`);
+        }
+        files = combined;
+        if (mainIdx >= files.length) mainIdx = 0;
+        render();
+        syncInput();
+    }
+
+    // ─── input change ───
+    $input.on('change', function () {
+        addFiles(Array.from(this.files));
+    });
+
+    // ─── drag & drop ───
+    $zone.on('dragover dragenter', e => {
+        e.preventDefault(); e.stopPropagation();
+        $zone.addClass('dragover');
+    });
+    $zone.on('dragleave dragend', e => {
+        e.preventDefault(); e.stopPropagation();
+        $zone.removeClass('dragover');
+    });
+    $zone.on('drop', e => {
+        e.preventDefault(); e.stopPropagation();
+        $zone.removeClass('dragover');
+        const dropped = Array.from(e.originalEvent.dataTransfer.files);
+        addFiles(dropped);
+    });
+
+    // ─── حذف عکس ───
+    $grid.on('click', '.image-remove', function (e) {
+        e.stopPropagation();
+        const i = parseInt($(this).data('index'));
+        files.splice(i, 1);
+        if (mainIdx === i) mainIdx = 0;
+        else if (mainIdx > i) mainIdx--;
+        if (mainIdx >= files.length) mainIdx = 0;
+        render();
+        syncInput();
+    });
+
+    // ─── انتخاب عکس اصلی ───
+    $grid.on('click', '.image-item', function (e) {
+        if ($(e.target).closest('.image-remove').length) return;
+        mainIdx = parseInt($(this).data('index'));
+        render();
+    });
+
+    // ═══════════════════════════════════════════
+    // SUBMIT
+    // ═══════════════════════════════════════════
+    $('#adForm').on('submit', function (e) {
+        // پاک کردن کاما از قیمت قبل از ارسال
+        if (!$price.prop('disabled')) {
+            const raw = $price.val().replace(/,/g, '');
+            $price.val(raw);
+        }
+
+        if (files.length === 0) {
+            e.preventDefault();
+            alert('حداقل یک تصویر آپلود کنید.');
+            return false;
+        }
+
+        $('#submitBtn').prop('disabled', true)
+            .html('<i class="fas fa-spinner fa-spin"></i> در حال ثبت...');
+    });
+});
+
+
+
+// ═══════════════════════════════════════════
+// CASCADE: برند → مدل
+// ═══════════════════════════════════════════
+function initCascading() {
+    // نقشه‌ی همه فیلدهای دارای data-field-key
+    const fieldMap = {};
+    $('[data-field-key]').each(function () {
+        fieldMap[$(this).attr('data-field-key')] = $(this);
+    });
+
+    $('.cascading-target').each(function () {
+        const $target = $(this);
+        const sourceKey = $target.attr('data-depends-on');
+        const $source = fieldMap[sourceKey];
+
+        if (!$source || !$source.length) {
+            console.warn('[Cascade] source not found:', sourceKey);
+            return;
+        }
+
+        // خواندن models map
+        let modelsMap = {};
+        try {
+            const raw = $source.attr('data-models');
+            modelsMap = raw ? JSON.parse(raw) : {};
+        } catch (e) {
+            console.warn('[Cascade] invalid models map:', sourceKey, e);
+            return;
+        }
+
+        // ذخیره‌ی مقدار فعلی (edit mode)
+        const initialValue = $target.val();
+
+        function populate(brand) {
+            $target.empty();
+            $target.append('<option value="">انتخاب کنید...</option>');
+
+            const models = modelsMap[brand] || [];
+            models.forEach(function (m) {
+                $target.append($('<option>').val(m).text(m));
+            });
+
+            // برگرداندن مقدار اولیه اگه هنوز معتبره
+            if (initialValue && models.indexOf(initialValue) !== -1) {
+                $target.val(initialValue);
+            }
+
+            // Select2 refresh
+            if ($target.hasClass('select2-hidden-accessible')) {
+                $target.trigger('change.select2');
+            }
+        }
+
+        // مقدار اولیه بر اساس انتخاب برند
+        populate($source.val() || '');
+
+        // با تغییر برند، مدل‌ها بازسازی بشن
+        $source.on('change', function () {
+            populate($(this).val() || '');
+        });
+    });
+}
+
+// ═══════════════════════════════════════════
+// اجرا در ready
+// ═══════════════════════════════════════════
+$(function () {
+    // اول Select2 رو initialize کن (اگه داری)
+    $('.select2-multi').each(function () {
+        $(this).select2({
+            placeholder: $(this).attr('data-placeholder') || 'انتخاب کنید',
+            allowClear: true,
+            width: '100%',
+            dir: 'rtl',
+            closeOnSelect: false,
+        });
+    });
+    $('.select2-single').each(function () {
+        $(this).select2({ allowClear: true, width: '100%', dir: 'rtl' });
+    });
+
+    // ⚠️ بعد از Select2، cascade رو اجرا کن
+    initCascading();
+
+    // بقیه‌ی کدهای قیمت، گالری، استان/شهر/محله...
+    // (که قبلاً داشتی، دست نزن)
+});
+</script>
+{% endblock %}

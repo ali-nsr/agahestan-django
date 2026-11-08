@@ -1,0 +1,73 @@
+{% load static %}
+
+<a href="{% url 'ad:ad-detail' ad.uuid %}" class="ad-card {% if ad.is_special %}is-special{% endif %}">
+
+    {# ─── Thumbnail ─── #}
+    <div class="ad-card-thumb">
+        {% if ad.thumbnail %}
+            <img src="{{ ad.thumbnail.url }}" alt="{{ ad.title }}" loading="lazy">
+        {% else %}
+            <div class="ad-card-thumb-placeholder">
+                <i class="fas fa-image"></i>
+            </div>
+        {% endif %}
+
+        {# ─── Badges ─── #}
+        <div class="ad-card-badges">
+            {% if ad.is_special %}
+                <span class="ad-badge ad-badge-special">
+                    <i class="fas fa-star"></i> ویژه
+                </span>
+            {% endif %}
+            {% if ad.is_paid %}
+                <span class="ad-badge ad-badge-paid">
+                    <i class="fas fa-check-circle"></i> پرداخت شده
+                </span>
+            {% endif %}
+        </div>
+
+        {# ─── Favorite ─── #}
+        <button type="button" class="ad-card-fav" data-uuid="{{ ad.uuid }}" aria-label="ذخیره">
+            <i class="far fa-heart"></i>
+        </button>
+
+        {# ─── Image count ─── #}
+        {% with img_count=ad.gallery.all|length %}
+            {% if img_count > 1 %}
+                <div class="ad-card-img-count">
+                    <i class="fas fa-images"></i> {{ img_count }}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {# ─── Body ─── #}
+    <div class="ad-card-body">
+        <div class="ad-card-category">{{ ad.category.title }}</div>
+        <h3 class="ad-card-title">{{ ad.title }}</h3>
+
+        <div class="ad-card-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{ ad.province.name }}، {{ ad.city.name }}{% if ad.neighborhood %}، {{ ad.neighborhood.name }}{% endif %}</span>
+        </div>
+
+        <div class="ad-card-footer">
+            <div class="ad-card-price">
+                {% if ad.price %}
+                    {{ ad.price|floatformat:"0" }}
+                    <small>تومان</small>
+                    {% if ad.is_negotiable %}
+                        <span class="ad-card-negotiable">توافقی</span>
+                    {% endif %}
+                {% else %}
+                    <span class="ad-card-price-negotiable">توافقی</span>
+                {% endif %}
+            </div>
+            <div class="ad-card-time">
+                <i class="far fa-clock"></i>
+                {{ ad.created_at|timesince }} پیش
+            </div>
+        </div>
+    </div>
+
+</a>

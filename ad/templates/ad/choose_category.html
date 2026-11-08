@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .choose-category-page {
+        background: #f5f7fa;
+        min-height: 100vh;
+        padding: 40px 0 80px;
+    }
+    .page-head { text-align: center; margin-bottom: 40px; }
+    .page-head h1 { font-size: 26px; font-weight: 800; color: #1a2233; margin-bottom: 8px; }
+    .page-head p { color: #6b7c93; font-size: 14px; margin: 0; }
+
+    .category-group { margin-bottom: 36px; }
+    .category-group-title {
+        display: flex; align-items: center; gap: 10px;
+        font-size: 16px; font-weight: 700; color: #2c3e50;
+        margin-bottom: 16px; padding-right: 4px;
+    }
+    .category-group-title i { color: #0d6efd; font-size: 18px; }
+
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 14px;
+    }
+
+    .category-card {
+        width: 100%;
+        display: flex; align-items: center; gap: 14px;
+        padding: 16px 18px;
+        background: #fff;
+        border: 1.5px solid #e8ecf1;
+        border-radius: 14px;
+        cursor: pointer;
+        text-align: right;
+        transition: all .2s;
+        font-family: inherit;
+    }
+    .category-card:hover {
+        border-color: #0d6efd;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(13,110,253,.12);
+    }
+    .category-icon {
+        width: 44px; height: 44px; border-radius: 12px;
+        background: #e7f0ff; color: #0d6efd;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 18px; flex-shrink: 0; transition: all .2s;
+    }
+    .category-card:hover .category-icon { background: #0d6efd; color: #fff; }
+    .category-name { flex: 1; font-size: 14px; font-weight: 600; color: #1a2233; }
+    .category-arrow { color: #cbd5e1; font-size: 13px; transition: all .2s; }
+    .category-card:hover .category-arrow { color: #0d6efd; transform: translateX(-3px); }
+
+    /* ─── Brand modal ─── */
+    .brand-modal-content { border-radius: 16px; border: none; }
+    .brand-modal-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #eef1f6;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand-modal-title { font-size: 17px; font-weight: 700; color: #1a2233; margin: 0; }
+    .brand-modal-sub { font-size: 12px; color: #8896a8; margin: 4px 0 0; }
+    .brand-modal-body { padding: 20px 24px; max-height: 60vh; overflow-y: auto; }
+
+    .brand-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+    }
+    .brand-btn {
+        padding: 12px 8px;
+        border: 1.5px solid #e8ecf1;
+        border-radius: 10px;
+        background: #fff;
+        color: #2c3e50;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .2s;
+        text-align: center;
+    }
+    .brand-btn:hover {
+        border-color: #0d6efd;
+        background: #eff6ff;
+        color: #0d6efd;
+    }
+    .brand-btn.active {
+        border-color: #0d6efd;
+        background: #0d6efd;
+        color: #fff;
+    }
+
+    .brand-modal-footer {
+        padding: 16px 24px;
+        border-top: 1px solid #eef1f6;
+        display: flex; justify-content: flex-end; gap: 10px;
+    }
+    .btn-confirm-brand {
+        background: #0d6efd; color: #fff; border: none;
+        padding: 10px 24px; border-radius: 10px;
+        font-size: 14px; font-weight: 600; cursor: pointer;
+        transition: all .2s;
+    }
+    .btn-confirm-brand:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-confirm-brand:hover:not(:disabled) { background: #0b5ed7; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="choose-category-page">
+    <div class="container">
+
+        <div class="page-head">
+            <h1>چه چیزی می‌خواهید ثبت کنید؟</h1>
+            <p>دسته‌بندی مناسب را انتخاب کنید تا فرم آگهی برای شما آماده شود.</p>
+        </div>
+
+        {% for group in grouped_categories %}
+            <div class="category-group">
+                <h2 class="category-group-title">
+                    <i class="fas fa-folder-open"></i>
+                    {% if group.parent %}{{ group.parent }}{% else %}سایر{% endif %}
+                </h2>
+
+                <div class="category-grid">
+                    {% for cat in group.children %}
+                        {% if cat.has_brands %}
+                            {# ─── دسته‌ای که برند داره: مودال باز کن ─── #}
+                            <button type="button" class="category-card js-open-brand-modal"
+                                    data-category-slug="{{ cat.slug }}"
+                                    data-category-name="{{ cat.title }}"
+                                    data-brands='{{ cat.brands_json }}'>
+                                <div class="category-icon"><i class="fas {{ cat.icon }}"></i></div>
+                                <span class="category-name">{{ cat.title }}</span>
+                                <i class="fas fa-arrow-left category-arrow"></i>
+                            </button>
+                        {% else %}
+                            {# ─── دسته‌ی ساده: submit مستقیم ─── #}
+                            <form method="post" style="margin:0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="category" value="{{ cat.slug }}">
+                                <button type="submit" class="category-card">
+                                    <div class="category-icon"><i class="fas {{ cat.icon }}"></i></div>
+                                    <span class="category-name">{{ cat.title }}</span>
+                                    <i class="fas fa-arrow-left category-arrow"></i>
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <div style="text-align:center;padding:60px;color:#94a3b8;">
+                <i class="fas fa-folder-open" style="font-size:48px;margin-bottom:12px;"></i>
+                <p>هیچ دسته‌بندی فعالی یافت نشد.</p>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{# ═══ مودال انتخاب برند ═══ #}
+<div class="modal fade" id="brandModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content brand-modal-content">
+            <form method="post" id="brandForm">
+                {% csrf_token %}
+                <input type="hidden" name="category" id="brandCategoryInput">
+                <input type="hidden" name="brand" id="brandValueInput">
+
+                <div class="brand-modal-header">
+                    <div>
+                        <h5 class="brand-modal-title" id="brandModalTitle">انتخاب برند</h5>
+                        <p class="brand-modal-sub">برند را انتخاب کنید تا ادامه دهید</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="brand-modal-body">
+                    <div class="brand-grid" id="brandGrid"></div>
+                </div>
+
+                <div class="brand-modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                    <button type="submit" class="btn-confirm-brand" id="brandConfirmBtn" disabled>
+                        ادامه
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(function () {
+    const $modal = new bootstrap.Modal(document.getElementById('brandModal'));
+    const $grid = $('#brandGrid');
+    let selectedBrand = null;
+
+    $(document).on('click', '.js-open-brand-modal', function () {
+        const slug = $(this).data('category-slug');
+        const name = $(this).data('category-name');
+        // data-brands به صورت attribute، JSON یا آرایه‌ی رشته‌ای می‌آد
+        let brands = [];
+
+        // اگه از data attribute خوندیم
+        const rawBrands = $(this).attr('data-brands');
+        try {
+            // اگه شبیه JSON آرایه بود، پارس کن
+            brands = JSON.parse(rawBrands);
+        } catch (e) {
+            // وگرنه شاید رشته‌ی comma-separated باشه
+            brands = (rawBrands || '').split(',').map(s => s.trim()).filter(Boolean);
+        }
+
+        selectedBrand = null;
+        $('#brandModalTitle').text(`انتخاب برند ${name}`);
+        $('#brandCategoryInput').val(slug);
+        $('#brandValueInput').val('');
+        $('#brandConfirmBtn').prop('disabled', true);
+
+        $grid.empty();
+        if (!brands.length) {
+            $grid.append('<p class="text-muted">برندی ثبت نشده است.</p>');
+        } else {
+            brands.forEach(function (b) {
+                $grid.append(
+                    `<button type="button" class="brand-btn" data-brand="${b}">${b}</button>`
+                );
+            });
+        }
+
+        $modal.show();
+    });
+
+    // انتخاب برند
+    $grid.on('click', '.brand-btn', function () {
+        selectedBrand = $(this).data('brand');
+        $('.brand-btn').removeClass('active');
+        $(this).addClass('active');
+        $('#brandValueInput').val(selectedBrand);
+        $('#brandConfirmBtn').prop('disabled', false);
+    });
+
+    // تأیید
+    $('#brandConfirmBtn').on('click', function () {
+        if (!selectedBrand) return;
+        $('#brandForm').trigger('submit');
+    });
+});
+</script>
+{% endblock %}

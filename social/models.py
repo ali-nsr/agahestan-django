@@ -20,7 +20,6 @@ class Follow(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        db_table = 'follows'
         unique_together = ('follower', 'following')  # جلوگیری از فالو تکراری
         verbose_name = 'Follow'
         verbose_name_plural = 'Follows'

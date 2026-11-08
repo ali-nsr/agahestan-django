@@ -26,7 +26,7 @@ def create_ad_thumbnail_async(image_from_gallery, ad_id):
     #                                        sys.getsizeof(output_thumb), None)
     ad = Ad.objects.get(id=ad_id)
 
-    output_size = (300, 169)
+    output_size = (390, 450)
     output_thumb = BytesIO()
 
     img = Image.open(image_from_gallery)

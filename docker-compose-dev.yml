@@ -1,28 +1,27 @@
 services:
-  django_agahestan:
-    container_name: django_agahestan
+
+  django:
+    container_name: django
     restart: always
     build:
       context: .
       dockerfile: Dockerfile
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
     volumes:
       - .:/app
-      - static_volume_agahestan:/app/staticfiles  # ✅ استفاده از Named Volume
-      - media_volume_agahestan:/app/media
     environment:
       DJANGO_SETTINGS_MODULE: config.settings
     depends_on:
-      - db_agahestan
-      - redis_agahestan
-    ports:
-      - "8000:8000"
+      - db
+      - redis
     networks:
       - agahestan-network
 
-  db_agahestan:
+  db:
     image: postgres:16.9
-    container_name: db_agahestan
+    container_name: db
     restart: always
     volumes:
       - postgres_data_agahestan:/var/lib/postgresql/data/
@@ -35,8 +34,8 @@ services:
     networks:
       - agahestan-network
 
-  celery_agahestan:
-    container_name: celery_agahestan
+  celery:
+    container_name: celery
     restart: always
     build:
       context: .
@@ -47,23 +46,22 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: config.settings
     depends_on:
-      - redis_agahestan
-      - db_agahestan
-      - django_agahestan
+      - redis
+      - db
+      - django
     networks:
       - agahestan-network
 
-  redis_agahestan:
+  redis:
     image: redis
-    container_name: redis_agahestan
+    container_name: redis
     restart: always
     ports:
       - "6379:6379"
     command: redis-server --save 60 1 --loglevel warning
-    volumes:
-      - redis_data_volume_agahestan:/data
     networks:
       - agahestan-network
+
 
 networks:
   agahestan-network:
@@ -73,6 +71,4 @@ networks:
 
 volumes:
   postgres_data_agahestan:
-  redis_data_volume_agahestan:
-  static_volume_agahestan:
-  media_volume_agahestan:
+  smtp4dev-data:

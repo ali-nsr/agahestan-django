@@ -21,7 +21,7 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug')
     prepopulated_fields = {'slug': ('title',)}  # ساخت خودکار اسلاگ از روی عنوان
     autocomplete_fields = ('parent',)  # جلوگیری از لود دراپ‌دان‌های بزرگ در دسته‌بندی‌های چند سطحی
-
+    inlines = (CategoryFieldInline,)
 
 @admin.register(CategoryField)
 class CategoryFieldAdmin(admin.ModelAdmin):

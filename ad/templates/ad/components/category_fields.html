@@ -1,0 +1,18 @@
+{% if cat_form %}
+<div class="row g-3">
+    {% for field in cat_form %}
+        <div class="col-md-6">
+            <div class="field-group">
+                <label class="field-label" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                    {% if field.field.required %}<span class="required">*</span>{% endif %}
+                </label>
+                {{ field }}
+                {% if field.errors %}<div class="field-error">{{ field.errors.0 }}</div>{% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info mb-0">این دسته‌بندی فیلد اضافی ندارد.</div>
+{% endif %}

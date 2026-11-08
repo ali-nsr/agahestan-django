@@ -5,18 +5,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-sz5!r3=1td9xeic8r%e__w_@q)e=*wxk*zfwe63sjis&(7pnbq'
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['nutrikala.com', 'api.nutrikala.com', 'www.nutrikala.com',
-                     'http://localhost:3000', 'http://127.1.1.1:3000']
-    CSRF_TRUSTED_ORIGINS = ['https://nutrikala.com', 'https://api.nutrikala.com',
-                            'http://localhost:3000', 'http://127.1.1.1:3000']
+    ALLOWED_HOSTS = ['agahestan.nutrikala.com', 'https://agahestan.nutrikala.com']
+    CSRF_TRUSTED_ORIGINS = ['https://agahestan.nutrikala.com', 'https://agahestan.nutrikala.com']
 
 INSTALLED_APPS = [
-    # 'daphne',  # async server
+    'daphne',  # async server
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,24 +56,26 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # context processors
+                'location.context_processors.city_selector',
             ],
         },
     },
 ]
 
 if DEBUG:
-    WSGI_APPLICATION = 'config.wsgi.application'  # sync server
-    # ASGI_APPLICATION = 'config.asgi.application'  # async server
+    # WSGI_APPLICATION = 'config.wsgi.application'  # sync server
+    ASGI_APPLICATION = 'config.asgi.application'  # async server
 else:
-    WSGI_APPLICATION = 'config.wsgi.application'  # sync server
-    # ASGI_APPLICATION = 'config.asgi.application'  # async server
+    # WSGI_APPLICATION = 'config.wsgi.application'  # sync server
+    ASGI_APPLICATION = 'config.asgi.application'  # async server
 
 if DEBUG:
     DATABASES = {
@@ -84,7 +84,7 @@ if DEBUG:
             'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'postgres',
-            'HOST': 'db_agahestan',
+            'HOST': 'db',
             'PORT': '5432'
         }
     }
@@ -92,10 +92,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'agahestan_db',
+            'NAME': 'postgresaae_db',
             'USER': 'postgres',
-            'PASSWORD': 'skF2pEyUMl5qAUj4Mnob',
-            'HOST': 'postgres-kjr-service',
+            'PASSWORD': 'oxCoOR2YYTc38nCczeko',
+            'HOST': 'postgres-app-ruh-service',
             'PORT': '5432'
         }
     }
@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'fa'
 
 TIME_ZONE = 'Asia/Tehran'
 
@@ -124,14 +124,12 @@ USE_I18N = True
 USE_TZ = True
 
 if DEBUG:
-    # static
     STATIC_URL = '/static/'
     STATICFILES_DIRS = [
         BASE_DIR / 'static'
     ]
     STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-    # media
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media/'
 else:
@@ -154,7 +152,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # celery config
 if DEBUG:
-    CELERY_BROKER_URL = 'redis://redis_agahestan:6379/1'
+    CELERY_BROKER_URL = 'redis://redis:6379/1'
     CELERY_RESULT_BACKEND = 'django_celery_results.backends.database:DatabaseBackend'
     CELERY_ACCEPT_CONTENT = ['application/json']
     CELERY_TASK_SERIALIZER = 'json'
@@ -162,7 +160,7 @@ if DEBUG:
     CELERY_TIMEZONE = 'Asia/Tehran'
     CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 else:
-    CELERY_BROKER_URL = 'redis://default:xPZ6rPGmE5rOFonlkk5p@redis-ovv-service:6379/1'
+    CELERY_BROKER_URL = 'redis://default:xPZ6rPGmE5rOFonlkk5p@redis-ovv-service:6379/0'
     CELERY_RESULT_BACKEND = 'django_celery_results.backends.database:DatabaseBackend'
     CELERY_ACCEPT_CONTENT = ['application/json']
     CELERY_TASK_SERIALIZER = 'json'
@@ -176,7 +174,7 @@ if DEBUG:
     CACHES = {
         'default': {
             'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-            'LOCATION': 'redis://redis_agahestan:6379/0'
+            'LOCATION': 'redis://redis:6379/0'
         }
     }
 else:
@@ -277,24 +275,24 @@ if DEBUG:
 
 
 # channels
-# if DEBUG:
-#     CHANNEL_LAYERS = {
-#         'default': {
-#             'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#             'CONFIG': {
-#                 'hosts': ['redis://redis:6379/1'],
-#             },
-#         },
-#     }
-# else:
-#     CHANNEL_LAYERS = {
-#         'default': {
-#             'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#             'CONFIG': {
-#                 'hosts': ['redis://default:xPZ6rPGmE5rOFonlkk5p@redis-ovv-service:6379/1'],
-#             },
-#         },
-#     }
+if DEBUG:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                'hosts': ['redis://redis:6379/1'],
+            },
+        },
+    }
+else:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                'hosts': ['redis://default:xPZ6rPGmE5rOFonlkk5p@redis-ovv-service:6379/1'],
+            },
+        },
+    }
 # CHANNEL_LAYERS = {
 #     "default": {
 #         "BACKEND": "channels.layers.InMemoryChannelLayer"
@@ -314,10 +312,7 @@ if DEBUG == False:
     CORS_ALLOW_ALL_ORIGINS = False
 
     CORS_ALLOWED_ORIGINS = [
-        'https://nutrikala.com',
-        'https://api.nutrikala.com',
-        'http://localhost:3000',
-        'http://127.1.1.1:3000'
+        'https://agahestan.nutrikala.com'
     ]
 
     CORS_ALLOW_CREDENTIALS = True  # ← این true هست
@@ -345,10 +340,7 @@ if DEBUG == False:
     ]
 
     CSRF_TRUSTED_ORIGINS = [
-        'https://nutrikala.com',
-        'https://api.nutrikala.com',
-        'http://localhost:3000',
-        'http://127.1.1.1:3000'
+        'https://agahestan.nutrikala.com'
     ]
 
 # end cors headers
@@ -374,3 +366,6 @@ JALALI_DATE_DEFAULTS = {
     },
 }
 # end jalali date
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024       # 5MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 25 * 1024 * 1024      # 25MB (برای POST)

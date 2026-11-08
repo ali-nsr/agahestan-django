@@ -1,113 +1,306 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+{% extends 'accounts/dashboard/base.html' %}
+
+
+{% block dashboard %}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-</head>
-<body>
+    <style>
+        .green {
+            background-color: green;
+        }
 
-<style>
-    .green {
-        background-color: green;
-    }
+        .red {
+            background-color: red;
+        }
 
-    .red {
-        background-color: red;
-    }
-
-    .yellow {
-        background-color: yellow;
-    }
-</style>
+        .yellow {
+            background-color: yellow;
+        }
+    </style>
 
 
-{% if request.user == chat.ad.user %}
-<h4 class="">در حال گفتگو با {{ chat.sender }}</h4>
-{% if chat.sender.is_online %}ONLINE{% else %}OFFLINE{% endif %}
-{% else %}
-<h4 class="">در حال گفتگو با {{ chat.ad.user }}</h4>
-{% if chat.ad.user.is_online %}ONLINE{% else %}OFFLINE{% endif %}
-{% endif %}
-<hr>
+    <div class="goodup-dashboard-content">
+        <div class="dashboard-tlbar d-block mb-5">
+            <div class="row">
+                <div class="colxl-12 col-lg-12 col-md-12">
+                    <h1 class="ft-medium fs-lg">پیام ها</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item text-muted"><a href="#">خانه</a></li>
+                            <li class="breadcrumb-item text-muted"><a href="#">داشبورد</a></li>
+                            <li class="breadcrumb-item"><a href="#" class="theme-cl">پیام ها</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
 
-<hr>
+        <div class="dashboard-widg-bar d-block">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div class="_dashboard_content bg-white rounded mb-4">
 
+                        <div class="_dashboard_content_body">
+                            <!-- Convershion -->
+                            <div class="messages-container margin-top-0">
+                                <div class="messages-headline">
+                                    <h4 class="">
+                                        {{ chat.sender }}
+                                    </h4>
+                                    {#                                    <a href="#" class="message-action"><i class="ti-trash"></i> حذف پیام ها</a>#}
+                                </div>
 
-{% for message in messages %}
-<p>
-    {{ message.sender }} -
-    <span style="color: green">
-            {{ message.text }}
-        </span>
-    {{ message.timestamp|timesince }} Ago
+                                <div class="messages-container-inner">
 
-    {% if message.is_seen %}
-    <span style="color: green">SEEN</span>
-    {% else %}
-    <span style="color: red">NOT SEEN</span>
-    {% endif %}
-</p>
-{% endfor %}
+                                    <!-- Messages -->
+                                    {#                                    <div class="dash-msg-inbox">#}
+                                    {#                                        <ul>#}
+                                    {#                                            {% for chat in chats %}#}
+                                    {#                                                <li class="active-message">#}
+                                    {#                                                <li>#}
+                                    {#                                                    <a href="#">#}
+                                    {#                                                        <div class="dash-msg-avatar">#}
+                                    {#                                                            <img src="assets/img/t-2.png" alt="">#}
+                                    {#                                                            <span class="_user_status offline"></span>#}
+                                    {#                                                        </div>#}
+                                    {##}
+                                    {#                                                        <div class="message-by">#}
+                                    {#                                                            <div class="message-by-headline">#}
+                                    {#                                                                <h5>#}
+                                    {#                                                                    {{ chat.sender.phone }}#}
+                                    {#                                                                </h5>#}
+                                    {#                                                                <span>#}
+                                    {#                                                                    {{ chat.created_at|timesince }}#}
+                                    {#                                                                </span>#}
+                                    {#                                                            </div>#}
+                                    {#                                                            <p>#}
+                                    {#                                                                {{ chat.messages.last.text|truncatechars:10 }}#}
+                                    {#                                                            </p>#}
+                                    {#                                                        </div>#}
+                                    {#                                                    </a>#}
+                                    {#                                                </li>#}
+                                    {#                                            {% endfor %}#}
+                                    {##}
+                                    {#                                        </ul>#}
+                                    {#                                    </div>#}
+                                    <!-- Messages / End -->
 
-
-<div id="chat-box">
-
-</div>
-
-
-<div>
-    <input id="msg" placeholder="متن پیام...">
-
-    <button id="sendbtn" type="submit">
-        ارسال پیام
-    </button>
-</div>
-
-
-<script>
-    const wsScheme = (window.location.protocol === "https:") ? "wss" : "ws";
-    const chatSocket = new WebSocket(
-            wsScheme + "://" + window.location.host + "/ws/chat/{{ chat.uuid }}/"
-    );
-
-
-    // frontend receiver just like django channels receiver function
-    // receives data from backend
-    chatSocket.onmessage = function (e) {
-        let data = JSON.parse(e.data)
-        $('#chat-box').html($('#chat-box').html() + '<br/>' + data.sender_username + ': ' + data.message);
-    }
-
-    // frontend requests to backend to accept connection
-    chatSocket.onopen = function (e) {
-        console.log('Websocket Connected');
-        $('#msg').removeClass('red');
-        $('#msg').addClass('green');
-    };
-
-    chatSocket.onclose = function (e) {
-        console.log('Websocket Disconnected');
-        $('#msg').removeClass('green');
-        $('#msg').addClass('red');
-    };
-
-    chatSocket.onerror = function (e) {
-        console.log('Websocket Error');
-        $('#msg').removeClass('green');
-        $('#msg').addClass('yellow');
-
-    };
+                                    <!-- Message Content -->
+                                    <div class="dash-msg-content">
 
 
-    $('#sendbtn').click(function (e) {
-        let msg = $('#msg').val();
-        chatSocket.send(msg);
-        $('#msg').val('');
-    });
-</script>
+                                        {% for message in chat_messages %}
+                                            <div class="message-plunch">
+                                                {{ message.sender }}
+                                                <div class="dash-msg-text">
+                                                    <p>
+                                                        {{ message.text }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
 
 
-</body>
-</html>
+                                        <div id="chat-box" class="message-plunch">
+                                            <div class="dash-msg-text">
+                                                <p>
+                                                </p>
+                                            </div>
+                                        </div>
+
+
+                                        {#                                        <div class="message-plunch me">#}
+                                        {#                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>#}
+                                        {#                                            <div class="dash-msg-text"><p>طراحان رایانه ای علی الخصوص طراحان خلاقی و#}
+                                        {#                                                فرهنگ پیشرو در زبان فارسی ایجاد کرد</p></div>#}
+                                        {#                                        </div>#}
+
+
+                                        <!-- Reply Area -->
+                                        <div class="clearfix"></div>
+                                        <div class="message-reply">
+                                            <input id="msg" placeholder="متن پیام...">
+
+                                            <button id="sendbtn" type="submit">
+                                                ارسال پیام
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <!-- Message Content -->
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        {#const wsScheme = (window.location.protocol === "http:") ? "ws" : "ws";#}
+        {#const chatSocket = new WebSocket(#}
+        {#        wsScheme + "://" + window.location.host + "/ws/chat/{{ chat.uuid }}/"#}
+        {#);#}
+        {#const chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/{{ chat.uuid }}/');#}
+        const chatSocket = new WebSocket('wss://agahestan.nutrikala.com/ws/chat/{{ chat.uuid }}/');
+
+
+        // frontend receiver just like django channels receiver function
+        // receives data from backend
+        chatSocket.onmessage = function (e) {
+            let data = JSON.parse(e.data)
+            $('#chat-box').html($('#chat-box').html() + '<br/>' + data.sender_username + ': ' + data.message);
+        }
+
+        // frontend requests to backend to accept connection
+        chatSocket.onopen = function (e) {
+            console.log('Websocket Connected');
+            $('#msg').removeClass('red');
+            $('#msg').addClass('green');
+        };
+
+        chatSocket.onclose = function (e) {
+            console.log('Websocket Disconnected');
+            $('#msg').removeClass('green');
+            $('#msg').addClass('red');
+        };
+
+        chatSocket.onerror = function (e) {
+            console.log('Websocket Error');
+            $('#msg').removeClass('green');
+            $('#msg').addClass('yellow');
+
+        };
+
+
+        $('#sendbtn').click(function (e) {
+            let msg = $('#msg').val();
+            chatSocket.send(msg);
+            $('#msg').val('');
+        });
+    </script>
+{% endblock %}
+
+
+
+
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+{#    <title></title>#}
+{#    <script src="https://code.jquery.com/jquery-3.7.1.min.js"#}
+{#            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<style>#}
+{#    .green {#}
+{#        background-color: green;#}
+{#    }#}
+{##}
+{#    .red {#}
+{#        background-color: red;#}
+{#    }#}
+{##}
+{#    .yellow {#}
+{#        background-color: yellow;#}
+{#    }#}
+{#</style>#}
+{##}
+{##}
+{#{% if request.user == chat.ad.user %}#}
+{#    <h4 class="">در حال گفتگو با {{ chat.sender }}</h4>#}
+{#    {% if chat.sender.is_online %}ONLINE{% else %}OFFLINE{% endif %}#}
+{#{% else %}#}
+{#    <h4 class="">در حال گفتگو با {{ chat.ad.user }}</h4>#}
+{#    {% if chat.ad.user.is_online %}ONLINE{% else %}OFFLINE{% endif %}#}
+{#{% endif %}#}
+{#<hr>#}
+{##}
+{#<hr>#}
+{##}
+{##}
+{#{% for message in messages %}#}
+{#    <p>#}
+{#        {{ message.sender }} -#}
+{#        <span style="color: green">#}
+{#            {{ message.text }}#}
+{#        </span>#}
+{#        {{ message.timestamp|timesince }} Ago#}
+{##}
+{#        {% if message.is_seen %}#}
+{#            <span style="color: green">SEEN</span>#}
+{#        {% else %}#}
+{#            <span style="color: red">NOT SEEN</span>#}
+{#        {% endif %}#}
+{#    </p>#}
+{#{% endfor %}#}
+{##}
+{##}
+{#<div id="chat-box">#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#<div>#}
+{#    <input id="msg" placeholder="متن پیام...">#}
+{##}
+{#    <button id="sendbtn" type="submit">#}
+{#        ارسال پیام#}
+{#    </button>#}
+{#</div>#}
+{##}
+{##}
+{#<script>#}
+{#const wsScheme = (window.location.protocol === "http:") ? "ws" : "ws";#}
+{#const chatSocket = new WebSocket(#}
+{#        wsScheme + "://" + window.location.host + "/ws/chat/{{ chat.uuid }}/"#}
+{#);#}
+{#    const chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/{{ chat.uuid }}/');#}
+{##}
+{##}
+{#    // frontend receiver just like django channels receiver function#}
+{#    // receives data from backend#}
+{#    chatSocket.onmessage = function (e) {#}
+{#        let data = JSON.parse(e.data)#}
+{#        $('#chat-box').html($('#chat-box').html() + '<br/>' + data.sender_username + ': ' + data.message);#}
+{#    }#}
+{##}
+{#    // frontend requests to backend to accept connection#}
+{#    chatSocket.onopen = function (e) {#}
+{#        console.log('Websocket Connected');#}
+{#        $('#msg').removeClass('red');#}
+{#        $('#msg').addClass('green');#}
+{#    };#}
+{##}
+{#    chatSocket.onclose = function (e) {#}
+{#        console.log('Websocket Disconnected');#}
+{#        $('#msg').removeClass('green');#}
+{#        $('#msg').addClass('red');#}
+{#    };#}
+{##}
+{#    chatSocket.onerror = function (e) {#}
+{#        console.log('Websocket Error');#}
+{#        $('#msg').removeClass('green');#}
+{#        $('#msg').addClass('yellow');#}
+{##}
+{#    };#}
+{##}
+{##}
+{#    $('#sendbtn').click(function (e) {#}
+{#        let msg = $('#msg').val();#}
+{#        chatSocket.send(msg);#}
+{#        $('#msg').val('');#}
+{#    });#}
+{#</script>#}
+{##}
+{##}
+{#</body>#}
+{#</html>#}

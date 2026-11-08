@@ -1,0 +1,86 @@
+{% load static %}
+
+<div class="ad-gallery-wrap">
+    {% with images=ad.gallery.all total=ad.gallery.all|length %}
+
+    {% if total == 0 %}
+        <div class="gallery-empty">
+            <i class="fas fa-image"></i>
+            <p>تصویری ثبت نشده است</p>
+        </div>
+
+    {% elif total == 1 %}
+        <div class="gallery-grid grid-single">
+            <div class="gallery-cell" data-index="0">
+                <img src="{{ images.0.image.url }}" alt="{{ ad.title }}">
+            </div>
+        </div>
+
+    {% elif total <= 4 %}
+        <div class="gallery-grid grid-{{ total }}">
+            {% for img in images %}
+                <div class="gallery-cell" data-index="{{ forloop.counter0 }}">
+                    <img src="{{ img.image.url }}" alt="{{ ad.title }}">
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="gallery-grid grid-hero">
+            <div class="gallery-cell hero-main" data-index="0">
+                <img src="{{ images.0.image.url }}" alt="{{ ad.title }}">
+            </div>
+            {% for img in images|slice:"1:5" %}
+                <div class="gallery-cell" data-index="{{ forloop.counter }}">
+                    <img src="{{ img.image.url }}" alt="{{ ad.title }}">
+                    {% if forloop.last %}
+                        <div class="gallery-overlay">
+                            <i class="fas fa-images"></i>
+                            <span>+{{ total|add:"-5" }} عکس دیگر</span>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if total > 0 %}
+        <button type="button" class="gallery-show-all" id="showAllImages">
+            <i class="fas fa-expand"></i>
+            نمایش همه تصاویر ({{ total }})
+        </button>
+    {% endif %}
+
+    {% endwith %}
+</div>
+
+<!-- ═══ Lightbox ═══ -->
+<div class="glb" id="galleryLightbox" aria-hidden="true">
+    <div class="glb-backdrop" id="glbBackdrop"></div>
+
+    <button type="button" class="glb-close" id="glbClose" aria-label="بستن">
+        <i class="fas fa-times"></i>
+    </button>
+
+    <button type="button" class="glb-nav glb-prev" id="glbPrev" aria-label="قبلی">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    <button type="button" class="glb-nav glb-next" id="glbNext" aria-label="بعدی">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="glb-stage">
+        <img src="" alt="" id="glbImage" class="glb-image">
+        <div class="glb-counter" id="glbCounter">1 / 1</div>
+    </div>
+
+    <div class="glb-thumbs" id="glbThumbs"></div>
+
+    <script type="application/json" id="glbData">
+    [
+        {% for img in ad.gallery.all %}
+        {"url": "{{ img.image.url }}", "is_main": {{ img.is_main|yesno:"true,false" }}}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ]
+    </script>
+</div>
