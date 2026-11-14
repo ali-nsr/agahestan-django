@@ -1,306 +1,684 @@
-{% extends 'accounts/dashboard/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
+{% block content %}
 
-{% block dashboard %}
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <style>
-        .green {
-            background-color: green;
-        }
+    <div class="chat-page">
+        <div class="chat-shell">
 
-        .red {
-            background-color: red;
-        }
+            <!-- ═══ Header ═══ -->
+            <div class="chat-head">
+                <a href="{% url 'chat:chat-list' %}" class="chat-back" aria-label="بازگشت">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
 
-        .yellow {
-            background-color: yellow;
-        }
-    </style>
-
-
-    <div class="goodup-dashboard-content">
-        <div class="dashboard-tlbar d-block mb-5">
-            <div class="row">
-                <div class="colxl-12 col-lg-12 col-md-12">
-                    <h1 class="ft-medium fs-lg">پیام ها</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item text-muted"><a href="#">خانه</a></li>
-                            <li class="breadcrumb-item text-muted"><a href="#">داشبورد</a></li>
-                            <li class="breadcrumb-item"><a href="#" class="theme-cl">پیام ها</a></li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-
-        <div class="dashboard-widg-bar d-block">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="_dashboard_content bg-white rounded mb-4">
-
-                        <div class="_dashboard_content_body">
-                            <!-- Convershion -->
-                            <div class="messages-container margin-top-0">
-                                <div class="messages-headline">
-                                    <h4 class="">
-                                        {{ chat.sender }}
-                                    </h4>
-                                    {#                                    <a href="#" class="message-action"><i class="ti-trash"></i> حذف پیام ها</a>#}
-                                </div>
-
-                                <div class="messages-container-inner">
-
-                                    <!-- Messages -->
-                                    {#                                    <div class="dash-msg-inbox">#}
-                                    {#                                        <ul>#}
-                                    {#                                            {% for chat in chats %}#}
-                                    {#                                                <li class="active-message">#}
-                                    {#                                                <li>#}
-                                    {#                                                    <a href="#">#}
-                                    {#                                                        <div class="dash-msg-avatar">#}
-                                    {#                                                            <img src="assets/img/t-2.png" alt="">#}
-                                    {#                                                            <span class="_user_status offline"></span>#}
-                                    {#                                                        </div>#}
-                                    {##}
-                                    {#                                                        <div class="message-by">#}
-                                    {#                                                            <div class="message-by-headline">#}
-                                    {#                                                                <h5>#}
-                                    {#                                                                    {{ chat.sender.phone }}#}
-                                    {#                                                                </h5>#}
-                                    {#                                                                <span>#}
-                                    {#                                                                    {{ chat.created_at|timesince }}#}
-                                    {#                                                                </span>#}
-                                    {#                                                            </div>#}
-                                    {#                                                            <p>#}
-                                    {#                                                                {{ chat.messages.last.text|truncatechars:10 }}#}
-                                    {#                                                            </p>#}
-                                    {#                                                        </div>#}
-                                    {#                                                    </a>#}
-                                    {#                                                </li>#}
-                                    {#                                            {% endfor %}#}
-                                    {##}
-                                    {#                                        </ul>#}
-                                    {#                                    </div>#}
-                                    <!-- Messages / End -->
-
-                                    <!-- Message Content -->
-                                    <div class="dash-msg-content">
-
-
-                                        {% for message in chat_messages %}
-                                            <div class="message-plunch">
-                                                {{ message.sender }}
-                                                <div class="dash-msg-text">
-                                                    <p>
-                                                        {{ message.text }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-
-
-                                        <div id="chat-box" class="message-plunch">
-                                            <div class="dash-msg-text">
-                                                <p>
-                                                </p>
-                                            </div>
-                                        </div>
-
-
-                                        {#                                        <div class="message-plunch me">#}
-                                        {#                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>#}
-                                        {#                                            <div class="dash-msg-text"><p>طراحان رایانه ای علی الخصوص طراحان خلاقی و#}
-                                        {#                                                فرهنگ پیشرو در زبان فارسی ایجاد کرد</p></div>#}
-                                        {#                                        </div>#}
-
-
-                                        <!-- Reply Area -->
-                                        <div class="clearfix"></div>
-                                        <div class="message-reply">
-                                            <input id="msg" placeholder="متن پیام...">
-
-                                            <button id="sendbtn" type="submit">
-                                                ارسال پیام
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                    <!-- Message Content -->
-
-                                </div>
-
-                            </div>
+                <div class="chat-head-user">
+                    <div class="chat-head-avatar">
+                        {{ other_user.get_full_name|default:other_user.phone|slice:":1"|upper }}
+                        {% if other_user.is_online %}
+                            <span class="chat-online"></span>
+                        {% endif %}
+                    </div>
+                    <div class="chat-head-info">
+                        <div class="chat-head-name">
+                            {{ other_user.get_full_name|default:other_user.phone }}
+                        </div>
+                        <div class="chat-head-status">
+                            {% if other_user.is_online %}
+                                <span class="status-online">آنلاین</span>
+                            {% else %}
+                                <span class="status-offline">آفلاین</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
+
+                <a href="{% url 'ad:ad-detail' chat.ad.uuid %}"
+                   class="chat-head-ad" title="{{ chat.ad.title }}">
+                    <i class="fas fa-tag"></i>
+                </a>
+            </div>
+
+            <!-- ═══ Messages ═══ -->
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-messages-inner">
+
+                    {% if not chat_messages %}
+                        <div class="chat-empty" id="emptyMsg">
+                            <i class="fas fa-comment-dots"></i>
+                            <p>شروع مکالمه با {{ other_user.get_full_name|default:other_user.phone }}</p>
+                            <span>اولین پیام را بفرستید</span>
+                        </div>
+                    {% endif %}
+
+                    {% for msg in chat_messages %}
+                        <div class="bubble-row {% if msg.sender_id == request.user.id %}mine{% else %}theirs{% endif %}"
+                             data-msg-id="{{ msg.id }}">
+                            <div class="bubble">
+                                <div class="bubble-text">{{ msg.text|linebreaksbr }}</div>
+                                <div class="bubble-meta">
+                                    <span class="bubble-time">{{ msg.timestamp|date:"H:i" }}</span>
+                                    {% if msg.sender_id == request.user.id %}
+                                        <i class="fas fa-check{% if msg.is_seen %}-double{% endif %} bubble-check"></i>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- ═══ Input ═══ -->
+            <form class="chat-compose" id="chatForm" autocomplete="off">
+                {% csrf_token %}
+                <textarea
+                        id="messageInput"
+                        rows="1"
+                        placeholder="پیام خود را بنویسید..."
+                        maxlength="2000"></textarea>
+                <button type="submit" id="sendBtn" aria-label="ارسال">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+
+            <!-- Connection status -->
+            <div class="chat-conn-status" id="connStatus" style="display:none;">
+                <i class="fas fa-wifi"></i>
+                <span>در حال اتصال...</span>
             </div>
 
         </div>
-
     </div>
 
-
-    <script>
-        {#const wsScheme = (window.location.protocol === "http:") ? "ws" : "ws";#}
-        {#const chatSocket = new WebSocket(#}
-        {#        wsScheme + "://" + window.location.host + "/ws/chat/{{ chat.uuid }}/"#}
-        {#);#}
-        {#const chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/{{ chat.uuid }}/');#}
-        const chatSocket = new WebSocket('wss://agahestan.nutrikala.com/ws/chat/{{ chat.uuid }}/');
-
-
-        // frontend receiver just like django channels receiver function
-        // receives data from backend
-        chatSocket.onmessage = function (e) {
-            let data = JSON.parse(e.data)
-            $('#chat-box').html($('#chat-box').html() + '<br/>' + data.sender_username + ': ' + data.message);
+    <style>
+        .chat-page {
+            background: #f5f7fa;
+            padding: 20px 0 40px;
+            min-height: calc(100vh - 80px);
         }
 
-        // frontend requests to backend to accept connection
-        chatSocket.onopen = function (e) {
-            console.log('Websocket Connected');
-            $('#msg').removeClass('red');
-            $('#msg').addClass('green');
-        };
+        .chat-shell {
+            max-width: 780px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 160px);
+            min-height: 500px;
+            box-shadow: 0 4px 24px rgba(15, 23, 42, .06);
+            border: 1px solid #eef1f6;
+        }
 
-        chatSocket.onclose = function (e) {
-            console.log('Websocket Disconnected');
-            $('#msg').removeClass('green');
-            $('#msg').addClass('red');
-        };
+        /* ═══ Header ═══ */
+        .chat-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            background: linear-gradient(135deg, #fafbfc 0%, #fff 100%);
+            flex-shrink: 0;
+        }
 
-        chatSocket.onerror = function (e) {
-            console.log('Websocket Error');
-            $('#msg').removeClass('green');
-            $('#msg').addClass('yellow');
+        .chat-back {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all .15s;
+            flex-shrink: 0;
+        }
 
-        };
+        .chat-back:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
 
+        .chat-head-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
 
-        $('#sendbtn').click(function (e) {
-            let msg = $('#msg').val();
-            chatSocket.send(msg);
-            $('#msg').val('');
-        });
-    </script>
+        .chat-head-avatar {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+            color: #f41b3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .chat-online {
+            position: absolute;
+            bottom: 1px;
+            left: 1px;
+            width: 11px;
+            height: 11px;
+            background: #10b981;
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+
+        .chat-head-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .chat-head-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-head-status {
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .status-online {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .status-offline {
+            color: #94a3b8;
+        }
+
+        .chat-head-ad {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #fff1f3;
+            color: #f41b3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 13px;
+            flex-shrink: 0;
+            transition: all .15s;
+        }
+
+        .chat-head-ad:hover {
+            background: #f41b3b;
+            color: #fff;
+        }
+
+        /* ═══ Messages ═══ */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            background: radial-gradient(circle at 20% 30%, rgba(244, 27, 59, .02), transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(139, 92, 246, .02), transparent 40%),
+            #f8fafc;
+            padding: 20px 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .chat-messages-inner {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-width: 100%;
+        }
+
+        /* ═══ Bubble ═══ */
+        .bubble-row {
+            display: flex;
+            width: 100%;
+        }
+
+        .bubble-row.mine {
+            justify-content: flex-start;
+        }
+
+        /* RTL: mine on right visually → flex-start */
+        .bubble-row.theirs {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 75%;
+            padding: 9px 12px 6px;
+            border-radius: 14px;
+            position: relative;
+            animation: bubbleIn .2s ease;
+            word-wrap: break-word;
+        }
+
+        @keyframes bubbleIn {
+            from {
+                opacity: 0;
+                transform: scale(.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .bubble-row.mine .bubble {
+            background: linear-gradient(135deg, #f41b3b 0%, #d3152f 100%);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bubble-row.theirs .bubble {
+            background: #fff;
+            color: #0f172a;
+            border: 1px solid #eef1f6;
+            border-bottom-left-radius: 4px;
+        }
+
+        .bubble-text {
+            font-size: 13.5px;
+            line-height: 1.65;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .bubble-meta {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+            margin-top: 3px;
+            font-size: 10px;
+        }
+
+        .bubble-row.mine .bubble-meta {
+            color: rgba(255, 255, 255, .8);
+        }
+
+        .bubble-row.theirs .bubble-meta {
+            color: #94a3b8;
+        }
+
+        .bubble-check {
+            font-size: 10px;
+        }
+
+        .bubble-row.mine .bubble-check {
+            color: rgba(255, 255, 255, .7);
+        }
+
+        .bubble-row.mine .bubble-check.fa-check-double {
+            color: #b3f0dc;
+        }
+
+        /* ═══ Empty ═══ */
+        .chat-empty {
+            text-align: center;
+            margin: auto;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+
+        .chat-empty i {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+
+        .chat-empty p {
+            font-size: 14px;
+            font-weight: 700;
+            color: #475569;
+            margin: 0 0 4px;
+        }
+
+        .chat-empty span {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        /* ═══ Compose ═══ */
+        .chat-compose {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid #f1f5f9;
+            background: #fff;
+            flex-shrink: 0;
+        }
+
+        .chat-compose textarea {
+            flex: 1;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 22px;
+            padding: 10px 16px;
+            font-size: 13.5px;
+            font-family: inherit;
+            color: #0f172a;
+            resize: none;
+            max-height: 120px;
+            line-height: 1.6;
+            background: #fafbfc;
+            transition: all .15s;
+        }
+
+        .chat-compose textarea:focus {
+            outline: none;
+            border-color: #f41b3b;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(244, 27, 59, .1);
+        }
+
+        .chat-compose textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        #sendBtn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #f41b3b 0%, #d3152f 100%);
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(244, 27, 59, .3);
+        }
+
+        #sendBtn:hover:not(:disabled) {
+            transform: translateY(-1px) scale(1.05);
+            box-shadow: 0 6px 16px rgba(244, 27, 59, .4);
+        }
+
+        #sendBtn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        /* ═══ Connection status ═══ */
+        .chat-conn-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 12px;
+            font-weight: 600;
+            border-top: 1px solid #fde68a;
+        }
+
+        /* ═══ Responsive ═══ */
+        @media (max-width: 767px) {
+            .chat-page {
+                padding: 0;
+                min-height: calc(100vh - 60px);
+            }
+
+            .chat-shell {
+                border-radius: 0;
+                height: calc(100vh - 120px);
+                min-height: 400px;
+                box-shadow: none;
+                border: none;
+            }
+
+            .bubble {
+                max-width: 85%;
+            }
+
+            .bubble-text {
+                font-size: 13px;
+            }
+
+            .chat-head {
+                padding: 10px 12px;
+            }
+
+            .chat-compose {
+                padding: 10px 12px;
+            }
+
+            .chat-messages {
+                padding: 14px 10px;
+            }
+        }
+    </style>
+
 {% endblock %}
 
+{% block extra_js %}
+    <script>
+        (function () {
+            'use strict';
+
+            var chatUuid = "{{ chat.uuid }}";
+            var currentUserId = {{ request.user.id }};
+
+            var protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+            //var wsUrl = protocol + window.location.host + '/ws/chat/' + chatUuid + '/';
+            //var wsUrl = 'wss://agahestan.nutrikala.com/ws/chat/' + chatUuid + '/';
+            var wsUrl = protocol + window.location.host + '/ws/chat/' + chatUuid + '/';
 
 
+            var $messages = document.getElementById('chatMessages');
+            var $inner = $messages.querySelector('.chat-messages-inner');
+            var $input = document.getElementById('messageInput');
+            var $form = document.getElementById('chatForm');
+            var $sendBtn = document.getElementById('sendBtn');
+            var $connStatus = document.getElementById('connStatus');
 
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
-{#    <title></title>#}
-{#    <script src="https://code.jquery.com/jquery-3.7.1.min.js"#}
-{#            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>#}
-{#</head>#}
-{#<body>#}
-{##}
-{#<style>#}
-{#    .green {#}
-{#        background-color: green;#}
-{#    }#}
-{##}
-{#    .red {#}
-{#        background-color: red;#}
-{#    }#}
-{##}
-{#    .yellow {#}
-{#        background-color: yellow;#}
-{#    }#}
-{#</style>#}
-{##}
-{##}
-{#{% if request.user == chat.ad.user %}#}
-{#    <h4 class="">در حال گفتگو با {{ chat.sender }}</h4>#}
-{#    {% if chat.sender.is_online %}ONLINE{% else %}OFFLINE{% endif %}#}
-{#{% else %}#}
-{#    <h4 class="">در حال گفتگو با {{ chat.ad.user }}</h4>#}
-{#    {% if chat.ad.user.is_online %}ONLINE{% else %}OFFLINE{% endif %}#}
-{#{% endif %}#}
-{#<hr>#}
-{##}
-{#<hr>#}
-{##}
-{##}
-{#{% for message in messages %}#}
-{#    <p>#}
-{#        {{ message.sender }} -#}
-{#        <span style="color: green">#}
-{#            {{ message.text }}#}
-{#        </span>#}
-{#        {{ message.timestamp|timesince }} Ago#}
-{##}
-{#        {% if message.is_seen %}#}
-{#            <span style="color: green">SEEN</span>#}
-{#        {% else %}#}
-{#            <span style="color: red">NOT SEEN</span>#}
-{#        {% endif %}#}
-{#    </p>#}
-{#{% endfor %}#}
-{##}
-{##}
-{#<div id="chat-box">#}
-{##}
-{#</div>#}
-{##}
-{##}
-{#<div>#}
-{#    <input id="msg" placeholder="متن پیام...">#}
-{##}
-{#    <button id="sendbtn" type="submit">#}
-{#        ارسال پیام#}
-{#    </button>#}
-{#</div>#}
-{##}
-{##}
-{#<script>#}
-{#const wsScheme = (window.location.protocol === "http:") ? "ws" : "ws";#}
-{#const chatSocket = new WebSocket(#}
-{#        wsScheme + "://" + window.location.host + "/ws/chat/{{ chat.uuid }}/"#}
-{#);#}
-{#    const chatSocket = new WebSocket('ws://127.0.0.1:8000/ws/chat/{{ chat.uuid }}/');#}
-{##}
-{##}
-{#    // frontend receiver just like django channels receiver function#}
-{#    // receives data from backend#}
-{#    chatSocket.onmessage = function (e) {#}
-{#        let data = JSON.parse(e.data)#}
-{#        $('#chat-box').html($('#chat-box').html() + '<br/>' + data.sender_username + ': ' + data.message);#}
-{#    }#}
-{##}
-{#    // frontend requests to backend to accept connection#}
-{#    chatSocket.onopen = function (e) {#}
-{#        console.log('Websocket Connected');#}
-{#        $('#msg').removeClass('red');#}
-{#        $('#msg').addClass('green');#}
-{#    };#}
-{##}
-{#    chatSocket.onclose = function (e) {#}
-{#        console.log('Websocket Disconnected');#}
-{#        $('#msg').removeClass('green');#}
-{#        $('#msg').addClass('red');#}
-{#    };#}
-{##}
-{#    chatSocket.onerror = function (e) {#}
-{#        console.log('Websocket Error');#}
-{#        $('#msg').removeClass('green');#}
-{#        $('#msg').addClass('yellow');#}
-{##}
-{#    };#}
-{##}
-{##}
-{#    $('#sendbtn').click(function (e) {#}
-{#        let msg = $('#msg').val();#}
-{#        chatSocket.send(msg);#}
-{#        $('#msg').val('');#}
-{#    });#}
-{#</script>#}
-{##}
-{##}
-{#</body>#}
-{#</html>#}
+            var ws = null;
+            var reconnectTimer = null;
+
+            // ─── Scroll ───
+            function scrollBottom(instant) {
+                if (instant) {
+                    $messages.scrollTop = $messages.scrollHeight;
+                } else {
+                    $messages.scrollTo({
+                        top: $messages.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            // ─── Escape ───
+            function escapeHtml(text) {
+                var div = document.createElement('div');
+                div.textContent = text == null ? '' : String(text);
+                return div.innerHTML;
+            }
+
+            // ─── Append new message ───
+            function appendMessage(data) {
+                var empty = document.getElementById('emptyMsg');
+                if (empty) empty.remove();
+
+                var mine = Number(data.sender_id) === Number(currentUserId);
+
+                var row = document.createElement('div');
+                row.className = 'bubble-row ' + (mine ? 'mine' : 'theirs');
+                row.dataset.msgId = data.message_id;   // ← اضافه شد
+
+                var bubble = document.createElement('div');
+                bubble.className = 'bubble';
+
+                var textDiv = document.createElement('div');
+                textDiv.className = 'bubble-text';
+                textDiv.innerHTML = escapeHtml(data.message).replace(/\n/g, '<br>');
+                bubble.appendChild(textDiv);
+
+                var meta = document.createElement('div');
+                meta.className = 'bubble-meta';
+
+                var time = document.createElement('span');
+                time.className = 'bubble-time';
+                time.textContent = data.time || '';
+                meta.appendChild(time);
+
+                if (mine) {
+                    var check = document.createElement('i');
+                    check.className = 'fas fa-check bubble-check';
+                    meta.appendChild(check);
+                }
+
+                bubble.appendChild(meta);
+                row.appendChild(bubble);
+                $inner.appendChild(row);
+
+                scrollBottom(false);
+            }
+
+            // ─── WS status ───
+            function showConnStatus(text) {
+                $connStatus.style.display = 'flex';
+                $connStatus.querySelector('span').textContent = text;
+            }
+
+            function hideConnStatus() {
+                $connStatus.style.display = 'none';
+            }
+
+            // ─── Connect ───
+            function connect() {
+                try {
+                    ws = new WebSocket(wsUrl);
+                } catch (e) {
+                    showConnStatus('خطا در اتصال');
+                    return;
+                }
+
+                ws.onopen = function () {
+                    console.log('[WS] connected');
+                    hideConnStatus();
+                    $sendBtn.disabled = false;
+                };
+
+                ws.onmessage = function (e) {
+                    var data;
+                    try {
+                        data = JSON.parse(e.data);
+                    } catch (err) {
+                        return;
+                    }
+
+                    // ═══ messages_seen ═══
+                    if (data.type === 'messages_seen') {
+                        data.message_ids.forEach(function (id) {
+                            var $check = document.querySelector(
+                                '.bubble-row[data-msg-id="' + id + '"] .bubble-check'
+                            );
+                            if ($check) {
+                                $check.classList.remove('fa-check');
+                                $check.classList.add('fa-check-double');
+                            }
+                        });
+                        return;
+                    }
+
+                    // ═══ chat_message ═══
+                    appendMessage(data);
+                };
+
+                ws.onclose = function (e) {
+                    console.log('[WS] closed', e.code);
+                    $sendBtn.disabled = true;
+
+                    if (e.code !== 1000) {
+                        showConnStatus('اتصال قطع شد، در حال تلاش مجدد...');
+                        scheduleReconnect();
+                    } else {
+                        showConnStatus('اتصال بسته شد');
+                    }
+                };
+
+                ws.onerror = function () {
+                    console.warn('[WS] error');
+                };
+            }
+
+            function scheduleReconnect() {
+                if (reconnectTimer) return;
+                reconnectTimer = setTimeout(function () {
+                    reconnectTimer = null;
+                    connect();
+                }, 3000);
+            }
+
+            // ─── Send ───
+            $form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                var text = $input.value.trim();
+                if (!text) return;
+
+                if (!ws || ws.readyState !== WebSocket.OPEN) {
+                    alert('اتصال برقرار نیست. لطفاً صبر کنید...');
+                    return;
+                }
+
+                ws.send(text);
+                $input.value = '';
+                $input.style.height = 'auto';
+                $input.focus();
+            });
+
+            // ─── Enter to send, Shift+Enter for newline ───
+            $input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    $form.dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));
+                }
+            });
+
+            // ─── Auto-resize ───
+            $input.addEventListener('input', function () {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+
+            // ─── Init ───
+            connect();
+            $sendBtn.disabled = true;   // تا اتصال برقرار بشه
+            scrollBottom(true);
+
+            // ─── Focus (موبایل کلیدبورد باز نکن) ───
+            if (window.matchMedia('(min-width: 768px)').matches) {
+                $input.focus();
+            }
+        })();
+    </script>
+{% endblock %}

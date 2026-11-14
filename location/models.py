@@ -55,7 +55,7 @@ class Neighborhood(models.Model):
 load_fixtures = """
 
 python manage.py loaddata categories.json & python manage.py loaddata real_estate_fields.json
-
+python manage.py loaddata vehicles.json & python manage.py loaddata vehicle_fields.json
 python manage.py loaddata provinces.json & python manage.py loaddata cities.json & python manage.py loaddata neighborhoods.json
 
 

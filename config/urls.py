@@ -10,8 +10,8 @@ urlpatterns = [
     path('chat/', include('chat.urls', namespace='chat')),
     path('account/', include('accounts.urls', namespace='accounts')),
     path('social/', include('social.urls', namespace='social')),
-
     path('admin/', admin.site.urls),
+
 ]
 
 if conf_settings.DEBUG:

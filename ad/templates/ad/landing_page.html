@@ -1,0 +1,777 @@
+{% extends 'base.html' %}
+{% load static humanize ad_tags %}
+
+{% block extra_css %}
+    <link href="{% static 'select2.min.css' %}" rel="stylesheet">
+    <style>
+        .filter-toggle-mobile {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            background: #fff;
+            border: 1.5px solid #eef1f6;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
+        }
+
+        .filter-toggle-mobile:hover,
+        .filter-toggle-mobile:active {
+            border-color: #f41b3b;
+            color: #f41b3b;
+        }
+
+        .ftm-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ftm-left i:first-child {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fff1f3 0%, #ffe0e6 100%);
+            color: #f41b3b;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .ftm-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #059669;
+            background: #f0fdf4;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .ftm-arrow {
+            font-size: 11px;
+            color: #94a3b8;
+            transition: transform .25s;
+        }
+
+        .filter-toggle-mobile[aria-expanded="true"] .ftm-arrow {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 991.98px) {
+            .filter-toggle-mobile {
+                display: flex;
+            }
+        }
+
+        .filter-card {
+            background: #fff;
+            border: 1px solid #eef1f6;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, .04);
+            margin-bottom: 20px;
+        }
+
+        .filter-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #fafbfc 0%, #fff 100%);
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .fch-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .fch-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+            color: #f41b3b;
+            border-radius: 9px;
+            font-size: 12px;
+        }
+
+        .fch-clear {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: all .15s;
+        }
+
+        .fch-clear:hover {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .filter-card-body {
+            padding: 20px;
+        }
+
+        .cf-item {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed #f1f5f9;
+        }
+
+        .cf-item:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 16px;
+        }
+
+        .cf-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .cf-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #f41b3b;
+            box-shadow: 0 0 0 3px rgba(244, 27, 59, .15);
+        }
+
+        .cf-input {
+            width: 100%;
+            font-size: 13px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1.5px solid #e2e8f0;
+            background: #fafbfc;
+            color: #334155;
+            transition: all .2s;
+        }
+
+        .cf-input:hover {
+            border-color: #cbd5e1;
+            background: #fff;
+        }
+
+        .cf-input:focus {
+            outline: none;
+            border-color: #f41b3b;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(244, 27, 59, .1);
+        }
+
+        .cf-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            padding: 4px 0;
+        }
+
+        .cf-toggle input {
+            display: none;
+        }
+
+        .cf-toggle-track {
+            width: 38px;
+            height: 22px;
+            background: #cbd5e1;
+            border-radius: 12px;
+            position: relative;
+            transition: background .25s;
+            flex-shrink: 0;
+        }
+
+        .cf-toggle-thumb {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform .25s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+        }
+
+        .cf-toggle input:checked + .cf-toggle-track {
+            background: #f41b3b;
+        }
+
+        .cf-toggle input:checked + .cf-toggle-track .cf-toggle-thumb {
+            transform: translateX(-16px);
+        }
+
+        .cf-toggle-text {
+            font-size: 12.5px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .cf-toggle input:checked ~ .cf-toggle-text {
+            color: #f41b3b;
+            font-weight: 700;
+        }
+
+        .cf-submit {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #f41b3b 0%, #d3152f 100%);
+            box-shadow: 0 4px 14px rgba(244, 27, 59, .25);
+            transition: all .2s;
+            cursor: pointer;
+        }
+
+        .cf-submit:hover {
+            background: linear-gradient(135deg, #d3152f 0%, #b5122a 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(244, 27, 59, .35);
+        }
+
+        .cf-empty {
+            text-align: center;
+            padding: 30px 20px;
+            color: #94a3b8;
+        }
+
+        .cf-empty i {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+        }
+
+        .cf-empty p {
+            font-size: 12.5px;
+            margin: 0;
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 10px !important;
+            min-height: 42px;
+            background: #fafbfc;
+            transition: all .15s;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--multiple,
+        .select2-container--default.select2-container--open .select2-selection--multiple {
+            border-color: #f41b3b !important;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(244, 27, 59, .1) !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background: #fff1f3 !important;
+            border: 1px solid #ffd0d8 !important;
+            color: #f41b3b !important;
+            padding: 3px 10px 3px 6px !important;
+            border-radius: 6px !important;
+            font-size: 11.5px !important;
+            font-weight: 700 !important;
+            margin: 4px 4px 4px 0 !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: #ff5470 !important;
+            font-size: 14px !important;
+            margin: 0 0 0 4px !important;
+            padding: 0 !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            color: #ef4444 !important;
+            background: transparent !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-search__field {
+            font-family: inherit;
+            font-size: 12.5px;
+            padding: 4px !important;
+            margin: 4px 0 !important;
+        }
+
+        .select2-dropdown {
+            border: 1.5px solid #e2e8f0 !important;
+            border-radius: 10px !important;
+            box-shadow: 0 10px 28px rgba(15, 23, 42, .12) !important;
+            margin-top: 4px;
+        }
+
+        .select2-results__option {
+            font-size: 12.5px;
+            padding: 9px 12px;
+        }
+
+        .select2-results__option--highlighted[aria-selected] {
+            background: #fff1f3 !important;
+            color: #f41b3b !important;
+        }
+
+        .select2-results__option[aria-selected="true"] {
+            background: #f0fdf4 !important;
+            color: #059669 !important;
+            font-weight: 700;
+        }
+
+        .pagination .page-link {
+            border-radius: 8px !important;
+            margin: 0 2px;
+            color: #475569;
+            border-color: #e2e8f0;
+            font-size: 13px;
+        }
+
+        .pagination .page-link:hover {
+            color: #f41b3b;
+            border-color: #f41b3b;
+        }
+
+        .pagination .page-item.active .page-link {
+            color: #fff;
+        }
+
+
+        /* ─── نوار اسکرول افقی برای دسته‌بندی‌ها ─── */
+.Goodup-all-drp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 4px 10px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+}
+
+.Goodup-all-drp::-webkit-scrollbar {
+    height: 6px;
+}
+
+.Goodup-all-drp::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.Goodup-all-drp::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.Goodup-all-drp::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.Goodup-all-drp > .Goodup-single-drp {
+    flex-shrink: 0;
+}
+
+.Goodup-all-drp .btn {
+    white-space: nowrap;
+}
+
+/* ─── سایه‌های نرم کنار نوار (نشون می‌ده اسکرول هست) ─── */
+.cats-filters {
+    position: relative;
+}
+
+.cats-filters::before,
+.cats-filters::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 20px;
+    width: 40px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.cats-filters::before {
+    right: 0;
+    background: linear-gradient(to left, #fff 0%, transparent 100%);
+}
+
+.cats-filters::after {
+    left: 0;
+    background: linear-gradient(to right, #fff 0%, transparent 100%);
+}
+
+@media (max-width: 768px) {
+    .cats-filters::before,
+    .cats-filters::after {
+        width: 24px;
+    }
+}
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <section class="cats-filters py-3">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-12">
+                    <div class="Goodup-all-drp">
+
+    <div class="Goodup-single-drp small">
+        <div class="btn-group">
+            <a href="{% url 'ad:iran-landing' %}" class="btn bg-dark text-light">همه</a>
+        </div>
+    </div>
+
+    {% if category %}
+        {% if category.children.all %}
+            {# ─── دسته فرزند داره → فرزندان رو نشون بده ─── #}
+            {% if category.parent %}
+                <div class="Goodup-single-drp small">
+                    <div class="btn-group">
+                        <a href="{% url 'ad:iran-category-landing' category_slug=category.parent.slug %}"
+                           class="btn btn-secondary">
+                            <i class="fas fa-arrow-right ms-1"></i>
+                            {{ category.parent.title }}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% for child in category.children.all %}
+                <div class="Goodup-single-drp small">
+                    <div class="btn-group">
+                        <a href="{% url 'ad:iran-category-landing' category_slug=child.slug %}"
+                           class="btn btn-secondary">
+                            {{ child.title }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% else %}
+            {# ─── دسته برگه → خواهر و برادرها رو نشون بده ─── #}
+            {% if category.parent %}
+                {% for sibling in category.parent.children.all %}
+                    <div class="Goodup-single-drp small">
+                        <div class="btn-group">
+                            <a href="{% url 'ad:iran-category-landing' category_slug=sibling.slug %}"
+                               class="btn {% if category.slug == sibling.slug %}theme-bg text-light{% else %}btn-secondary{% endif %}">
+                                {{ sibling.title }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+
+    {% else %}
+        {# ─── بدون دسته → dropdown های والدها ─── #}
+        {% for parent in parent_categories %}
+            {% with children=parent.children.all %}
+                {% if children %}
+                    <div class="Goodup-single-drp small">
+                        <div class="btn-group">
+                            <button type="button"
+                                    class="btn btn-secondary dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                {{ parent.title }}
+                            </button>
+                            <ul class="dropdown-menu">
+                                {% for child in children %}
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="{% url 'ad:iran-category-landing' category_slug=child.slug %}">
+                                            {{ child.title }}
+                                            {% if child.children.all %}
+                                                <i class="fas fa-chevron-left ms-auto" style="font-size:9px;opacity:.4;"></i>
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
+
+</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="clearfix"></div>
+
+    <section class="gray py-5">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xl-3 col-lg-3 col-12">
+
+                    <button type="button"
+                            class="filter-toggle-mobile"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#filterCollapse"
+                            aria-expanded="{% if request.GET %}true{% else %}false{% endif %}"
+                            aria-controls="filterCollapse">
+                    <span class="ftm-left">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>فیلترها</span>
+                    </span>
+                        {% if request.GET %}
+                            <span class="ftm-badge">
+                            <i class="fas fa-check"></i>
+                            فعال
+                        </span>
+                        {% else %}
+                            <i class="fas fa-chevron-down ftm-arrow"></i>
+                        {% endif %}
+                    </button>
+
+                    <div class="collapse d-lg-block {% if request.GET %}show{% endif %}" id="filterCollapse">
+                        <div class="filter-card">
+
+                            <div class="filter-card-head">
+                                <div class="fch-title">
+                                <span class="fch-icon">
+                                    <i class="fas fa-sliders-h"></i>
+                                </span>
+                                    <span>فیلتر جستجو</span>
+                                </div>
+                                {% if request.GET %}
+                                    <a href="{{ request.path }}" class="fch-clear">
+                                        <i class="fas fa-times"></i>
+                                        پاک کردن
+                                    </a>
+                                {% endif %}
+                            </div>
+
+                            <div class="filter-card-body">
+                                {% include 'ad/components/filter_form.html' %}
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-9 col-lg-9 col-12">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <div>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-1 small">
+                                    <li class="breadcrumb-item">
+                                        <a href="{% url 'ad:iran-landing' %}" class="text-decoration-none text-muted">ایران</a>
+                                    </li>
+                                    {% if city %}
+                                        <li class="breadcrumb-item">
+                                            <a href="{% url 'ad:city-landing' city_slug=city.slug %}"
+                                               class="text-decoration-none text-muted">{{ city.name }}</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if category %}
+                                        <li class="breadcrumb-item active text-dark">{{ category.title }}</li>
+                                    {% endif %}
+                                </ol>
+                            </nav>
+                            <h1 class="ft-bold fs-5 mb-0">{{ page_title }}</h1>
+                        </div>
+                        <span class="badge bg-white text-dark border px-3 py-2">
+                        <i class="fas fa-list-ul ms-1" style="color:#f41b3b;"></i>
+                        {{ total_count|intcomma }} آگهی
+                    </span>
+                    </div>
+
+                    {% if ads %}
+                        <div class="row gx-3 gy-3">
+                            {% for ad in ads %}
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                                    {% include 'ad/components/ad_card.html' %}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        {% if page_obj.has_other_pages %}
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <ul class="pagination justify-content-center mb-0 flex-wrap">
+                                        {% if page_obj.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="?
+                                                           {% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">
+                                                    <i class="fas fa-arrow-circle-right"></i>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for num in page_obj.paginator.page_range %}
+                                            {% if num == page_obj.number %}
+                                                <li class="page-item active">
+                                                    <span class="page-link"
+                                                          style="background:#f41b3b;border-color:#f41b3b;">{{ num }}</span>
+                                                </li>
+                                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                       href="?
+                                                               {% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ num }}">{{ num }}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if page_obj.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="?
+                                                           {% for k, v in request.GET.items %}{% if k != 'page' %}{{ k }}={{ v }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">
+                                                    <i class="fas fa-arrow-circle-left"></i>
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% else %}
+                        <div class="bg-white rounded text-center py-5">
+                            <i class="fas fa-search fs-1 text-muted mb-3 d-block opacity-50"></i>
+                            <h5 class="ft-medium">آگهی‌ای یافت نشد</h5>
+                            <p class="text-muted small mb-3">فیلترها را تغییر دهید یا بعداً دوباره سر بزنید.</p>
+                            {% if request.GET %}
+                                <a href="{{ request.path }}" class="btn btn-sm text-light" style="background:#f41b3b;">
+                                    <i class="fas fa-times ms-1"></i>
+                                    حذف فیلترها
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'select2.min.js' %}"></script>
+    <script>
+        $(function () {
+            function initSelect2() {
+                $('.filter-multi').each(function () {
+                    var $el = $(this);
+                    if ($el.hasClass('select2-hidden-accessible')) {
+                        $el.select2('destroy');
+                    }
+                    $el.select2({
+                        placeholder: $el.data('placeholder') || 'انتخاب کنید',
+                        allowClear: true,
+                        width: '100%',
+                        dir: 'rtl',
+                        closeOnSelect: false,
+                        language: {
+                            noResults: function () {
+                                return 'نتیجه‌ای یافت نشد';
+                            },
+                            searching: function () {
+                                return 'در حال جستجو...';
+                            }
+                        }
+                    });
+                });
+            }
+
+            initSelect2();
+
+            $('#filterCollapse').on('shown.bs.collapse', function () {
+                initSelect2();
+            });
+        });
+    </script>
+
+    <script>
+(function () {
+    var el = document.querySelector('.Goodup-all-drp');
+    if (!el) return;
+
+    el.addEventListener('wheel', function (e) {
+        if (e.deltaY === 0) return;
+        // فقط اگر اسکرول افقی ممکنه
+        if (el.scrollWidth <= el.clientWidth) return;
+
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+    }, { passive: false });
+
+    // کشیدن با ماوس
+    var isDown = false;
+    var startX = 0;
+    var scrollLeftStart = 0;
+
+    el.addEventListener('mousedown', function (e) {
+        isDown = true;
+        startX = e.pageX - el.offsetLeft;
+        scrollLeftStart = el.scrollLeft;
+        el.style.cursor = 'grabbing';
+    });
+
+    el.addEventListener('mouseleave', function () {
+        isDown = false;
+        el.style.cursor = '';
+    });
+
+    el.addEventListener('mouseup', function () {
+        isDown = false;
+        el.style.cursor = '';
+    });
+
+    el.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - el.offsetLeft;
+        var walk = (x - startX) * 1.5;
+        el.scrollLeft = scrollLeftStart - walk;
+    });
+})();
+</script>
+{% endblock %}

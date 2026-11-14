@@ -1,0 +1,29 @@
+{% for node in nodes %}
+<li class="hc-tree-item depth-{{ depth }}{% if node.children %} has-children{% endif %}">
+
+    <div class="hc-tree-row">
+        <a href="{% url 'ad:iran-category-landing' node.slug %}" class="hc-tree-link">
+            <span class="hc-tree-bullet"></span>
+            <span class="hc-tree-text">{{ node.title }}</span>
+            {% if node.is_special %}
+                <span class="hc-tree-mini-badge">ویژه</span>
+            {% endif %}
+        </a>
+
+        {% if node.children %}
+            <button type="button" class="hc-tree-toggle" aria-label="باز/بسته">
+                <i class="fas fa-plus"></i>
+            </button>
+        {% endif %}
+    </div>
+
+    {% if node.children %}
+        <ul class="hc-tree-sub">
+            {% include 'ad/components/category_tree.html' with nodes=node.children depth=depth|add:1 %}
+        </ul>
+    {% endif %}
+
+</li>
+
+{% endfor %}
+

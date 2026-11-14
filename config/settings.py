@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-sz5!r3=1td9xeic8r%e__w_@q)e=*wxk*zfwe63sjis&(7pnbq'
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # apps
     'channels',
     'accounts',
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     'social',
     'chat',
     'utils',
+    'core',
     # packages
     'rest_framework',
     'django_celery_beat',
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'jalali_date',
+    'django_json_widget',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +67,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 # context processors
+                'ad.context_processors.header_categories',
                 'location.context_processors.city_selector',
+                'core.context_processors.site',
+                'ad.context_processors.menu_categories',
             ],
         },
     },
@@ -92,10 +98,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgresaae_db',
+            'NAME': 'postgresmwf_db',
             'USER': 'postgres',
-            'PASSWORD': 'oxCoOR2YYTc38nCczeko',
-            'HOST': 'postgres-app-ruh-service',
+            'PASSWORD': 'vmf4SF3JTnzlBUkum9Yy',
+            'HOST': 'postgres-application-uco-service',
             'PORT': '5432'
         }
     }

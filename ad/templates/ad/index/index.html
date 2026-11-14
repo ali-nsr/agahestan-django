@@ -1,0 +1,1575 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block meta_title %}آگهستان{% endblock %}
+
+{% block extra_css %}
+    <style>
+        /* ═══════════════════════════════════════════
+    Ad Card — Base (دسکتاپ عمودی)
+    ═══════════════════════════════════════════ */
+        .ad-card {
+            display: block;
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #eef1f6;
+            text-decoration: none;
+            color: inherit;
+            transition: all .25s ease;
+            height: 100%;
+            position: relative;
+        }
+
+        .ad-card:hover {
+            border-color: #ffd0d8;
+            box-shadow: 0 8px 24px rgba(244, 27, 59, .1);
+            transform: translateY(-3px);
+        }
+
+        .ad-card:hover .ad-card-thumb img {
+            transform: scale(1.06);
+        }
+
+        .ad-card.is-special {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 2px rgba(251, 191, 36, .15);
+        }
+
+        /* ─── Thumbnail ─── */
+        .ad-card-thumb {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: #f3f4f6;
+        }
+
+        .ad-card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s ease;
+            display: block;
+        }
+
+        .ad-card-thumb-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e1;
+            font-size: 42px;
+            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+        }
+
+        /* ─── Badges ─── */
+        .ad-card-badges {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 2;
+        }
+
+        .ad-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            backdrop-filter: blur(6px);
+        }
+
+        .ad-badge-special {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, .35);
+        }
+
+        .ad-badge-paid {
+            background: rgba(16, 185, 129, .95);
+            color: #fff;
+        }
+
+        /* ─── Favorite ─── */
+        .ad-card-fav {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, .95);
+            color: #6b7280;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+        }
+
+        .ad-card-fav:hover {
+            background: #f41b3b;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .ad-card-fav.is-active {
+            background: #f41b3b;
+            color: #fff;
+        }
+
+        .ad-card-fav.is-active i::before {
+            font-weight: 900;
+        }
+
+        /* ─── Image count ─── */
+        .ad-card-img-count {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, .65);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(6px);
+            z-index: 2;
+        }
+
+        /* ─── Body ─── */
+        .ad-card-body {
+            padding: 14px 16px 16px;
+        }
+
+        .ad-card-category {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #f41b3b;
+            background: #fff1f3;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .ad-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111827;
+            margin: 0 0 10px;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 44px;
+        }
+
+        .ad-card-location {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .ad-card-location i {
+            color: #f41b3b;
+            font-size: 11px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .ad-card-location span {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ─── Footer ─── */
+        .ad-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px dashed #eef1f6;
+        }
+
+        .ad-card-price {
+            font-size: 15px;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1.3;
+        }
+
+        .ad-card-price small {
+            font-size: 11px;
+            font-weight: 500;
+            color: #6b7280;
+            margin-right: 2px;
+        }
+
+        .ad-card-negotiable {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 4px;
+        }
+
+        .ad-card-price-negotiable {
+            color: #f41b3b;
+            font-size: 14px;
+        }
+
+        .ad-card-time {
+            font-size: 11px;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        /* ═══ Empty State ═══ */
+        .ad-list-empty {
+            background: #fff;
+            border-radius: 16px;
+            border: 2px dashed #e5e7eb;
+            padding: 60px 20px;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        .ad-list-empty i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #d1d5db;
+        }
+
+        .ad-list-empty h4 {
+            font-size: 16px;
+            color: #374151;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .ad-list-empty p {
+            font-size: 13px;
+            margin: 0;
+        }
+
+
+        /* ═══════════════════════════════════════════
+           MOBILE — افقی مثل شیپور
+           ═══════════════════════════════════════════ */
+        @media (max-width: 767px) {
+
+            /* کارت افقی می‌شه */
+            .ad-card {
+                display: flex;
+                flex-direction: row-reverse; /* عکس چپ، متن راست (RTL) */
+                border-radius: 12px;
+                min-height: 140px;
+                border: 1px solid #eef1f6;
+                box-shadow: none;
+                transform: none;
+            }
+
+            .ad-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            /* ─── Thumbnail ─── */
+            .ad-card-thumb {
+                width: 130px;
+                min-width: 130px;
+                aspect-ratio: 1 / 1;
+                height: auto;
+                border-radius: 12px 0 0 12px;
+            }
+
+            /* ─── Body ─── */
+            .ad-card-body {
+                flex: 1;
+                min-width: 0;
+                padding: 12px 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            /* ─── Category (بالای کارت، خیلی کوچک) ─── */
+            .ad-card-category {
+                font-size: 10px;
+                padding: 2px 8px;
+                margin-bottom: 6px;
+            }
+
+            /* ─── Title (۲ خط) ─── */
+            .ad-card-title {
+                font-size: 13px;
+                line-height: 1.5;
+                margin-bottom: 8px;
+                min-height: 0;
+                -webkit-line-clamp: 2;
+            }
+
+            /* ─── Location (خیلی کوتاه) ─── */
+            .ad-card-location {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .ad-card-location i {
+                font-size: 10px;
+                margin-top: 2px;
+            }
+
+            /* ─── Footer (قیمت + زمان) ─── */
+            .ad-card-footer {
+                padding-top: 8px;
+                border-top: 1px solid #f1f3f6;
+            }
+
+            .ad-card-price {
+                font-size: 14px;
+            }
+
+            .ad-card-price small {
+                font-size: 10px;
+            }
+
+            .ad-card-time {
+                font-size: 10px;
+            }
+
+            /* ─── Badges (بالای عکس، کوچک‌تر) ─── */
+            .ad-card-badges {
+                top: 6px;
+                right: 6px;
+                gap: 4px;
+            }
+
+            .ad-badge {
+                padding: 3px 7px;
+                font-size: 9px;
+            }
+
+            /* ─── Favorite (بالای عکس) ─── */
+            .ad-card-fav {
+                top: 6px;
+                left: 6px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            /* ─── Image count (پایین عکس) ─── */
+            .ad-card-img-count {
+                bottom: 6px;
+                left: 6px;
+                padding: 3px 7px;
+                font-size: 10px;
+            }
+
+            /* ─── Placeholder ─── */
+            .ad-card-thumb-placeholder {
+                font-size: 32px;
+            }
+        }
+
+        /* ═══ موبایل کوچک ═══ */
+        @media (max-width: 400px) {
+            .ad-card-thumb {
+                width: 110px;
+                min-width: 110px;
+            }
+
+            .ad-card-title {
+                font-size: 12px;
+            }
+
+            .ad-card-price {
+                font-size: 13px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- ======================= Home Banner ======================== -->
+    {#    <div class="home-banner home-7">#}
+    {#        <div class="container">#}
+    {#            <div class="row align-items-center justify-content-between">#}
+    {#                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">#}
+    {#                    <div class="pe-3">#}
+    {#                        <div class="banner_caption text-right">#}
+    {#                            <h1 class="banner_title ft-normal mb-1">دسترسی آسان به <span class="theme-cl">#}
+    {#                                آگهی ها#}
+    {#                            </span>#}
+    {#                            </h1>#}
+    {#                            <p class="fs-lg fw-light">#}
+    {#                                جستجوی تمام آگهی ها در هر شهر#}
+    {#                            </p>#}
+    {#                        </div>#}
+    {#                        <form class="main-search-wrap fl-wrap one-column mb-5">#}
+    {#                            <div class="main-search-item">#}
+    {#                                <span class="search-tag">آگهی</span>#}
+    {#                                <input type="text" class="form-control radius" placeholder="جستجو">#}
+    {#                            </div>#}
+    {#                            <div class="main-search-button">#}
+    {#                                <button class="btn full-width theme-bg text-white" type="button">جستجو<i#}
+    {#                                        class="fas fa-search"></i></button>#}
+    {#                            </div>#}
+    {#                        </form>#}
+    {#                        <div class="Goodup-bnr-cats dark rounded">#}
+    {#                            <ul>#}
+    {#                                <li>محبوب:</li>#}
+    {#                                <li><a href="half-map-search-1.html">خانه</a></li>#}
+    {#                                <li><a href="half-map-search-1.html">خودرو</a></li>#}
+    {#                                <li><a href="half-map-search-1.html">موبایل</a></li>#}
+    {#                                <li><a href="half-map-search-1.html">صندلی</a></li>#}
+    {#                            </ul>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="col-xl-4 col-lg-5 col-md-12 col-sm-12 col-12">#}
+    {#                    <div class="imgSlide">#}
+    {#                        <div class="singleSlide"><img src="{% static 'listingaccessAIwars.webp' %}" class="img"#}
+    {#                                                      alt="Img Slide">#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="blockWrap">#}
+    {#            <div class="block"></div>#}
+    {#            <div class="block2"></div>#}
+    {#        </div>#}
+    {#    </div>#}
+
+    {% include 'ad/index/header.html' %}
+    <!-- ======================= Home Banner ======================== -->
+
+
+
+
+
+
+    <!-- ====================== Start Offers ========================= -->
+    <section class="banners-section pt-4 pb-0">
+        <div class="container">
+            {% if banners %}
+                <div class="banners-grid">
+                    {% for banner in banners %}
+                        <a href="{{ banner.link|default:'#' }}"
+                           class="banner-card">
+                            <img src="{{ banner.image.url }}"
+                                 alt=""
+                                 loading="lazy">
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <style>
+        /* ═══════════════════════════════════════════
+           Banners Section — Responsive
+           ═══════════════════════════════════════════ */
+        .banners-section {
+            overflow: hidden;
+        }
+
+        .banners-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* موبایل: تک‌ستون */
+            gap: 14px;
+        }
+
+        /* تبلت و بالاتر: ۲ ستون */
+        @media (min-width: 576px) {
+            .banners-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ─── Card ─── */
+        .banner-card {
+            display: block;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 7; /* نسبت ثابت — بدون پرش لایوت */
+            border-radius: 14px;
+            overflow: hidden;
+            background: #f3f4f6;
+            text-decoration: none;
+            transition: transform .3s ease, box-shadow .3s ease;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .banner-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .5s ease;
+        }
+
+        /* ─── Hover (فقط دسکتاپ) ─── */
+        @media (hover: hover) and (min-width: 768px) {
+            .banner-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(15, 23, 42, .12);
+            }
+
+            .banner-card:hover img {
+                transform: scale(1.04);
+            }
+        }
+
+        /* ─── Tap feedback (موبایل) ─── */
+        .banner-card:active {
+            transform: scale(.985);
+        }
+
+        /* ═══════════════════════════════════════════
+           نسبت‌های خاص برای موبایل
+           ═══════════════════════════════════════════ */
+
+        /* موبایل کوچک: بنر مربع‌تر، چون تک‌ستونه */
+        @media (max-width: 575px) {
+            .banners-grid {
+                gap: 12px;
+            }
+
+            .banner-card {
+                aspect-ratio: 16 / 8;
+                border-radius: 12px;
+            }
+        }
+
+        /* خیلی کوچک */
+        @media (max-width: 400px) {
+            .banner-card {
+                aspect-ratio: 16 / 9;
+            }
+        }
+
+        /* ═══════════════════════════════════════════
+           حالت تک‌بنر (اگه فقط یک بنر داشته باشی)
+           ═══════════════════════════════════════════ */
+        .banners-grid:has(> .banner-card:only-child) {
+            grid-template-columns: 1fr;
+        }
+
+        .banners-grid:has(> .banner-card:only-child) .banner-card {
+            aspect-ratio: 21 / 7; /* بنر باریک تمام‌عرض */
+        }
+
+        @media (max-width: 575px) {
+            .banners-grid:has(> .banner-card:only-child) .banner-card {
+                aspect-ratio: 16 / 8;
+            }
+        }
+
+        /* ═══ اگه IE support می‌خوای، :has fallback ═══ */
+        @supports not (selector(:has(*))) {
+            .banners-grid.single .banner-card {
+                aspect-ratio: 21 / 7;
+            }
+        }
+    </style>
+    <!-- ====================== End Offers ========================= -->
+
+
+    <!-- ======================= All Listing ======================== -->
+    <section class="space">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="sec_title position-relative text-center mb-5">
+                        <h6 class="text-muted mb-0">آگهی های جدید</h6>
+                        <h4 class="ft-bold">آگهی های تایید شده <span class="theme-cl"> امروز</span></h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- row -->
+            <div class="row g-3 justify-content-center">
+
+                {% for ad in ads %}
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                        {% include 'ad/components/ad_card.html' %}
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="ad-list-empty">
+                            <i class="fas fa-search"></i>
+                            <h4>آگهی‌ای یافت نشد</h4>
+                            <p>فیلترها را تغییر دهید یا بعداً دوباره سر بزنید.</p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <!-- /row -->
+
+        </div>
+    </section>
+    <!-- ======================= All Listings ======================== -->
+
+
+    <!-- ======================= Listing Categories ======================== -->
+    {#    <section class="space gray">#}
+    {#        <div class="container">#}
+    {##}
+    {#            <div class="row justify-content-center">#}
+    {#                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">#}
+    {#                    <div class="sec_title position-relative text-center mb-5">#}
+    {#                        <h6 class="mb-0 theme-cl">دسته بندی های محبوب</h6>#}
+    {#                        <h4 class="ft-bold">انتخاب دسته بندی انتخابی شما</h4>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {##}
+    {#            <!-- row -->#}
+    {#            <div class="row align-items-center">#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="half-map-search-2.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">07 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-stethoscope"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">بیمارستان</h4>#}
+    {#                                <span class="text-muted">607 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">17 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-building"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">بانک</h4>#}
+    {#                                <span class="text-muted">76 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">19 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-shopping-basket"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">مراکز خرید</h4>#}
+    {#                                <span class="text-muted">112 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">32 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-screwdriver"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">خدمات خانگی</h4>#}
+    {#                                <span class="text-muted">322 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">27 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-basketball-ball"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">باشگاه</h4>#}
+    {#                                <span class="text-muted">161 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">26 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-utensils"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">رستوران</h4>#}
+    {#                                <span class="text-muted">172 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">10 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-book-open"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">آموزشگاه</h4>#}
+    {#                                <span class="text-muted">144 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">24 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-house-damage"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">املاک</h4>#}
+    {#                                <span class="text-muted">210 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">18 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-wine-glass"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">کافی شاپ</h4>#}
+    {#                                <span class="text-muted">241 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">06 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-car-alt"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">کارواش</h4>#}
+    {#                                <span class="text-muted">52 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">08 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-pencil-ruler"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">هنر</h4>#}
+    {#                                <span class="text-muted">97 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6">#}
+    {#                    <div class="cats-wrap text-center">#}
+    {#                        <a href="listing-search-v1.html" class="Goodup-catg-wrap">#}
+    {#                            <div class="Goodup-catg-city">05 شهر</div>#}
+    {#                            <div class="Goodup-catg-icon"><i class="fas fa-plane"></i></div>#}
+    {#                            <div class="Goodup-catg-caption">#}
+    {#                                <h4 class="fs-md mb-0 ft-medium m-catrio">گردشگری</h4>#}
+    {#                                <span class="text-muted">42 آگهی</span>#}
+    {#                            </div>#}
+    {#                        </a>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {##}
+    {#            </div>#}
+    {#            <!-- row -->#}
+    {##}
+    {#        </div>#}
+    {#    </section>#}
+
+
+    <style>
+        /* ══════════════════════════════════════════
+       بخش
+       ══════════════════════════════════════════ */
+        .home-categories-section {
+            position: relative;
+            padding: 80px 0;
+            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+            overflow: hidden;
+        }
+
+        .home-categories-section::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(244, 27, 59, .07), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .home-categories-section::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(244, 27, 59, .05), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* ─── هدر ───────────────────────────────── */
+        .hc-section-head {
+            position: relative;
+            text-align: center;
+            margin-bottom: 48px;
+            z-index: 1;
+        }
+
+        .hc-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 18px;
+            margin-bottom: 16px;
+            font-size: .85rem;
+            font-weight: 600;
+            color: #f41b3b;
+            background: rgba(244, 27, 59, .08);
+            border-radius: 50px;
+        }
+
+        .hc-eyebrow i {
+            font-size: .85rem;
+        }
+
+        .hc-section-title {
+            font-size: clamp(1.6rem, 3vw, 2.3rem);
+            font-weight: 800;
+            line-height: 1.3;
+            color: #18181b;
+            margin-bottom: 12px;
+            letter-spacing: -.3px;
+        }
+
+        .hc-section-title span {
+            color: #f41b3b;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hc-section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            right: 0;
+            left: 0;
+            height: 4px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, transparent, #f41b3b, transparent);
+        }
+
+        .hc-section-sub {
+            color: #71717a;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* ══════════════════════════════════════════
+           گرید
+           ══════════════════════════════════════════ */
+        .hc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            align-items: start; /* کارت‌های باز، ارتفاع همسایه‌ها را کش نمی‌دهند */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ══════════════════════════════════════════
+           کارت (details)
+           ══════════════════════════════════════════ */
+        .hc-card {
+            position: relative;
+            background: #fff;
+            border: 1px solid #ececec;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: border-color .3s ease, box-shadow .3s ease;
+        }
+
+        .hc-card[open] {
+            border-color: rgba(244, 27, 59, .30);
+            box-shadow: 0 22px 45px -18px rgba(244, 27, 59, .22);
+        }
+
+        .hc-card-special {
+            background: linear-gradient(135deg, #ffffff 0%, #fff5f6 100%);
+            border-color: rgba(244, 27, 59, .18);
+        }
+
+        /* حذف فلش پیش‌فرض summary */
+        .hc-card-summary {
+            list-style: none;
+        }
+
+        .hc-card-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* ─── هد کارت ────────────────────────────── */
+        .hc-card-summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color .2s ease;
+        }
+
+        .hc-card-summary:hover {
+            background: #fff9fa;
+        }
+
+        .hc-icon-wrap {
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fff5f6, #ffe0e4);
+            overflow: hidden;
+            transition: background .3s ease, transform .3s ease;
+        }
+
+        .hc-icon-wrap img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            transition: filter .3s ease;
+        }
+
+        .hc-icon-wrap i {
+            font-size: 22px;
+            color: #f41b3b;
+            transition: color .3s ease;
+        }
+
+        .hc-card[open] .hc-icon-wrap {
+            background: linear-gradient(135deg, #f41b3b, #d3152f);
+            transform: rotate(-6deg) scale(1.05);
+        }
+
+        .hc-card[open] .hc-icon-wrap i {
+            color: #fff;
+        }
+
+        .hc-card[open] .hc-icon-wrap img {
+            filter: brightness(0) invert(1);
+        }
+
+        .hc-head-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .hc-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #18181b;
+            margin: 0 0 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .hc-card[open] .hc-title {
+            color: #f41b3b;
+        }
+
+        .hc-count {
+            display: block;
+            font-size: .78rem;
+            color: #a1a1aa;
+        }
+
+        /* آیکون فلش summary */
+        .hc-toggle-icon {
+            flex-shrink: 0;
+            font-size: 12px;
+            color: #a1a1aa;
+            transition: transform .3s ease, color .3s ease;
+        }
+
+        .hc-card[open] .hc-toggle-icon {
+            transform: rotate(180deg);
+            color: #f41b3b;
+        }
+
+        /* بج ویژه */
+        .hc-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 2px 9px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fff;
+            background: #f41b3b;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(244, 27, 59, .35);
+        }
+
+        /* ══════════════════════════════════════════
+           بدنه کارت
+           ══════════════════════════════════════════ */
+        .hc-card-body {
+            padding: 0 18px 18px;
+            border-top: 1px dashed #f1f1f1;
+            padding-top: 14px;
+            animation: hcSlideDown .28s ease;
+        }
+
+        @keyframes hcSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ══════════════════════════════════════════
+           درخت دسته‌ها
+           ══════════════════════════════════════════ */
+        .hc-tree,
+        .hc-tree-sub {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* هر سطح با خط عمودی و تودرفتگی */
+        .hc-tree-sub {
+            display: none;
+            padding-right: 14px;
+            margin: 2px 6px 2px 0;
+            border-right: 1.5px dashed #ececec;
+        }
+
+        .hc-tree-item.expanded > .hc-tree-sub {
+            display: block;
+            animation: hcTreeOpen .22s ease;
+        }
+
+        @keyframes hcTreeOpen {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ردیف هر آیتم */
+        .hc-tree-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+            border-radius: 8px;
+            transition: background-color .18s ease;
+        }
+
+        .hc-tree-row:hover {
+            background: #fff5f6;
+        }
+
+        .hc-tree-link {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 6px;
+            font-size: .85rem;
+            color: #3f3f46;
+            text-decoration: none;
+            transition: color .18s ease;
+        }
+
+        .hc-tree-link:hover {
+            color: #f41b3b;
+        }
+
+        .hc-tree-bullet {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #d4d4d8;
+            flex-shrink: 0;
+            transition: background-color .18s ease;
+        }
+
+        .hc-tree-link:hover .hc-tree-bullet {
+            background: #f41b3b;
+        }
+
+        .hc-tree-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .hc-tree-mini-badge {
+            padding: 1px 6px;
+            font-size: 9px;
+            font-weight: 700;
+            color: #fff;
+            background: #f41b3b;
+            border-radius: 50px;
+            flex-shrink: 0;
+        }
+
+        /* دکمه‌ی باز/بسته‌ی هر شاخه */
+        .hc-tree-toggle {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ececec;
+            background: #fff;
+            border-radius: 6px;
+            color: #71717a;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all .18s ease;
+        }
+
+        .hc-tree-toggle:hover {
+            border-color: #f41b3b;
+            color: #f41b3b;
+            background: #fff5f6;
+        }
+
+        /* آیکون plus به minus در حالت باز */
+        .hc-tree-item.expanded > .hc-tree-row .hc-tree-toggle {
+            background: #f41b3b;
+            border-color: #f41b3b;
+            color: #fff;
+        }
+
+        .hc-tree-item.expanded > .hc-tree-row .hc-tree-toggle i::before {
+            content: "\f068"; /* fa-minus */
+        }
+
+        /* ══════════════════════════════════════════
+           دکمه‌ی «مشاهده همه»
+           ══════════════════════════════════════════ */
+        .hc-view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 8px 14px;
+            font-size: .82rem;
+            font-weight: 600;
+            color: #f41b3b;
+            background: #fff5f6;
+            border: 1px solid rgba(244, 27, 59, .18);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all .2s ease;
+        }
+
+        .hc-view-all:hover {
+            background: #f41b3b;
+            color: #fff;
+            border-color: #f41b3b;
+            transform: translateX(-2px);
+        }
+
+        .hc-view-all i {
+            transition: transform .2s ease;
+        }
+
+        .hc-view-all:hover i {
+            transform: translateX(-3px);
+        }
+
+        /* ══════════════════════════════════════════
+           حالت خالی
+           ══════════════════════════════════════════ */
+        .hc-empty {
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            text-align: center;
+            color: #a1a1aa;
+        }
+
+        .hc-empty i {
+            font-size: 3rem;
+            opacity: .5;
+            margin-bottom: 12px;
+        }
+
+        .hc-empty p {
+            margin: 0;
+        }
+
+        /* ══════════════════════════════════════════
+           ریسپانسیو
+           ══════════════════════════════════════════ */
+        @media (max-width: 1199.98px) {
+            .hc-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .home-categories-section {
+                padding: 60px 0;
+            }
+
+            .hc-section-head {
+                margin-bottom: 36px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .hc-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            .hc-card-summary {
+                padding: 14px;
+            }
+
+            .hc-icon-wrap {
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+            }
+
+            .hc-icon-wrap i {
+                font-size: 18px;
+            }
+
+            .hc-icon-wrap img {
+                width: 26px;
+                height: 26px;
+            }
+
+            .hc-title {
+                font-size: .92rem;
+            }
+
+            .hc-count {
+                font-size: .72rem;
+            }
+
+            .hc-card-body {
+                padding: 10px 14px 14px;
+            }
+
+            .hc-tree-link {
+                font-size: .82rem;
+                padding: 6px 4px;
+            }
+
+            .hc-tree-sub {
+                padding-right: 10px;
+                margin-right: 4px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .home-categories-section {
+                padding: 50px 0;
+            }
+
+            .hc-grid {
+                gap: 10px;
+            }
+
+            .hc-card-summary {
+                padding: 12px 10px;
+                gap: 10px;
+            }
+
+            .hc-card-body {
+                padding: 8px 10px 12px;
+            }
+
+            .hc-tree-link {
+                font-size: .78rem;
+            }
+
+            .hc-tree-sub {
+                padding-right: 8px;
+                margin-right: 2px;
+                border-right-width: 1px;
+            }
+
+            .hc-tree-mini-badge {
+                display: none;
+            }
+
+            .hc-view-all {
+                font-size: .76rem;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+
+    {% load static %}
+    {% get_media_prefix as MEDIA_PREFIX %}
+
+    <section class="home-categories-section">
+        <div class="container">
+
+            <!-- هدر بخش -->
+            <div class="hc-section-head">
+            <span class="hc-eyebrow">
+                <i class="fas fa-th-large"></i>
+                دسته‌بندی‌ها
+            </span>
+                <h2 class="hc-section-title">
+                    دسته‌بندی‌های <span>محبوب</span>
+                </h2>
+                <p class="hc-section-sub">
+                    روی هر دسته بزنید تا زیردسته‌های آن باز شود
+                </p>
+            </div>
+
+            <!-- گرید کارت‌ها -->
+            <div class="hc-grid">
+
+                {% for cat in header_categories %}
+                    <details class="hc-card {% if cat.is_special %}hc-card-special{% endif %}">
+                        <summary class="hc-card-summary">
+
+                            <div class="hc-icon-wrap">
+                                {% if cat.icon %}
+                                    <img src="{{ MEDIA_PREFIX }}{{ cat.icon }}"
+                                         alt="{{ cat.title }}" loading="lazy">
+                                {% else %}
+                                    <i class="fas fa-folder"></i>
+                                {% endif %}
+                            </div>
+
+                            <div class="hc-head-info">
+                                <h3 class="hc-title">{{ cat.title }}</h3>
+                                <span class="hc-count">
+                            {% if cat.children %}
+                                {{ cat.children|length }} زیردسته
+                            {% else %}
+                                مشاهده
+                            {% endif %}
+                        </span>
+                            </div>
+
+                            {% if cat.is_special %}
+                                <span class="hc-badge">ویژه</span>
+                            {% endif %}
+
+                            <i class="fas fa-chevron-down hc-toggle-icon"></i>
+                        </summary>
+
+                        <div class="hc-card-body">
+                            {% if cat.children %}
+                                <ul class="hc-tree">
+                                    {% include 'ad/components/category_tree.html' with nodes=cat.children depth=1 %}
+                                </ul>
+
+                                <a href="{% url 'ad:iran-category-landing' cat.slug %}" class="hc-view-all">
+                                    مشاهده همه {{ cat.title }}
+                                    <i class="fas fa-arrow-left"></i>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'ad:iran-category-landing' cat.slug %}" class="hc-view-all">
+                                    مشاهده {{ cat.title }}
+                                    <i class="fas fa-arrow-left"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </details>
+                {% empty %}
+                    <div class="hc-empty">
+                        <i class="fas fa-folder-open"></i>
+                        <p>هنوز دسته‌بندی‌ای ثبت نشده است</p>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        (function () {
+            /* توگل شاخه‌های تودرتو */
+            document.querySelectorAll('.hc-tree-toggle').forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();   /* جلوگیری از بستن details والد */
+                    btn.closest('.hc-tree-item').classList.toggle('expanded');
+                });
+            });
+
+            /* آکاردئون: باز کردن یک کارت، بقیه را ببندد (اختیاری) */
+            document.querySelectorAll('.hc-card').forEach(function (card) {
+                card.addEventListener('toggle', function () {
+                    if (card.open) {
+                        document.querySelectorAll('.hc-card[open]').forEach(function (other) {
+                            if (other !== card) other.removeAttribute('open');
+                        });
+                    }
+                });
+            });
+        })();
+    </script>
+
+    <!-- ======================= Listing Categories End ======================== -->
+
+    <!-- ======================= Explore By Location ======================== -->
+    <section class="space">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="sec_title position-relative text-center mb-5">
+                        <h6 class="theme-cl mb-0">جستجو براساس منطقه</h6>
+                        <h4 class="ft-bold">جستجوی براساس <span class="theme-cl">شهر</span></h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- row -->
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+
+                    <div class="newlocationslider">
+
+                        <div class="single-list">
+                            <div class="Goodup-img-location-wrap">
+                                <div class="Goodup-img-location-thumb">
+                                    <a href="city/tehran/">
+                                        <img src="{% static '' %}img/l-1.png" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                                <div class="Goodup-img-location-caption">
+                                    <h4 class="fs-md mb-0 ft-medium m-catrio">تهران</h4>
+                                    <a href="city/tehran/" class="Goodup-cat-arrow"><i
+                                            class="lni lni-arrow-right-circle"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="single-list">
+                            <div class="Goodup-img-location-wrap">
+                                <div class="Goodup-img-location-thumb">
+                                    <a href="city/karaj/">
+                                        <img src="{% static '' %}img/l-2.png" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                                <div class="Goodup-img-location-caption">
+                                    <h4 class="fs-md mb-0 ft-medium m-catrio">کرج</h4>
+                                    <a href="city/shiraz/" class="Goodup-cat-arrow"><i
+                                            class="lni lni-arrow-right-circle"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="single-list">
+                            <div class="Goodup-img-location-wrap">
+                                <div class="Goodup-img-location-thumb">
+                                    <a href="city/isfahan-city/">
+                                        <img src="{% static '' %}img/l-3.png" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                                <div class="Goodup-img-location-caption">
+                                    <h4 class="fs-md mb-0 ft-medium m-catrio">اصفهان</h4>
+                                    <a href="city/isfahan-city/" class="Goodup-cat-arrow"><i
+                                            class="lni lni-arrow-right-circle"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="single-list">
+                            <div class="Goodup-img-location-wrap">
+                                <div class="Goodup-img-location-thumb">
+                                    <a href="city/shiraz/">
+                                        <img src="{% static '' %}img/l-4.png" class="img-fluid" alt="">
+                                    </a>
+                                </div>
+                                <div class="Goodup-img-location-caption">
+                                    <h4 class="fs-md mb-0 ft-medium m-catrio">شیراز</h4>
+                                    <a href="city/shiraz/" class="Goodup-cat-arrow"><i
+                                            class="lni lni-arrow-right-circle"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+
+        </div>
+    </section>
+    <!-- ======================= Explore By Location ======================== -->
+{% endblock %}

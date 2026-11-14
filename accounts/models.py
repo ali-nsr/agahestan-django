@@ -27,7 +27,7 @@ class User(AbstractBaseUser):
             models.Index(fields=['uuid'])
         ]
         verbose_name = _('کاربر')
-        verbose_name_plural = _('کابر ها')
+        verbose_name_plural = _('کاربر ها')
 
     def __str__(self):
         return self.phone

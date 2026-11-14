@@ -1,73 +1,308 @@
-{% load static %}
-
-<a href="{% url 'ad:ad-detail' ad.uuid %}" class="ad-card {% if ad.is_special %}is-special{% endif %}">
-
+{#{% load static humanize %}#}
+{##}
+{#<a href="{% url 'ad:ad-detail' ad.uuid %}" class="ad-card {% if ad.is_special %}is-special{% endif %}">#}
+{##}
     {# ─── Thumbnail ─── #}
-    <div class="ad-card-thumb">
+{#    <div class="ad-card-thumb">#}
+{#        {% if ad.thumbnail %}#}
+{#            <img src="{{ ad.thumbnail.url }}" alt="{{ ad.title }}" loading="lazy">#}
+{#        {% elif ad.gallery.first %}#}
+{#            <img src="{{ ad.gallery.first.image.url }}" alt="{{ ad.title }}" loading="lazy">#}
+{#        {% else %}#}
+{#            <div class="ad-card-thumb-placeholder">#}
+{#                <i class="fas fa-image"></i>#}
+{#            </div>#}
+{#        {% endif %}#}
+{##}
+{#        <div class="ad-card-badges">#}
+{#            {% if ad.is_special %}#}
+{#                <span class="ad-badge ad-badge-special">#}
+{#                    <i class="fas fa-star"></i> ویژه#}
+{#                </span>#}
+{#            {% endif %}#}
+{#            {% if ad.is_paid %}#}
+{#                <span class="ad-badge ad-badge-paid">#}
+{#                    <i class="fas fa-check-circle"></i> پرداخت شده#}
+{#                </span>#}
+{#            {% endif %}#}
+{#        </div>#}
+{##}
+{#        <button type="button" class="ad-card-fav" data-uuid="{{ ad.uuid }}" aria-label="ذخیره">#}
+{#            <i class="far fa-heart"></i>#}
+{#        </button>#}
+{##}
+{#        {% with img_count=ad.gallery.all|length %}#}
+{#            {% if img_count > 1 %}#}
+{#                <div class="ad-card-img-count">#}
+{#                    <i class="fas fa-images"></i> {{ img_count }}#}
+{#                </div>#}
+{#            {% endif %}#}
+{#        {% endwith %}#}
+{#    </div>#}
+{##}
+    {# ─── Body ─── #}
+{#    <div class="ad-card-body">#}
+{#        <div class="ad-card-category"><a href="{% url 'ad:iran-category-landing' category_slug=ad.category.slug %}">#}
+{#    {{ ad.category.title }}#}
+{#</a></div>#}
+{#        <h3 class="ad-card-title">{{ ad.title }}</h3>#}
+{##}
+{#        <div class="ad-card-location">#}
+{#            <i class="fas fa-map-marker-alt"></i>#}
+{#            <span>{{ ad.province.name }}، {{ ad.city.name }}{% if ad.neighborhood %}، {{ ad.neighborhood.name }}{% endif %}</span>#}
+{#        </div>#}
+{##}
+{#        <div class="ad-card-footer">#}
+{#            <div class="ad-card-price">#}
+{#                {% if ad.price %}#}
+{#                    {{ ad.price|intcomma:False }}#}
+{#                    <small>تومان</small>#}
+{#                    {% if ad.is_negotiable %}#}
+{#                        <span class="ad-card-negotiable">توافقی</span>#}
+{#                    {% endif %}#}
+{#                {% else %}#}
+{#                    <span class="ad-card-price-negotiable">توافقی</span>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <div class="ad-card-time">#}
+{#                <i class="far fa-clock"></i>#}
+{#                {{ ad.created_at|timesince }} پیش#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#</a>#}
+
+{% load static humanize %}
+
+<a href="{% url 'ad:ad-detail' ad.uuid %}"
+   class="adc {% if ad.is_special %}adc-special{% endif %}">
+
+    <div class="adc-thumb">
         {% if ad.thumbnail %}
             <img src="{{ ad.thumbnail.url }}" alt="{{ ad.title }}" loading="lazy">
+        {% elif ad.gallery.first %}
+            <img src="{{ ad.gallery.first.image.url }}" alt="{{ ad.title }}" loading="lazy">
         {% else %}
-            <div class="ad-card-thumb-placeholder">
-                <i class="fas fa-image"></i>
-            </div>
+            <div class="adc-noimg"><i class="far fa-image"></i></div>
         {% endif %}
 
-        {# ─── Badges ─── #}
-        <div class="ad-card-badges">
-            {% if ad.is_special %}
-                <span class="ad-badge ad-badge-special">
-                    <i class="fas fa-star"></i> ویژه
-                </span>
-            {% endif %}
-            {% if ad.is_paid %}
-                <span class="ad-badge ad-badge-paid">
-                    <i class="fas fa-check-circle"></i> پرداخت شده
-                </span>
-            {% endif %}
-        </div>
-
-        {# ─── Favorite ─── #}
-        <button type="button" class="ad-card-fav" data-uuid="{{ ad.uuid }}" aria-label="ذخیره">
-            <i class="far fa-heart"></i>
-        </button>
-
-        {# ─── Image count ─── #}
-        {% with img_count=ad.gallery.all|length %}
-            {% if img_count > 1 %}
-                <div class="ad-card-img-count">
-                    <i class="fas fa-images"></i> {{ img_count }}
-                </div>
-            {% endif %}
-        {% endwith %}
+        {% if ad.is_special %}
+            <span class="adc-badge">
+                <i class="fas fa-star"></i>
+                ویژه
+            </span>
+        {% endif %}
     </div>
 
-    {# ─── Body ─── #}
-    <div class="ad-card-body">
-        <div class="ad-card-category">{{ ad.category.title }}</div>
-        <h3 class="ad-card-title">{{ ad.title }}</h3>
+    <div class="adc-body">
+        <span class="adc-cat">{{ ad.category.title }}</span>
 
-        <div class="ad-card-location">
+        <h3 class="adc-title">{{ ad.title }}</h3>
+
+        <div class="adc-loc">
             <i class="fas fa-map-marker-alt"></i>
-            <span>{{ ad.province.name }}، {{ ad.city.name }}{% if ad.neighborhood %}، {{ ad.neighborhood.name }}{% endif %}</span>
+            <span>{{ ad.city.name }}{% if ad.neighborhood %}، {{ ad.neighborhood.name }}{% endif %}</span>
         </div>
 
-        <div class="ad-card-footer">
-            <div class="ad-card-price">
+        <div class="adc-foot">
+            <div class="adc-price">
                 {% if ad.price %}
-                    {{ ad.price|floatformat:"0" }}
+                    {{ ad.price|intcomma:False }}
                     <small>تومان</small>
-                    {% if ad.is_negotiable %}
-                        <span class="ad-card-negotiable">توافقی</span>
-                    {% endif %}
                 {% else %}
-                    <span class="ad-card-price-negotiable">توافقی</span>
+                    <span class="adc-neg">توافقی</span>
                 {% endif %}
             </div>
-            <div class="ad-card-time">
-                <i class="far fa-clock"></i>
-                {{ ad.created_at|timesince }} پیش
-            </div>
+            <span class="adc-time">{{ ad.created_at|timesince }} پیش</span>
         </div>
     </div>
-
 </a>
+
+<style>
+.adc {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    transition: all .25s ease;
+}
+.adc:hover {
+    border-color: #ffd0d8;
+    box-shadow: 0 8px 24px rgba(244, 27, 59, .08);
+    transform: translateY(-2px);
+}
+.adc-special { border-color: #fbbf24; }
+
+.adc-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #f3f4f6;
+    flex-shrink: 0;
+}
+.adc-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+}
+.adc:hover .adc-thumb img { transform: scale(1.05); }
+
+.adc-noimg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    font-size: 36px;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+}
+
+.adc-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, .4);
+}
+.adc-badge i { font-size: 9px; }
+
+.adc-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 14px 14px;
+    gap: 8px;
+    min-width: 0;
+}
+
+.adc-cat {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #f41b3b;
+    background: #fff1f3;
+    padding: 2px 8px;
+    border-radius: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adc-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.55;
+    color: #0f172a;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 42px;
+}
+
+.adc-loc {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+}
+.adc-loc i {
+    color: #f41b3b;
+    font-size: 10px;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+.adc-loc span {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.adc-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 10px;
+    margin-top: auto;
+    border-top: 1px solid #f1f5f9;
+}
+.adc-price {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #0f172a;
+    white-space: nowrap;
+}
+.adc-price small {
+    font-size: 10px;
+    font-weight: 500;
+    color: #94a3b8;
+    margin-right: 2px;
+}
+.adc-neg {
+    color: #f41b3b;
+    font-size: 13px;
+}
+.adc-time {
+    font-size: 10px;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+@media (max-width: 575.98px) {
+    .adc {
+        flex-direction: row;
+        border-radius: 12px;
+        min-height: 120px;
+    }
+    .adc-thumb {
+        width: 110px;
+        min-width: 110px;
+        aspect-ratio: auto;
+        height: auto;
+    }
+    .adc-noimg { font-size: 24px; }
+    .adc-body {
+        padding: 10px 12px;
+        gap: 5px;
+        justify-content: space-between;
+    }
+    .adc-cat { font-size: 9.5px; padding: 2px 7px; }
+    .adc-title {
+        font-size: 12.5px;
+        line-height: 1.45;
+        min-height: 0;
+        -webkit-line-clamp: 2;
+    }
+    .adc-loc { font-size: 10px; }
+    .adc-foot { padding-top: 7px; }
+    .adc-price { font-size: 12.5px; }
+    .adc-time { font-size: 9px; }
+    .adc:hover { transform: none; }
+    .adc:hover .adc-thumb img { transform: none; }
+}
+</style>

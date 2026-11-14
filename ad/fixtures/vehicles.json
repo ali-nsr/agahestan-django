@@ -1,170 +1,36 @@
 [
-  {
-    "model": "ad.category",
-    "pk": 500,
-    "fields": {
-      "parent": null,
-      "title": "وسایل نقلیه",
-      "slug": "vehicles",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 501,
-    "fields": {
-      "parent": 500,
-      "title": "خودرو",
-      "slug": "vehicles-cars",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 502,
-    "fields": {
-      "parent": 500,
-      "title": "موتورسیکلت",
-      "slug": "vehicles-motorcycles",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 503,
-    "fields": {
-      "parent": 500,
-      "title": "ماشین سنگین",
-      "slug": "vehicles-heavy-machinery",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 504,
-    "fields": {
-      "parent": 500,
-      "title": "ماشین اجاره‌ای",
-      "slug": "vehicles-rental",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 505,
-    "fields": {
-      "parent": 500,
-      "title": "لوازم جانبی خودرو",
-      "slug": "vehicles-spare-parts",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 506,
-    "fields": {
-      "parent": 500,
-      "title": "قایق و سایر وسایل نقلیه",
-      "slug": "vehicles-boats-others",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 507,
-    "fields": {
-      "parent": 501,
-      "title": "خودرو سواری",
-      "slug": "vehicles-cars-sedan",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 508,
-    "fields": {
-      "parent": 501,
-      "title": "وانت",
-      "slug": "vehicles-cars-pickup",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 509,
-    "fields": {
-      "parent": 501,
-      "title": "خودرو کلاسیک",
-      "slug": "vehicles-cars-classic",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 510,
-    "fields": {
-      "parent": 503,
-      "title": "کامیون و کشنده",
-      "slug": "vehicles-heavy-trucks",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 511,
-    "fields": {
-      "parent": 503,
-      "title": "ماشین‌آلات کشاورزی و عمرانی",
-      "slug": "vehicles-heavy-agricultural",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 512,
-    "fields": {
-      "parent": 505,
-      "title": "قطعات یدکی",
-      "slug": "vehicles-spare-parts-components",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  },
-  {
-    "model": "ad.category",
-    "pk": 513,
-    "fields": {
-      "parent": 505,
-      "title": "لوازم جانبی و تزئینات",
-      "slug": "vehicles-spare-parts-accessories",
-      "is_payable": false,
-      "is_special": false,
-      "price": 0
-    }
-  }
+  {"model": "ad.category", "pk": 600, "fields": {"parent": 501, "title": "پژو", "slug": "sedan-peugeot", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 601, "fields": {"parent": 501, "title": "سمند", "slug": "sedan-samand", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 602, "fields": {"parent": 501, "title": "دنا", "slug": "sedan-dena", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 603, "fields": {"parent": 501, "title": "رانا", "slug": "sedan-rana", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 604, "fields": {"parent": 501, "title": "پراید", "slug": "sedan-pride", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 605, "fields": {"parent": 501, "title": "تیبا", "slug": "sedan-tiba", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 606, "fields": {"parent": 501, "title": "ساینا", "slug": "sedan-saina", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 607, "fields": {"parent": 501, "title": "کوییک", "slug": "sedan-quick", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 608, "fields": {"parent": 501, "title": "شاهین", "slug": "sedan-shahin", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 609, "fields": {"parent": 501, "title": "تارا", "slug": "sedan-tara", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 610, "fields": {"parent": 501, "title": "رنو", "slug": "sedan-renault", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 611, "fields": {"parent": 501, "title": "هیوندای", "slug": "sedan-hyundai", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 612, "fields": {"parent": 501, "title": "کیا", "slug": "sedan-kia", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 613, "fields": {"parent": 501, "title": "تویوتا", "slug": "sedan-toyota", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 614, "fields": {"parent": 501, "title": "هوندا", "slug": "sedan-honda", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 615, "fields": {"parent": 501, "title": "نیسان", "slug": "sedan-nissan", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 616, "fields": {"parent": 501, "title": "مزدا", "slug": "sedan-mazda", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 617, "fields": {"parent": 501, "title": "بنز", "slug": "sedan-mercedes", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 618, "fields": {"parent": 501, "title": "بی‌ام‌و", "slug": "sedan-bmw", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 619, "fields": {"parent": 501, "title": "لکسوس", "slug": "sedan-lexus", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 620, "fields": {"parent": 501, "title": "پورشه", "slug": "sedan-porsche", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 621, "fields": {"parent": 501, "title": "فولکس‌واگن", "slug": "sedan-volkswagen", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 622, "fields": {"parent": 501, "title": "آئودی", "slug": "sedan-audi", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 623, "fields": {"parent": 501, "title": "چری", "slug": "sedan-chery", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 624, "fields": {"parent": 501, "title": "MVM", "slug": "sedan-mvm", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 625, "fields": {"parent": 501, "title": "جک", "slug": "sedan-jac", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 626, "fields": {"parent": 501, "title": "لیفان", "slug": "sedan-lifan", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 627, "fields": {"parent": 501, "title": "هایما", "slug": "sedan-haima", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 628, "fields": {"parent": 501, "title": "فیدلیتی", "slug": "sedan-fidelity", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 629, "fields": {"parent": 501, "title": "دیگنیتی", "slug": "sedan-dignity", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 630, "fields": {"parent": 501, "title": "تیگو", "slug": "sedan-tiggo", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 631, "fields": {"parent": 501, "title": "آریزو", "slug": "sedan-arrizo", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 632, "fields": {"parent": 501, "title": "جیلی", "slug": "sedan-geely", "is_payable": false, "is_special": false, "price": 0}},
+  {"model": "ad.category", "pk": 633, "fields": {"parent": 501, "title": "سایر", "slug": "sedan-other", "is_payable": false, "is_special": false, "price": 0}}
 ]

@@ -1,0 +1,873 @@
+{% load static %}
+
+{% if user.is_authenticated %}
+    <nav class="mobile-bottom-nav" aria-label="ناوبری موبایل">
+
+        <div class="mbn-indicator" aria-hidden="true"></div>
+
+        <a href="/" class="mbn-item {% if request.path == '/' %}active{% endif %}" data-tab="home">
+            <span class="mbn-icon-wrap"><i class="fas fa-house"></i></span>
+            <span class="mbn-label">خانه</span>
+        </a>
+
+
+        <button type="button"
+                class="mbn-item"
+                onclick="openCatSheet()"
+                aria-label="دسته‌بندی‌ها">
+            <span class="mbn-icon-wrap"><i class="fas fa-grip"></i></span>
+            <span class="mbn-label">دسته‌ها</span>
+        </button>
+
+
+        <a href="{% url 'ad:choose-category' %}" class="mbn-item mbn-add" data-tab="add" aria-label="ثبت آگهی">
+            <span class="mbn-add-inner">
+                <span class="mbn-add-ripple"></span>
+                <span class="mbn-add-circle"><i class="fas fa-plus"></i></span>
+            </span>
+            <span class="mbn-label">ثبت</span>
+        </a>
+
+
+        <a href="{% url 'chat:chat-list' %}"
+           class="mbn-item {% if 'chat' in request.path %}active{% endif %}"
+           data-tab="chat"
+           aria-label="پیام‌ها">
+            <span class="mbn-icon-wrap">
+                <i class="fas fa-comments"></i>
+                <span class="mbn-badge" id="navChatBadge" style="display:none;">0</span>
+            </span>
+            <span class="mbn-label">چت</span>
+        </a>
+
+        <a href="{% url 'accounts:dashboard' %}"
+           class="mbn-item {% if 'dashboard' in request.path %}active{% endif %}"
+           data-tab="profile">
+            <span class="mbn-icon-wrap"><i class="fas fa-user"></i></span>
+            <span class="mbn-label">پروفایل</span>
+        </a>
+    </nav>
+{% else %}
+    <nav class="mobile-bottom-nav" aria-label="ناوبری موبایل">
+        <div class="mbn-indicator" aria-hidden="true"></div>
+
+        <a href="/" class="mbn-item {% if request.path == '/' %}active{% endif %}" data-tab="home">
+            <span class="mbn-icon-wrap"><i class="fas fa-house"></i></span>
+            <span class="mbn-label">خانه</span>
+        </a>
+
+        <button type="button"
+                class="mbn-item"
+                onclick="openCatSheet()"
+                aria-label="دسته‌بندی‌ها">
+            <span class="mbn-icon-wrap"><i class="fas fa-grip"></i></span>
+            <span class="mbn-label">دسته‌ها</span>
+        </button>
+
+        {# ═══ دکمه شهر (مودال) ═══ #}
+        {#        <a href="#"#}
+        {#           data-bs-toggle="modal"#}
+        {#           data-bs-target="#citySelectModal"#}
+        {#           class="mbn-item"#}
+        {#           data-tab="city"#}
+        {#           aria-label="انتخاب شهر">#}
+        {#            <span class="mbn-icon-wrap">#}
+        {#                <i class="fas fa-map-marker-alt"></i>#}
+        {#                {% if selected_cities %}#}
+        {#                    <span class="mbn-badge mbn-badge-count">{{ selected_cities|length }}</span>#}
+        {#                {% endif %}#}
+        {#            </span>#}
+        {#            <span class="mbn-label">شهر</span>#}
+        {#        </a>#}
+
+
+        <a href="{% url 'ad:choose-category' %}" class="mbn-item mbn-add" data-tab="add" aria-label="ثبت آگهی">
+            <span class="mbn-add-inner">
+                <span class="mbn-add-ripple"></span>
+                <span class="mbn-add-circle"><i class="fas fa-plus"></i></span>
+            </span>
+            <span class="mbn-label">ثبت</span>
+        </a>
+
+
+        <a href="{% url 'chat:chat-list' %}"
+           class="mbn-item {% if 'chat' in request.path %}active{% endif %}"
+           data-tab="chat"
+           aria-label="پیام‌ها">
+            <span class="mbn-icon-wrap">
+                <i class="fas fa-comments"></i>
+                <span class="mbn-badge" id="navChatBadge" style="display:none;">0</span>
+            </span>
+            <span class="mbn-label">چت</span>
+        </a>
+
+        <a href="{% url 'accounts:login' %}" class="mbn-item" data-tab="account">
+            <span class="mbn-icon-wrap"><i class="fas fa-user"></i></span>
+            <span class="mbn-label">حساب</span>
+        </a>
+    </nav>
+{% endif %}
+
+
+<div class="cat-modal" id="catModal" role="dialog" aria-modal="true">
+    <div class="cat-modal-backdrop" onclick="closeCatSheet()"></div>
+
+    <div class="cat-modal-sheet">
+        <div class="cat-modal-head">
+            <div class="cat-modal-title">
+                <span class="cat-modal-icon">
+                    <i class="fas fa-grip"></i>
+                </span>
+                <span>انتخاب دسته‌بندی</span>
+            </div>
+            <button type="button" class="cat-modal-close" onclick="closeCatSheet()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="cat-modal-body">
+            {% if parent_categories %}
+                {% for parent in parent_categories %}
+                    <details class="cat-l1">
+                        <summary class="cat-l1-head">
+                            <i class="fas fa-folder-open"></i>
+                            <span>{{ parent.title }}</span>
+                            <i class="fas fa-chevron-down cat-arrow"></i>
+                        </summary>
+                        <div class="cat-l1-body">
+                            {% for mid in parent.children.all %}
+                                {% with leaves=mid.children.all %}
+                                    {% if leaves %}
+                                        <details class="cat-l2">
+                                            <summary class="cat-l2-head">
+                                                <span>{{ mid.title }}</span>
+                                                <i class="fas fa-chevron-down cat-arrow"></i>
+                                            </summary>
+                                            <div class="cat-l2-body">
+                                                {% for leaf in leaves %}
+                                                    <a href="{% url 'ad:iran-category-landing' category_slug=leaf.slug %}"
+                                                       class="cat-item">
+                                                        <span>{{ leaf.title }}</span>
+                                                        <i class="fas fa-chevron-left cat-item-arrow"></i>
+                                                    </a>
+                                                {% endfor %}
+                                            </div>
+                                        </details>
+                                    {% else %}
+                                        <a href="{% url 'ad:iran-category-landing' category_slug=mid.slug %}"
+                                           class="cat-item">
+                                            <span>{{ mid.title }}</span>
+                                            <i class="fas fa-chevron-left cat-item-arrow"></i>
+                                        </a>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
+                        </div>
+                    </details>
+                {% endfor %}
+            {% else %}
+                <div class="cat-empty">
+                    <i class="fas fa-inbox"></i>
+                    <p>دسته‌بندی‌ای موجود نیست</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ═══════════════════════════════════════════
+       Mobile Bottom Nav — Theme: #f41b3b
+       ═══════════════════════════════════════════ */
+    .mobile-bottom-nav {
+        display: none;
+    }
+
+    @media (max-width: 991px) {
+
+        .mobile-bottom-nav {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, .94);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-top: 1px solid rgba(244, 27, 59, .1);
+            box-shadow: 0 -8px 32px rgba(244, 27, 59, .1), 0 -2px 8px rgba(15, 23, 42, .04);
+            z-index: 999;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 0 4px calc(8px + env(safe-area-inset-bottom, 0px));
+            animation: mbnSlideUp .4s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        @keyframes mbnSlideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .mbn-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 32px;
+            background: linear-gradient(90deg, #f41b3b, #ff5470);
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 10px rgba(244, 27, 59, .5);
+            transition: transform .35s cubic-bezier(.4, 0, .2, 1), opacity .2s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mbn-indicator.show {
+            opacity: 1;
+        }
+
+        .mbn-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 6px 0 2px;
+            text-decoration: none;
+            color: #94a3b8;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+            transition: color .25s;
+            border: none;
+            background: none;
+            cursor: pointer;
+            min-width: 0;
+        }
+
+        .mbn-icon-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 28px;
+            border-radius: 14px;
+            transition: background .25s, transform .25s;
+        }
+
+        .mbn-icon-wrap i {
+            font-size: 18px;
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .mbn-label {
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 1;
+            transition: color .25s, font-weight .25s;
+            white-space: nowrap;
+        }
+
+        .mbn-item.active {
+            color: #f41b3b;
+        }
+
+        .mbn-item.active .mbn-icon-wrap {
+            background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+        }
+
+        .mbn-item.active .mbn-icon-wrap i {
+            transform: scale(1.15);
+        }
+
+        .mbn-item.active .mbn-label {
+            font-weight: 800;
+        }
+
+        .mbn-item:active .mbn-icon-wrap {
+            background: rgba(244, 27, 59, .12);
+            transform: scale(.94);
+        }
+
+        /* ═══ Badge اطلاع‌رسانی (قرمز، پالس) ═══ */
+        .mbn-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 16px;
+            height: 16px;
+            padding: 0 4px;
+            background: linear-gradient(135deg, #f41b3b, #d11530);
+            color: #fff;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            box-shadow: 0 2px 6px rgba(244, 27, 59, .5), 0 0 0 2px #fff;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        /* ═══ Badge تعداد شهرهای انتخاب‌شده (سبز، بدون پالس) ═══ */
+        .mbn-badge-count {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 2px 6px rgba(16, 185, 129, .5), 0 0 0 2px #fff;
+            animation: none;
+            min-width: 18px;
+            height: 18px;
+            font-size: 10px;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.12);
+            }
+        }
+
+        /* ═══ Center Add ═══ */
+        .mbn-add {
+            flex: 1.2;
+            color: #f41b3b;
+            padding-top: 0;
+        }
+
+        .mbn-add-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 48px;
+            margin-bottom: 2px;
+        }
+
+        .mbn-add-circle {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f41b3b 0%, #ff3355 50%, #ff5470 100%);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(244, 27, 59, .4),
+            0 2px 8px rgba(244, 27, 59, .3),
+            inset 0 1px 0 rgba(255, 255, 255, .3);
+            border: 3px solid #fff;
+            transform: translateY(-12px);
+            transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s;
+            z-index: 2;
+        }
+
+        .mbn-add-circle i {
+            font-size: 20px;
+            font-weight: 900;
+            transition: transform .3s cubic-bezier(.34, 1.56, .64, 1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+        }
+
+        .mbn-add:active .mbn-add-circle {
+            transform: translateY(-12px) scale(.92);
+            box-shadow: 0 4px 12px rgba(244, 27, 59, .45),
+            inset 0 1px 0 rgba(255, 255, 255, .3);
+        }
+
+        .mbn-add:active .mbn-add-circle i {
+            transform: rotate(90deg);
+        }
+
+        .mbn-add-ripple {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244, 27, 59, .3), transparent 70%);
+            transform: translateY(-12px) scale(1);
+            animation: addPulse 2.5s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes addPulse {
+            0%, 100% {
+                transform: translateY(-12px) scale(1);
+                opacity: .7;
+            }
+            50% {
+                transform: translateY(-12px) scale(1.55);
+                opacity: 0;
+            }
+        }
+
+        .mbn-add .mbn-label {
+            color: #f41b3b;
+            font-weight: 800;
+            margin-top: 4px;
+        }
+
+        .mbn-add.active .mbn-add-circle {
+            background: linear-gradient(135deg, #d11530 0%, #f41b3b 50%, #ff3355 100%);
+        }
+    }
+
+    @media (max-width: 991px) {
+        body {
+            padding-bottom: 78px;
+        }
+    }
+
+    @media (max-width: 991px) and (orientation: landscape) {
+        .mobile-bottom-nav {
+            height: 58px;
+        }
+
+        .mbn-add-circle {
+            width: 44px;
+            height: 44px;
+            transform: translateY(-8px);
+        }
+
+        .mbn-add-ripple {
+            width: 44px;
+            height: 44px;
+            transform: translateY(-8px);
+        }
+
+        .mbn-icon-wrap {
+            height: 24px;
+        }
+
+        .mbn-icon-wrap i {
+            font-size: 16px;
+        }
+
+        .mbn-label {
+            font-size: 9px;
+        }
+
+        body {
+            padding-bottom: 66px;
+        }
+    }
+</style>
+<style>
+    /* ═══ Level 1 accordion ═══ */
+    .cat-l1 {
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .cat-l1:last-child {
+        border-bottom: none;
+    }
+
+    .cat-l1-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 12px;
+        font-size: 14px;
+        font-weight: 800;
+        color: #0f172a;
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+        border-radius: 10px;
+        transition: all .15s;
+    }
+
+    .cat-l1-head::-webkit-details-marker {
+        display: none;
+    }
+
+    .cat-l1-head:hover {
+        background: #fafbfc;
+        color: #f41b3b;
+    }
+
+    .cat-l1-head > span {
+        flex: 1;
+    }
+
+    .cat-l1-head > i:first-child {
+        color: #f41b3b;
+        font-size: 13px;
+    }
+
+    .cat-arrow {
+        font-size: 10px;
+        color: #94a3b8;
+        transition: transform .25s;
+    }
+
+    .cat-l1[open] > .cat-l1-head .cat-arrow {
+        transform: rotate(180deg);
+    }
+
+    .cat-l1[open] > .cat-l1-head {
+        color: #f41b3b;
+        background: #fff1f3;
+    }
+
+    .cat-l1-body {
+        padding: 6px 4px 12px;
+    }
+
+    /* ═══ Level 2 accordion ═══ */
+    .cat-l2 {
+        margin-bottom: 6px;
+        background: #fafbfc;
+        border: 1px solid #eef1f6;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .cat-l2:last-child {
+        margin-bottom: 0;
+    }
+
+    .cat-l2-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 14px;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #334155;
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+        transition: all .15s;
+    }
+
+    .cat-l2-head::-webkit-details-marker {
+        display: none;
+    }
+
+    .cat-l2-head:hover {
+        color: #f41b3b;
+        background: #fff1f3;
+    }
+
+    .cat-l2[open] > .cat-l2-head {
+        color: #f41b3b;
+        border-bottom: 1px solid #eef1f6;
+    }
+
+    .cat-l2[open] > .cat-l2-head .cat-arrow {
+        transform: rotate(180deg);
+    }
+
+    .cat-l2-body {
+        padding: 8px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    @media (max-width: 400px) {
+        .cat-l2-body {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ═══ Categories Modal (Custom) ═══ */
+    .cat-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .cat-modal.open {
+        display: flex;
+    }
+
+    .cat-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, .55);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        animation: catFadeIn .25s ease;
+    }
+
+    @keyframes catFadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .cat-modal-sheet {
+        position: relative;
+        background: #fff;
+        width: 100%;
+        max-width: 600px;
+        max-height: 85vh;
+        border-radius: 24px 24px 0 0;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 -20px 60px rgba(15, 23, 42, .25);
+        animation: catSlideUp .35s cubic-bezier(.16, 1, .3, 1);
+        overflow: hidden;
+    }
+
+    @keyframes catSlideUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .cat-modal-sheet::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        background: #cbd5e1;
+        border-radius: 4px;
+        z-index: 2;
+    }
+
+    .cat-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 20px 14px;
+        border-bottom: 1px solid #f1f5f9;
+        flex-shrink: 0;
+    }
+
+    .cat-modal-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .cat-modal-icon {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+        color: #f41b3b;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .cat-modal-close {
+        width: 36px;
+        height: 36px;
+        border: none;
+        background: #f1f5f9;
+        color: #64748b;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all .2s;
+    }
+
+    .cat-modal-close:hover {
+        background: #fee2e2;
+        color: #ef4444;
+        transform: rotate(90deg);
+    }
+
+    .cat-modal-body {
+        padding: 14px 16px 30px;
+        overflow-y: auto;
+        flex: 1;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cat-block {
+        margin-bottom: 20px;
+    }
+
+    .cat-block:last-child {
+        margin-bottom: 0;
+    }
+
+    .cat-block-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 800;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        padding: 4px 4px 10px;
+    }
+
+    .cat-block-title i {
+        color: #f41b3b;
+        font-size: 11px;
+    }
+
+    .cat-block-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .cat-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 12px 14px;
+        background: #fafbfc;
+        border: 1.5px solid #eef1f6;
+        border-radius: 10px;
+        color: #334155;
+        text-decoration: none;
+        font-size: 12.5px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .15s;
+        -webkit-tap-highlight-color: rgba(244, 27, 59, .1);
+    }
+
+    .cat-item span {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .cat-item-arrow {
+        font-size: 9px;
+        color: #cbd5e1;
+        transition: all .15s;
+    }
+
+    .cat-item:hover,
+    .cat-item:active {
+        background: #fff1f3;
+        border-color: #f41b3b;
+        color: #f41b3b;
+    }
+
+    .cat-item:hover .cat-item-arrow {
+        color: #f41b3b;
+    }
+
+    .cat-empty {
+        text-align: center;
+        padding: 40px 20px;
+        color: #94a3b8;
+    }
+
+    .cat-empty i {
+        font-size: 40px;
+        margin-bottom: 12px;
+        display: block;
+        color: #cbd5e1;
+    }
+
+    .cat-empty p {
+        font-size: 13px;
+        margin: 0;
+    }
+
+    @media (max-width: 400px) {
+        .cat-block-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<script>
+    (function () {
+        function positionIndicator() {
+            var nav = document.querySelector('.mobile-bottom-nav');
+            if (!nav) return;
+            var active = nav.querySelector('.mbn-item.active');
+            var indicator = nav.querySelector('.mbn-indicator');
+            if (!active || !indicator) return;
+
+            if (active.classList.contains('mbn-add')) {
+                indicator.classList.remove('show');
+                return;
+            }
+
+            var navRect = nav.getBoundingClientRect();
+            var itemRect = active.getBoundingClientRect();
+            var centerX = itemRect.left - navRect.left + itemRect.width / 2;
+            var w = 32;
+
+            indicator.style.transform = 'translateX(' + (centerX - w / 2) + 'px)';
+            indicator.classList.add('show');
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', positionIndicator);
+        } else {
+            positionIndicator();
+        }
+        window.addEventListener('resize', positionIndicator);
+        window.addEventListener('pageshow', positionIndicator);
+
+        if ('vibrate' in navigator) {
+            document.querySelectorAll('.mobile-bottom-nav .mbn-item').forEach(function (el) {
+                el.addEventListener('touchstart', function () {
+                    navigator.vibrate(5);
+                }, {passive: true});
+            });
+        }
+    })();
+
+    // ═══ انتقال مودال شهر به body ═══
+    document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById('citySelectModal');
+        if (modal && modal.parentElement !== document.body) {
+            document.body.appendChild(modal);
+        }
+    });
+</script>
+
+<script>
+    function openCatSheet() {
+        document.getElementById('catModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCatSheet() {
+        document.getElementById('catModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // بستن با Escape
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeCatSheet();
+    });
+</script>

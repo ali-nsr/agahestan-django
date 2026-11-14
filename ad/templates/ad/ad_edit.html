@@ -1,0 +1,883 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'select2.min.css' %}" rel="stylesheet" />
+<style>
+    :root {
+        --brand: #f41b3b;
+        --brand-dark: #d3152f;
+    }
+    body { background: #f5f7fa; }
+
+    .edit-wrap { padding: 32px 0 90px; }
+
+    /* ─── Header ─── */
+    .edit-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+    }
+    .edit-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #64748b;
+        font-size: 13px;
+        text-decoration: none;
+        margin-bottom: 8px;
+        transition: color .15s;
+    }
+    .edit-back:hover { color: var(--brand); }
+    .edit-title {
+        font-size: 24px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 4px;
+    }
+    .edit-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #fff1f3;
+        color: var(--brand);
+        font-size: 12px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    /* ─── Card ─── */
+    .edit-card {
+        background: #fff;
+        border: 1px solid #eef1f6;
+        border-radius: 16px;
+        margin-bottom: 16px;
+        overflow: hidden;
+    }
+    .edit-card-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 18px 22px;
+        border-bottom: 1px solid #eef1f6;
+        background: linear-gradient(135deg, #f8fafc 0%, #fff 100%);
+    }
+    .edit-card-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #fff1f3;
+        color: var(--brand);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        flex-shrink: 0;
+    }
+    .edit-card-head h3 {
+        font-size: 15px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 2px;
+    }
+    .edit-card-head p {
+        font-size: 12px;
+        color: #94a3b8;
+        margin: 0;
+    }
+    .edit-card-body { padding: 22px; }
+
+    /* ─── Fields ─── */
+    .edit-field { margin-bottom: 18px; }
+    .edit-field:last-child { margin-bottom: 0; }
+    .edit-label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 8px;
+    }
+    .req { color: #ef4444; }
+    .edit-help {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 6px;
+    }
+    .edit-err {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .form-control, .form-select {
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-size: 14px;
+        transition: all .2s;
+        background: #fff;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 4px rgba(244, 27, 59, .1);
+    }
+
+    /* ─── Price row ─── */
+    .price-row { display: flex; gap: 10px; }
+    .price-row .form-control { flex: 1; }
+    .negotiable-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 16px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        cursor: pointer;
+        background: #f8fafc;
+        transition: all .2s;
+        white-space: nowrap;
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+    }
+    .negotiable-toggle:hover { border-color: #cbd5e1; }
+    .negotiable-toggle input { display: none; }
+    .toggle-track {
+        width: 34px; height: 18px;
+        background: #cbd5e1;
+        border-radius: 10px;
+        position: relative;
+        transition: background .2s;
+    }
+    .toggle-thumb {
+        position: absolute;
+        top: 2px; right: 2px;
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform .25s;
+    }
+    .negotiable-toggle input:checked ~ .toggle-track { background: var(--brand); }
+    .negotiable-toggle input:checked ~ .toggle-track .toggle-thumb { transform: translateX(-16px); }
+
+    .price-preview {
+        font-size: 12px;
+        color: var(--brand);
+        font-weight: 700;
+        margin-top: 6px;
+        min-height: 16px;
+    }
+    .price-row.is-negotiable .form-control {
+        background: #f0f3f7;
+        color: #94a3b8;
+        pointer-events: none;
+    }
+
+    /* ─── Gallery ─── */
+    .gallery-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 10px;
+    }
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    .image-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 2.5px solid #eef1f6;
+        background: #f8fafc;
+        transition: all .2s;
+    }
+    .image-item.is-main {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 4px rgba(244, 27, 59, .15);
+    }
+    .image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+    }
+
+    .img-main-radio {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        z-index: 1;
+    }
+    .img-main-radio input { display: none; }
+    .img-main-radio span {
+        position: absolute;
+        bottom: 6px;
+        right: 6px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .95);
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+        transition: all .15s;
+    }
+    .img-main-radio:hover span { background: var(--brand); color: #fff; }
+    .img-main-radio input:checked ~ span {
+        background: var(--brand);
+        color: #fff;
+        transform: scale(1.05);
+    }
+
+    .img-remove-cb {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        cursor: pointer;
+        z-index: 2;
+    }
+    .img-remove-cb input { display: none; }
+    .img-remove-cb span {
+        display: flex;
+        width: 26px; height: 26px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, .55);
+        color: #fff;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        transition: background .15s;
+    }
+    .img-remove-cb:hover span { background: #ef4444; }
+    .img-remove-cb input:checked ~ span { background: #ef4444; transform: scale(1.1); }
+    .image-item:has(.img-remove-cb input:checked) {
+        opacity: .35;
+        filter: grayscale(1);
+        border-color: #ef4444 !important;
+    }
+
+    .img-main-badge {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: var(--brand);
+        color: #fff;
+        font-size: 9px;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 6px;
+        display: none;
+        z-index: 2;
+    }
+    .image-item.is-main .img-main-badge {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    /* ─── Upload zone ─── */
+    .upload-zone {
+        display: block;
+        border: 2px dashed #cbd5e1;
+        border-radius: 14px;
+        padding: 32px 20px;
+        text-align: center;
+        background: #f8fafc;
+        cursor: pointer;
+        transition: all .2s;
+        margin-bottom: 16px;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+        border-color: var(--brand);
+        background: #fff1f3;
+    }
+    .upload-icon {
+        font-size: 36px;
+        color: #94a3b8;
+        margin-bottom: 10px;
+        transition: color .2s;
+    }
+    .upload-zone:hover .upload-icon { color: var(--brand); }
+    .upload-text strong { display: block; color: #0f172a; font-size: 14px; margin-bottom: 4px; }
+    .upload-text span { color: #64748b; font-size: 13px; }
+    .upload-hint { font-size: 11px; color: #94a3b8; margin-top: 10px; }
+
+    /* ─── Actions ─── */
+    .edit-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+    }
+    .edit-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 26px;
+        border-radius: 12px;
+        border: none;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all .2s;
+    }
+    .edit-btn-cancel {
+        background: #f1f5f9;
+        color: #475569;
+    }
+    .edit-btn-cancel:hover { background: #e2e8f0; color: #1e293b; }
+    .edit-btn-primary {
+        background: linear-gradient(135deg, var(--brand), #ff3355);
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(244, 27, 59, .3);
+    }
+    .edit-btn-primary:hover {
+        background: linear-gradient(135deg, #d11530, var(--brand));
+        color: #fff;
+        transform: translateY(-1px);
+    }
+    .edit-btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    /* ─── Select2 theme ─── */
+    .select2-container { width: 100% !important; }
+    .select2-container--default .select2-selection--multiple,
+    .select2-container--default .select2-selection--single {
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        min-height: 44px;
+    }
+    .select2-container--default.select2-container--focus .select2-selection--multiple,
+    .select2-container--default.select2-container--focus .select2-selection--single {
+        border-color: var(--brand) !important;
+        box-shadow: 0 0 0 4px rgba(244, 27, 59, .1) !important;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background: #fff1f3 !important;
+        border: 1px solid #ffd0d8 !important;
+        color: var(--brand) !important;
+        border-radius: 6px !important;
+        padding: 3px 8px !important;
+        font-size: 12px;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        color: #ff5470 !important;
+        margin-left: 4px;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+        color: #ef4444 !important;
+    }
+    .select2-dropdown {
+        border: 1.5px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, .12);
+    }
+    .select2-results__option--highlighted[aria-selected] {
+        background: #fff1f3 !important;
+        color: var(--brand) !important;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 767px) {
+        .edit-title { font-size: 19px; }
+        .edit-card-body { padding: 16px; }
+        .edit-card-head { padding: 14px 16px; }
+        .image-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+        .price-row { flex-direction: column; }
+        .edit-actions { flex-direction: column-reverse; }
+        .edit-btn { justify-content: center; width: 100%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="edit-wrap">
+    <div class="container">
+
+        <!-- Header -->
+        <div class="edit-header">
+            <div>
+                <a href="{% url 'accounts:dashboard' %}" class="edit-back">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت به داشبورد
+                </a>
+                <h1 class="edit-title">ویرایش آگهی</h1>
+                <span class="edit-badge">
+                    <i class="fas fa-tag"></i>
+                    {{ category.title }}
+                </span>
+            </div>
+        </div>
+
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+
+        {% if form.non_field_errors or cat_form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for err in form.non_field_errors %}{{ err }}<br>{% endfor %}
+                {% for err in cat_form.non_field_errors %}{{ err }}<br>{% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data" id="adForm" novalidate>
+            {% csrf_token %}
+
+            <!-- ═══ ویژگی‌های دسته ═══ -->
+            <div class="edit-card">
+                <div class="edit-card-head">
+                    <div class="edit-card-icon"><i class="fas fa-list-ul"></i></div>
+                    <div>
+                        <h3>ویژگی‌های {{ category.title }}</h3>
+                        <p>فیلدهای ستاره‌دار الزامی هستند</p>
+                    </div>
+                </div>
+                <div class="edit-card-body">
+                    {% if cat_form %}
+                        <div class="row g-3">
+                            {% for field in cat_form %}
+                                <div class="col-md-6">
+                                    <div class="edit-field">
+                                        <label class="edit-label" for="{{ field.id_for_label }}">
+                                            {{ field.label }}
+                                            {% if field.field.required %}<span class="req">*</span>{% endif %}
+                                        </label>
+                                        {{ field }}
+                                        {% if field.errors %}<div class="edit-err">{{ field.errors.0 }}</div>{% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info mb-0">این دسته‌بندی فیلد اضافی ندارد.</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- ═══ اطلاعات آگهی ═══ -->
+            <div class="edit-card">
+                <div class="edit-card-head">
+                    <div class="edit-card-icon"><i class="fas fa-file-alt"></i></div>
+                    <div>
+                        <h3>اطلاعات آگهی</h3>
+                        <p>عنوان واضح و توضیحات کامل</p>
+                    </div>
+                </div>
+                <div class="edit-card-body">
+                    <div class="edit-field">
+                        <label class="edit-label">عنوان <span class="req">*</span></label>
+                        {{ form.title }}
+                        {% if form.title.errors %}<div class="edit-err">{{ form.title.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="edit-field">
+                        <label class="edit-label">توضیحات <span class="req">*</span></label>
+                        {{ form.description }}
+                        {% if form.description.errors %}<div class="edit-err">{{ form.description.errors.0 }}</div>{% endif %}
+                    </div>
+
+                    <div class="edit-field">
+                        <label class="edit-label">
+                            <span class="price-label">قیمت</span> (تومان) <span class="req">*</span>
+                        </label>
+                        <div class="price-row" id="priceRow">
+                            {{ form.price }}
+                            <label class="negotiable-toggle" for="id_is_negotiable">
+                                {{ form.is_negotiable }}
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                <span>توافقی</span>
+                            </label>
+                        </div>
+                        <div class="price-preview" id="pricePreview"></div>
+                        {% if 'rent' in category.slug %}
+                            <div class="edit-help">این مقدار به‌عنوان <strong>ودیعه</strong> ذخیره می‌شود.</div>
+                        {% endif %}
+                        {% if form.price.errors %}<div class="edit-err">{{ form.price.errors.0 }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ موقعیت ═══ -->
+            <div class="edit-card">
+                <div class="edit-card-head">
+                    <div class="edit-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <h3>موقعیت</h3>
+                        <p>موقعیت دقیق، بازدید بیشتر</p>
+                    </div>
+                </div>
+                <div class="edit-card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="edit-field">
+                                <label class="edit-label">استان <span class="req">*</span></label>
+                                {{ form.province }}
+                                {% if form.province.errors %}<div class="edit-err">{{ form.province.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="edit-field">
+                                <label class="edit-label">شهر <span class="req">*</span></label>
+                                {{ form.city }}
+                                {% if form.city.errors %}<div class="edit-err">{{ form.city.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="edit-field">
+                                <label class="edit-label">محله</label>
+                                {{ form.neighborhood }}
+                                {% if form.neighborhood.errors %}<div class="edit-err">{{ form.neighborhood.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-field">
+                        <label class="edit-label">آدرس <span class="req">*</span></label>
+                        {{ form.address }}
+                        {% if form.address.errors %}<div class="edit-err">{{ form.address.errors.0 }}</div>{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ تصاویر ═══ -->
+            <div class="edit-card">
+                <div class="edit-card-head">
+                    <div class="edit-card-icon"><i class="fas fa-images"></i></div>
+                    <div>
+                        <h3>تصاویر آگهی</h3>
+                        <p>روی هر تصویر کلیک کنید تا «عکس اصلی» شود</p>
+                    </div>
+                </div>
+                <div class="edit-card-body">
+
+                    {% if existing_images %}
+                        <div class="gallery-label">
+                            <i class="fas fa-images"></i>
+                            تصاویر فعلی
+                        </div>
+                        <div class="image-grid" id="existingGrid">
+                            {% for img in existing_images %}
+                                <div class="image-item {% if img.is_main %}is-main{% endif %}"
+                                     data-type="existing" data-id="{{ img.id }}">
+                                    <img src="{{ img.image.url }}" alt="">
+
+                                    <label class="img-main-radio" title="انتخاب به‌عنوان اصلی">
+                                        <input type="radio"
+                                               name="main_image_ref"
+                                               value="existing:{{ img.id }}"
+                                               {% if img.is_main %}checked{% endif %}>
+                                        <span><i class="fas fa-star"></i></span>
+                                    </label>
+
+                                    <label class="img-remove-cb" title="حذف این تصویر">
+                                        <input type="checkbox"
+                                               name="removed_images"
+                                               value="{{ img.id }}">
+                                        <span><i class="fas fa-times"></i></span>
+                                    </label>
+
+                                    <span class="img-main-badge"><i class="fas fa-star"></i> اصلی</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="gallery-label mt-3">
+                        <i class="fas fa-plus-circle"></i>
+                        افزودن تصاویر جدید
+                    </div>
+                    <label for="id_images" class="upload-zone" id="uploadZone">
+                        <input type="file" name="images" id="id_images"
+                               multiple accept="image/*" style="display:none">
+                        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <div class="upload-text">
+                            <strong>برای انتخاب کلیک کنید</strong>
+                            <span>یا فایل‌ها را اینجا رها کنید</span>
+                        </div>
+                        <div class="upload-hint">حداکثر ۱۰ تصویر، هر کدام تا ۵ مگابایت</div>
+                    </label>
+
+                    <div class="image-grid" id="newGrid"></div>
+                </div>
+            </div>
+
+            <!-- دکمه‌ها -->
+            <div class="edit-actions">
+                <a href="{% url 'ad:ad-detail' ad.uuid %}" class="edit-btn edit-btn-cancel">
+                    انصراف
+                </a>
+                <button type="submit" class="edit-btn edit-btn-primary" id="submitBtn">
+                    <i class="fas fa-check"></i>
+                    ذخیره تغییرات
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'select2.min.js' %}"></script>
+<script>
+$(function () {
+    // ═══════════════════════════════════════════
+    // SELECT2
+    // ═══════════════════════════════════════════
+    if ($.fn.select2) {
+        $('.select2-multi').each(function () {
+            $(this).select2({
+                placeholder: $(this).data('placeholder') || 'انتخاب کنید',
+                allowClear: true,
+                width: '100%',
+                dir: 'rtl',
+                closeOnSelect: false,
+                language: {
+                    noResults: () => 'نتیجه‌ای یافت نشد',
+                    searching: () => 'در حال جستجو...',
+                }
+            });
+        });
+        $('.select2-single').each(function () {
+            $(this).select2({ allowClear: true, width: '100%', dir: 'rtl' });
+        });
+    }
+
+    // ═══════════════════════════════════════════
+    // CASCADE: برند → مدل (با initial value)
+    // ═══════════════════════════════════════════
+    function initCascading() {
+        const fieldMap = {};
+        $('[data-field-key]').each(function () {
+            fieldMap[$(this).attr('data-field-key')] = $(this);
+        });
+
+        $('.cascading-target').each(function () {
+            const $target = $(this);
+            const sourceKey = $target.attr('data-depends-on');
+            const $source = fieldMap[sourceKey];
+
+            if (!$source || !$source.length) {
+                console.warn('[Cascade] source not found:', sourceKey);
+                return;
+            }
+
+            let modelsMap = {};
+            try {
+                modelsMap = JSON.parse($source.attr('data-models') || '{}');
+            } catch (e) {
+                console.warn('[Cascade] invalid models map:', e);
+                return;
+            }
+
+            // ⚠️ initial value از data attribute
+            const initialValue = $target.attr('data-initial-value') || $target.val() || '';
+
+            function populate(brand) {
+                $target.empty();
+                $target.append('<option value="">انتخاب کنید...</option>');
+                const models = modelsMap[brand] || [];
+                models.forEach(m => {
+                    $target.append($('<option>').val(m).text(m));
+                });
+                // برگرداندن مقدار اولیه
+                if (initialValue && models.indexOf(initialValue) !== -1) {
+                    $target.val(initialValue);
+                }
+                // Select2 refresh
+                if ($target.hasClass('select2-hidden-accessible')) {
+                    $target.trigger('change.select2');
+                }
+            }
+
+            populate($source.val() || '');
+
+            $source.on('change', function () {
+                // در تغییر برند، initial رو پاک کن
+                $target.removeAttr('data-initial-value');
+                populate($(this).val() || '');
+            });
+        });
+    }
+
+    initCascading();
+
+    // ═══════════════════════════════════════════
+    // قیمت
+    // ═══════════════════════════════════════════
+    const $price = $('#id_price');
+    const $preview = $('#pricePreview');
+    const $negotiable = $('#id_is_negotiable');
+    const $priceRow = $('#priceRow');
+
+    function formatPrice(n) {
+        return String(n).replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    function toWords(num) {
+        num = parseInt(num);
+        if (!num) return '';
+        if (num >= 1_000_000_000) return (num / 1_000_000_000).toFixed(1) + ' میلیارد تومان';
+        if (num >= 1_000_000) return (num / 1_000_000).toFixed(0) + ' میلیون تومان';
+        if (num >= 1_000) return (num / 1_000).toFixed(0) + ' هزار تومان';
+        return num + ' تومان';
+    }
+
+    $price.on('input', function () {
+        const raw = $(this).val().replace(/\D/g, '');
+        $(this).val(formatPrice(raw));
+        $preview.text(raw ? toWords(raw) : '');
+    }).trigger('input');
+
+    function syncNegotiable() {
+        const isN = $negotiable.is(':checked');
+        $priceRow.toggleClass('is-negotiable', isN);
+        if (isN) {
+            $price.val('').prop('disabled', true);
+            $preview.text('قیمت توافقی');
+        } else {
+            $price.prop('disabled', false);
+            if ($price.val()) $price.trigger('input');
+        }
+    }
+    $negotiable.on('change', syncNegotiable);
+    syncNegotiable();
+
+    // ═══════════════════════════════════════════
+    // استان → شهر → محله
+    // ═══════════════════════════════════════════
+    $('#id_province').on('change', function () {
+        const p = $(this).val();
+        const $city = $('#id_city').empty().append('<option value="">---</option>');
+        $('#id_neighborhood').empty().append('<option value="">---</option>');
+        if (!p) return;
+        $.get("{% url 'ad:cities-by-province' %}", { province_id: p }, function (data) {
+            data.forEach(c => $city.append(`<option value="${c.id}">${c.name}</option>`));
+        });
+    });
+
+    $('#id_city').on('change', function () {
+        const c = $(this).val();
+        const $nh = $('#id_neighborhood').empty().append('<option value="">---</option>');
+        if (!c) return;
+        $.get("{% url 'ad:neighborhoods-by-city' %}", { city_id: c }, function (data) {
+            data.forEach(n => $nh.append(`<option value="${n.id}">${n.name}</option>`));
+        });
+    });
+
+    // ═══════════════════════════════════════════
+    // آپلود تصاویر جدید
+    // ═══════════════════════════════════════════
+    const $zone = $('#uploadZone');
+    const $input = $('#id_images');
+    const $newGrid = $('#newGrid');
+    const MAX = 10;
+    let newFiles = [];
+
+    function renderNew() {
+        $newGrid.empty();
+        newFiles.forEach((file, i) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                $newGrid.append(`
+                    <div class="image-item" data-type="new" data-index="${i}">
+                        <img src="${e.target.result}" alt="">
+                        <label class="img-main-radio" title="انتخاب به‌عنوان اصلی">
+                            <input type="radio" name="main_image_ref" value="new:${i}">
+                            <span><i class="fas fa-star"></i></span>
+                        </label>
+                        <span class="img-main-badge"><i class="fas fa-star"></i> اصلی</span>
+                    </div>
+                `);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function syncInput() {
+        const dt = new DataTransfer();
+        newFiles.forEach(f => dt.items.add(f));
+        $input[0].files = dt.files;
+    }
+
+    $zone.on('click', () => $input.trigger('click'));
+    $zone.on('dragover dragenter', e => {
+        e.preventDefault();
+        $zone.addClass('dragover');
+    });
+    $zone.on('dragleave dragend drop', e => {
+        e.preventDefault();
+        $zone.removeClass('dragover');
+    });
+    $zone.on('drop', e => {
+        const files = Array.from(e.originalEvent.dataTransfer.files);
+        addFiles(files);
+    });
+    $input.on('change', function () {
+        addFiles(Array.from(this.files));
+    });
+
+    function addFiles(files) {
+    const imgs = files.filter(f => f.type.startsWith('image/'));
+    const existingCount = $('#existingGrid .image-item').not(':has(.img-remove-cb input:checked)').length;
+    const allowed = MAX - existingCount;
+
+    if (newFiles.length + imgs.length > allowed) {
+        alert(`با احتساب تصاویر فعلی، فقط ${allowed} تصویر جدید می‌تونید اضافه کنید.`);
+        return;
+    }
+    newFiles = newFiles.concat(imgs).slice(0, allowed);
+    renderNew();
+    syncInput();
+}
+
+    // ═══ عکس اصلی ═══
+    $(document).on('change', 'input[name="main_image_ref"]', function () {
+        $('.image-item').removeClass('is-main');
+        $(this).closest('.image-item').addClass('is-main');
+    });
+
+    // ═══ Submit ═══
+    $('#adForm').on('submit', function (e) {
+        let hasError = false;
+
+    $('[required]').each(function () {
+        if (!$(this).val()) {
+            $(this).addClass('is-invalid');
+            hasError = true;
+        } else {
+            $(this).removeClass('is-invalid');
+        }
+    });
+
+    if (hasError) {
+        e.preventDefault();
+        $('.is-invalid').first().focus();
+        return;
+    }
+
+        if (!$price.prop('disabled')) {
+            $price.val($price.val().replace(/,/g, ''));
+        }
+        if (!$('input[name="main_image_ref"]:checked').length) {
+            e.preventDefault();
+            alert('یک عکس را به‌عنوان اصلی انتخاب کنید.');
+            return;
+        }
+        $('#submitBtn').prop('disabled', true)
+            .html('<i class="fas fa-spinner fa-spin"></i> در حال ذخیره...');
+    });
+});
+</script>
+{% endblock %}

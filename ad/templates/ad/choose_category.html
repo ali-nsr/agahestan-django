@@ -3,255 +3,542 @@
 
 {% block extra_css %}
 <style>
-    .choose-category-page {
+    .choose-page {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
         background: #f5f7fa;
-        min-height: 100vh;
-        padding: 40px 0 80px;
-    }
-    .page-head { text-align: center; margin-bottom: 40px; }
-    .page-head h1 { font-size: 26px; font-weight: 800; color: #1a2233; margin-bottom: 8px; }
-    .page-head p { color: #6b7c93; font-size: 14px; margin: 0; }
-
-    .category-group { margin-bottom: 36px; }
-    .category-group-title {
-        display: flex; align-items: center; gap: 10px;
-        font-size: 16px; font-weight: 700; color: #2c3e50;
-        margin-bottom: 16px; padding-right: 4px;
-    }
-    .category-group-title i { color: #0d6efd; font-size: 18px; }
-
-    .category-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 14px;
     }
 
-    .category-card {
-        width: 100%;
-        display: flex; align-items: center; gap: 14px;
-        padding: 16px 18px;
+    .choose-card {
         background: #fff;
-        border: 1.5px solid #e8ecf1;
+        border-radius: 24px;
+        padding: 48px 32px 40px;
+        max-width: 460px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 4px 24px rgba(15, 23, 42, .06);
+        border: 1px solid #eef1f6;
+    }
+
+    .choose-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 24px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+        color: #f41b3b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+    }
+
+    .choose-card h1 {
+        font-size: 22px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0 0 8px;
+    }
+
+    .choose-card p {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0 0 28px;
+        line-height: 1.7;
+    }
+
+    .choose-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 15px 24px;
+        background: linear-gradient(135deg, #f41b3b 0%, #d3152f 100%);
+        color: #fff;
+        border: none;
         border-radius: 14px;
+        font-size: 15px;
+        font-weight: 700;
         cursor: pointer;
-        text-align: right;
         transition: all .2s;
+        box-shadow: 0 6px 20px rgba(244, 27, 59, .3);
         font-family: inherit;
     }
-    .category-card:hover {
-        border-color: #0d6efd;
+    .choose-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(13,110,253,.12);
+        box-shadow: 0 10px 28px rgba(244, 27, 59, .4);
     }
-    .category-icon {
-        width: 44px; height: 44px; border-radius: 12px;
-        background: #e7f0ff; color: #0d6efd;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 18px; flex-shrink: 0; transition: all .2s;
+    .choose-btn:active {
+        transform: translateY(0);
     }
-    .category-card:hover .category-icon { background: #0d6efd; color: #fff; }
-    .category-name { flex: 1; font-size: 14px; font-weight: 600; color: #1a2233; }
-    .category-arrow { color: #cbd5e1; font-size: 13px; transition: all .2s; }
-    .category-card:hover .category-arrow { color: #0d6efd; transform: translateX(-3px); }
 
-    /* ─── Brand modal ─── */
-    .brand-modal-content { border-radius: 16px; border: none; }
-    .brand-modal-header {
-        padding: 20px 24px;
-        border-bottom: 1px solid #eef1f6;
-        display: flex; justify-content: space-between; align-items: center;
+    /* ═══ Picker Modal ═══ */
+    .cat-picker {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        padding: 0;
     }
-    .brand-modal-title { font-size: 17px; font-weight: 700; color: #1a2233; margin: 0; }
-    .brand-modal-sub { font-size: 12px; color: #8896a8; margin: 4px 0 0; }
-    .brand-modal-body { padding: 20px 24px; max-height: 60vh; overflow-y: auto; }
+    .cat-picker.open { display: flex; }
 
-    .brand-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px;
+    .cp-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(15, 23, 42, .55);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        animation: cpFade .25s ease;
     }
-    .brand-btn {
-        padding: 12px 8px;
-        border: 1.5px solid #e8ecf1;
-        border-radius: 10px;
+    @keyframes cpFade {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    .cp-sheet {
+        position: relative;
         background: #fff;
-        color: #2c3e50;
-        font-size: 13px;
-        font-weight: 600;
+        width: 100%;
+        max-width: 500px;
+        max-height: 80vh;
+        border-radius: 24px 24px 0 0;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 -20px 60px rgba(15, 23, 42, .25);
+        animation: cpUp .35s cubic-bezier(.16, 1, .3, 1);
+        overflow: hidden;
+    }
+    @keyframes cpUp {
+        from { transform: translateY(100%); }
+        to   { transform: translateY(0); }
+    }
+
+    .cp-handle {
+        width: 40px;
+        height: 4px;
+        background: #cbd5e1;
+        border-radius: 4px;
+        margin: 10px auto 0;
+        flex-shrink: 0;
+    }
+
+    .cp-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 20px;
+        border-bottom: 1px solid #f1f5f9;
+        flex-shrink: 0;
+    }
+
+    .cp-back-btn {
+        width: 38px;
+        height: 38px;
+        border: none;
+        background: #f1f5f9;
+        color: #475569;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         transition: all .2s;
-        text-align: center;
+        flex-shrink: 0;
+        font-size: 13px;
     }
-    .brand-btn:hover {
-        border-color: #0d6efd;
-        background: #eff6ff;
-        color: #0d6efd;
+    .cp-back-btn:hover {
+        background: #e2e8f0;
+        color: #0f172a;
     }
-    .brand-btn.active {
-        border-color: #0d6efd;
-        background: #0d6efd;
-        color: #fff;
+    .cp-back-btn:disabled {
+        opacity: 0;
+        pointer-events: none;
     }
 
-    .brand-modal-footer {
-        padding: 16px 24px;
-        border-top: 1px solid #eef1f6;
-        display: flex; justify-content: flex-end; gap: 10px;
+    .cp-head-info {
+        flex: 1;
+        min-width: 0;
     }
-    .btn-confirm-brand {
-        background: #0d6efd; color: #fff; border: none;
-        padding: 10px 24px; border-radius: 10px;
-        font-size: 14px; font-weight: 600; cursor: pointer;
+    .cp-head-title {
+        font-size: 15px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .cp-breadcrumb {
+        font-size: 11px;
+        color: #94a3b8;
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        overflow: hidden;
+    }
+    .cp-breadcrumb span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .cp-breadcrumb i {
+        font-size: 8px;
+        flex-shrink: 0;
+    }
+
+    .cp-close-btn {
+        width: 38px;
+        height: 38px;
+        border: none;
+        background: #f1f5f9;
+        color: #64748b;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
         transition: all .2s;
+        flex-shrink: 0;
+        font-size: 14px;
     }
-    .btn-confirm-brand:disabled { opacity: .5; cursor: not-allowed; }
-    .btn-confirm-brand:hover:not(:disabled) { background: #0b5ed7; }
+    .cp-close-btn:hover {
+        background: #fee2e2;
+        color: #ef4444;
+        transform: rotate(90deg);
+    }
+
+    .cp-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px 0;
+    }
+
+    .cp-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        padding: 14px 20px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #f1f5f9;
+        cursor: pointer;
+        transition: background .15s;
+        text-align: right;
+        font-family: inherit;
+    }
+    .cp-item:last-child { border-bottom: none; }
+    .cp-item:hover { background: #fafbfc; }
+    .cp-item:active { background: #fff1f3; }
+
+    .cp-item-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #fff1f3;
+        color: #f41b3b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        flex-shrink: 0;
+        transition: all .15s;
+    }
+    .cp-item.is-leaf .cp-item-icon {
+        background: #f0fdf4;
+        color: #10b981;
+    }
+    .cp-item:hover .cp-item-icon {
+        transform: scale(1.08);
+    }
+
+    .cp-item-text {
+        flex: 1;
+        min-width: 0;
+    }
+    .cp-item-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .cp-item-sub {
+        font-size: 11px;
+        color: #94a3b8;
+        margin-top: 2px;
+    }
+
+    .cp-item-arrow {
+        color: #cbd5e1;
+        font-size: 11px;
+        flex-shrink: 0;
+        transition: all .15s;
+    }
+    .cp-item:hover .cp-item-arrow {
+        color: #f41b3b;
+        transform: translateX(-3px);
+    }
+    .cp-item.is-leaf .cp-item-arrow {
+        color: #10b981;
+    }
+
+    .cp-empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: #94a3b8;
+    }
+    .cp-empty i {
+        font-size: 40px;
+        margin-bottom: 10px;
+        display: block;
+        color: #cbd5e1;
+    }
+    .cp-empty p {
+        font-size: 13px;
+        margin: 0;
+    }
+
+    @media (min-width: 768px) {
+        .cat-picker {
+            align-items: center;
+            padding: 20px;
+        }
+        .cp-sheet {
+            border-radius: 24px;
+            max-height: 70vh;
+            animation: cpScale .3s cubic-bezier(.16, 1, .3, 1);
+        }
+        @keyframes cpScale {
+            from { opacity: 0; transform: scale(.9); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+    }
+
+    @media (max-width: 575px) {
+        .choose-page { padding: 24px 16px; min-height: calc(100vh - 160px); }
+        .choose-card { padding: 36px 24px 32px; border-radius: 20px; }
+        .choose-icon { width: 68px; height: 68px; font-size: 28px; margin-bottom: 18px; }
+        .choose-card h1 { font-size: 19px; }
+        .choose-card p { font-size: 13px; margin-bottom: 22px; }
+        .choose-btn { padding: 14px 20px; font-size: 14px; }
+
+        .cp-sheet { max-height: 85vh; }
+        .cp-head { padding: 14px 16px; }
+        .cp-item { padding: 13px 16px; gap: 12px; }
+        .cp-item-icon { width: 36px; height: 36px; font-size: 14px; }
+        .cp-item-title { font-size: 13px; }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="choose-category-page">
-    <div class="container">
-
-        <div class="page-head">
-            <h1>چه چیزی می‌خواهید ثبت کنید؟</h1>
-            <p>دسته‌بندی مناسب را انتخاب کنید تا فرم آگهی برای شما آماده شود.</p>
+<div class="choose-page">
+    <div class="choose-card">
+        <div class="choose-icon">
+            <i class="fas fa-plus"></i>
         </div>
-
-        {% for group in grouped_categories %}
-            <div class="category-group">
-                <h2 class="category-group-title">
-                    <i class="fas fa-folder-open"></i>
-                    {% if group.parent %}{{ group.parent }}{% else %}سایر{% endif %}
-                </h2>
-
-                <div class="category-grid">
-                    {% for cat in group.children %}
-                        {% if cat.has_brands %}
-                            {# ─── دسته‌ای که برند داره: مودال باز کن ─── #}
-                            <button type="button" class="category-card js-open-brand-modal"
-                                    data-category-slug="{{ cat.slug }}"
-                                    data-category-name="{{ cat.title }}"
-                                    data-brands='{{ cat.brands_json }}'>
-                                <div class="category-icon"><i class="fas {{ cat.icon }}"></i></div>
-                                <span class="category-name">{{ cat.title }}</span>
-                                <i class="fas fa-arrow-left category-arrow"></i>
-                            </button>
-                        {% else %}
-                            {# ─── دسته‌ی ساده: submit مستقیم ─── #}
-                            <form method="post" style="margin:0;">
-                                {% csrf_token %}
-                                <input type="hidden" name="category" value="{{ cat.slug }}">
-                                <button type="submit" class="category-card">
-                                    <div class="category-icon"><i class="fas {{ cat.icon }}"></i></div>
-                                    <span class="category-name">{{ cat.title }}</span>
-                                    <i class="fas fa-arrow-left category-arrow"></i>
-                                </button>
-                            </form>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        {% empty %}
-            <div style="text-align:center;padding:60px;color:#94a3b8;">
-                <i class="fas fa-folder-open" style="font-size:48px;margin-bottom:12px;"></i>
-                <p>هیچ دسته‌بندی فعالی یافت نشد.</p>
-            </div>
-        {% endfor %}
-
+        <h1>ثبت آگهی جدید</h1>
+        <p>برای شروع، دسته‌بندی آگهی‌تان را انتخاب کنید</p>
+        <button type="button" class="choose-btn" id="openPicker">
+            <i class="fas fa-grip"></i>
+            انتخاب دسته‌بندی
+        </button>
     </div>
 </div>
 
-{# ═══ مودال انتخاب برند ═══ #}
-<div class="modal fade" id="brandModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content brand-modal-content">
-            <form method="post" id="brandForm">
-                {% csrf_token %}
-                <input type="hidden" name="category" id="brandCategoryInput">
-                <input type="hidden" name="brand" id="brandValueInput">
+<div class="cat-picker" id="catPicker" role="dialog" aria-modal="true">
+    <div class="cp-backdrop" id="cpBackdrop"></div>
 
-                <div class="brand-modal-header">
-                    <div>
-                        <h5 class="brand-modal-title" id="brandModalTitle">انتخاب برند</h5>
-                        <p class="brand-modal-sub">برند را انتخاب کنید تا ادامه دهید</p>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+    <div class="cp-sheet">
+        <div class="cp-handle"></div>
 
-                <div class="brand-modal-body">
-                    <div class="brand-grid" id="brandGrid"></div>
-                </div>
-
-                <div class="brand-modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
-                    <button type="submit" class="btn-confirm-brand" id="brandConfirmBtn" disabled>
-                        ادامه
-                    </button>
-                </div>
-            </form>
+        <div class="cp-head">
+            <button type="button" class="cp-back-btn" id="cpBackBtn" aria-label="بازگشت">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="cp-head-info">
+                <h3 class="cp-head-title" id="cpTitle">انتخاب دسته‌بندی</h3>
+                <div class="cp-breadcrumb" id="cpBreadcrumb"></div>
+            </div>
+            <button type="button" class="cp-close-btn" id="cpCloseBtn" aria-label="بستن">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
+
+        <div class="cp-body" id="cpBody"></div>
     </div>
 </div>
+
+<form method="post" id="pickForm" style="display:none;">
+    {% csrf_token %}
+    <input type="hidden" name="category" id="pickCategory">
+</form>
+
+<script type="application/json" id="catData">{{ items_json|safe }}</script>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-$(function () {
-    const $modal = new bootstrap.Modal(document.getElementById('brandModal'));
-    const $grid = $('#brandGrid');
-    let selectedBrand = null;
+(function () {
+    'use strict';
 
-    $(document).on('click', '.js-open-brand-modal', function () {
-        const slug = $(this).data('category-slug');
-        const name = $(this).data('category-name');
-        // data-brands به صورت attribute، JSON یا آرایه‌ی رشته‌ای می‌آد
-        let brands = [];
+    var items = [];
+    try {
+        items = JSON.parse(document.getElementById('catData').textContent || '[]');
+    } catch (e) {
+        console.error('Invalid catData', e);
+    }
 
-        // اگه از data attribute خوندیم
-        const rawBrands = $(this).attr('data-brands');
-        try {
-            // اگه شبیه JSON آرایه بود، پارس کن
-            brands = JSON.parse(rawBrands);
-        } catch (e) {
-            // وگرنه شاید رشته‌ی comma-separated باشه
-            brands = (rawBrands || '').split(',').map(s => s.trim()).filter(Boolean);
-        }
+    // ─── ساخت درخت از path ها ───
+    function buildTree(items) {
+        var root = { children: {}, isLeaf: false, slug: null, title: 'ریشه' };
 
-        selectedBrand = null;
-        $('#brandModalTitle').text(`انتخاب برند ${name}`);
-        $('#brandCategoryInput').val(slug);
-        $('#brandValueInput').val('');
-        $('#brandConfirmBtn').prop('disabled', true);
-
-        $grid.empty();
-        if (!brands.length) {
-            $grid.append('<p class="text-muted">برندی ثبت نشده است.</p>');
-        } else {
-            brands.forEach(function (b) {
-                $grid.append(
-                    `<button type="button" class="brand-btn" data-brand="${b}">${b}</button>`
-                );
+        items.forEach(function (item) {
+            var node = root;
+            item.path.forEach(function (step, idx) {
+                if (!node.children[step.slug]) {
+                    node.children[step.slug] = {
+                        slug: step.slug,
+                        title: step.title,
+                        children: {},
+                        isLeaf: false,
+                    };
+                }
+                node = node.children[step.slug];
+                if (idx === item.path.length - 1) {
+                    node.isLeaf = true;
+                }
             });
+        });
+
+        return root;
+    }
+
+    var tree = buildTree(items);
+
+    // ─── State ───
+    var stack = [tree];
+    var $picker = document.getElementById('catPicker');
+    var $body = document.getElementById('cpBody');
+    var $title = document.getElementById('cpTitle');
+    var $breadcrumb = document.getElementById('cpBreadcrumb');
+    var $backBtn = document.getElementById('cpBackBtn');
+    var $form = document.getElementById('pickForm');
+    var $pickCategory = document.getElementById('pickCategory');
+
+    // ─── Render ───
+    function render() {
+        var node = stack[stack.length - 1];
+        var children = Object.values(node.children);
+
+        // عنوان
+        if (stack.length === 1) {
+            $title.textContent = 'انتخاب دسته‌بندی';
+            $breadcrumb.innerHTML = '<span>ریشه</span>';
+        } else {
+            $title.textContent = node.title;
+            var crumbs = stack.slice(1).map(function (n) {
+                return '<span>' + esc(n.title) + '</span>';
+            });
+            $breadcrumb.innerHTML = crumbs.join('<i class="fas fa-chevron-left"></i>');
         }
 
-        $modal.show();
+        // back button
+        $backBtn.disabled = stack.length === 1;
+
+        // items
+        $body.innerHTML = '';
+        if (!children.length) {
+            $body.innerHTML = '<div class="cp-empty"><i class="fas fa-inbox"></i><p>دسته‌ای نیست</p></div>';
+            return;
+        }
+
+        children.forEach(function (child) {
+            var hasChildren = Object.keys(child.children).length > 0;
+            var isLeaf = child.isLeaf && !hasChildren;
+
+            var $item = document.createElement('button');
+            $item.type = 'button';
+            $item.className = 'cp-item' + (isLeaf ? ' is-leaf' : '');
+            $item.innerHTML = '' +
+                '<div class="cp-item-icon">' +
+                    '<i class="fas ' + (isLeaf ? 'fa-check' : 'fa-folder') + '"></i>' +
+                '</div>' +
+                '<div class="cp-item-text">' +
+                    '<div class="cp-item-title">' + esc(child.title) + '</div>' +
+                    '<div class="cp-item-sub">' +
+                        (isLeaf ? 'انتخاب' : Object.keys(child.children).length + ' زیردسته') +
+                    '</div>' +
+                '</div>' +
+                '<i class="fas ' + (isLeaf ? 'fa-arrow-left' : 'fa-chevron-left') + ' cp-item-arrow"></i>';
+
+            $item.addEventListener('click', function () {
+                if (isLeaf) {
+                    // انتخاب نهایی
+                    $pickCategory.value = child.slug;
+                    $form.submit();
+                } else {
+                    // رفتن داخل
+                    stack.push(child);
+                    render();
+                    $body.scrollTop = 0;
+                }
+            });
+
+            $body.appendChild($item);
+        });
+    }
+
+    function esc(str) {
+        var div = document.createElement('div');
+        div.textContent = str || '';
+        return div.innerHTML;
+    }
+
+    // ─── Open / Close ───
+    function openPicker() {
+        stack = [tree];
+        render();
+        $picker.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePicker() {
+        $picker.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // ─── Events ───
+    document.getElementById('openPicker').addEventListener('click', openPicker);
+    document.getElementById('cpCloseBtn').addEventListener('click', closePicker);
+    document.getElementById('cpBackdrop').addEventListener('click', closePicker);
+
+    $backBtn.addEventListener('click', function () {
+        if (stack.length > 1) {
+            stack.pop();
+            render();
+        }
     });
 
-    // انتخاب برند
-    $grid.on('click', '.brand-btn', function () {
-        selectedBrand = $(this).data('brand');
-        $('.brand-btn').removeClass('active');
-        $(this).addClass('active');
-        $('#brandValueInput').val(selectedBrand);
-        $('#brandConfirmBtn').prop('disabled', false);
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && $picker.classList.contains('open')) {
+            if (stack.length > 1) {
+                stack.pop();
+                render();
+            } else {
+                closePicker();
+            }
+        }
     });
-
-    // تأیید
-    $('#brandConfirmBtn').on('click', function () {
-        if (!selectedBrand) return;
-        $('#brandForm').trigger('submit');
-    });
-});
+})();
 </script>
 {% endblock %}

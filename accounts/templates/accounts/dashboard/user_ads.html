@@ -1,0 +1,1026 @@
+{% extends 'accounts/dashboard/base.html' %}
+{% load static humanize %}
+{% block extra_css %}
+<style>
+/* ═══════════════════════════════════════════
+   My Ads Page
+   ═══════════════════════════════════════════ */
+.my-ads-page {
+    padding: 0;
+}
+
+/* ─── Header Card ─── */
+.my-ads-header-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    border: 1px solid #eef1f6;
+}
+.my-ads-header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+.my-ads-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px;
+}
+.my-ads-subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+.my-ads-new-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    background: linear-gradient(135deg, #f41b3b, #ff3355);
+    color: #fff;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .2s;
+    box-shadow: 0 4px 14px rgba(244, 27, 59, .25);
+    white-space: nowrap;
+}
+.my-ads-new-btn:hover {
+    background: linear-gradient(135deg, #d11530, #f41b3b);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(244, 27, 59, .35);
+}
+
+/* ─── Stats ─── */
+.my-ads-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
+}
+.my-ads-stat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #fafbfc;
+    border-radius: 12px;
+    transition: all .2s;
+    min-width: 0;
+}
+.my-ads-stat:hover {
+    background: #f1f5f9;
+    transform: translateY(-1px);
+}
+.my-ads-stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+}
+.my-ads-stat-info {
+    min-width: 0;
+}
+.my-ads-stat-value {
+    font-size: 19px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+.my-ads-stat-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 500;
+    margin-top: 2px;
+    white-space: nowrap;
+}
+
+/* ─── Tabs ─── */
+.my-ads-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+}
+.my-ads-tabs::-webkit-scrollbar { height: 4px; }
+.my-ads-tabs::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 2px; }
+
+.my-ads-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background: #fff;
+    border: 1.5px solid #eef1f6;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.my-ads-tab span {
+    background: rgba(0, 0, 0, .08);
+    padding: 1px 7px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #475569;
+}
+.my-ads-tab:hover {
+    border-color: #f41b3b;
+    color: #f41b3b;
+}
+.my-ads-tab:hover span {
+    background: rgba(244, 27, 59, .1);
+    color: #f41b3b;
+}
+.my-ads-tab.active {
+    background: linear-gradient(135deg, #f41b3b, #ff3355);
+    border-color: #f41b3b;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(244, 27, 59, .25);
+}
+.my-ads-tab.active span {
+    background: rgba(255, 255, 255, .25);
+    color: #fff;
+}
+
+/* ═══ Grid ═══ */
+.my-ads-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+/* ═══ Card ═══ */
+.my-ad-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all .2s;
+    height: 100%;
+}
+.my-ad-card:hover {
+    border-color: #ffd0d8;
+    box-shadow: 0 4px 20px rgba(244, 27, 59, .08);
+    transform: translateY(-2px);
+}
+
+/* ─── Thumb ─── */
+.my-ad-thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #f3f4f6;
+    flex-shrink: 0;
+}
+.my-ad-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s;
+}
+.my-ad-card:hover .my-ad-thumb img {
+    transform: scale(1.05);
+}
+.my-ad-thumb-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cbd5e1;
+    font-size: 36px;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+}
+.my-ad-thumb-star {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, .4);
+    z-index: 2;
+}
+.my-ad-thumb-count {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, .65);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    backdrop-filter: blur(6px);
+    z-index: 2;
+}
+
+/* ─── Body ─── */
+.my-ad-body {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.my-ad-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.my-ad-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
+.my-ad-status i { font-size: 10px; }
+.my-ad-status-published { background: #f0fdf4; color: #059669; }
+.my-ad-status-review { background: #fef3c7; color: #92400e; }
+.my-ad-status-rejected { background: #fee2e2; color: #991b1b; }
+.my-ad-status-draft { background: #f1f5f9; color: #475569; }
+.my-ad-status-expired, .my-ad-status-archived { background: #f3f4f6; color: #6b7280; }
+.my-ad-status-wait_to_pay { background: #e0e7ff; color: #4338ca; }
+
+.my-ad-date {
+    font-size: 11px;
+    color: #94a3b8;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.my-ad-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 42px;
+}
+.my-ad-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color .15s;
+}
+.my-ad-title a:hover { color: #f41b3b; }
+
+.my-ad-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    font-size: 11px;
+    color: #64748b;
+}
+.my-ad-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+.my-ad-meta i {
+    color: #f41b3b;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+.my-ad-meta span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ─── Footer ─── */
+.my-ad-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 10px;
+    margin-top: auto;
+    border-top: 1px dashed #f1f5f9;
+    flex-wrap: wrap;
+}
+.my-ad-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+.my-ad-price-value {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f172a;
+}
+.my-ad-price-currency {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 500;
+}
+.my-ad-negotiable {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+}
+.my-ad-price-negotiable {
+    font-size: 14px;
+    font-weight: 800;
+    color: #f41b3b;
+}
+
+/* ─── Actions ─── */
+.my-ad-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+.my-ad-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid #eef1f6;
+    background: #fff;
+    color: #64748b;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .15s;
+    padding: 0;
+}
+.my-ad-action-view:hover {
+    border-color: #4f46e5;
+    color: #4f46e5;
+    background: #f5f3ff;
+}
+.my-ad-action-edit:hover {
+    border-color: #0ea5e9;
+    color: #0ea5e9;
+    background: #f0f9ff;
+}
+.my-ad-action-delete:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: #fef2f2;
+}
+
+/* ─── Stats Mini ─── */
+.my-ad-stats-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+    padding: 10px 16px;
+    border-top: 1px solid #f1f5f9;
+    background: #fafbfc;
+    font-size: 11px;
+}
+.my-ad-stat-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #64748b;
+    font-weight: 600;
+}
+.my-ad-stat-mini i {
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+/* ═══ Empty ═══ */
+.my-ads-empty {
+    background: #fff;
+    border: 2px dashed #e5e7eb;
+    border-radius: 16px;
+    padding: 60px 24px;
+    text-align: center;
+}
+.my-ads-empty-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: #fff1f3;
+    color: #f41b3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+.my-ads-empty h3 {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+.my-ads-empty p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 20px;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+}
+
+/* ═══ Pagination ═══ */
+.my-ads-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+.my-ads-page-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    background: #fff;
+    border: 1.5px solid #eef1f6;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .15s;
+}
+.my-ads-page-btn:hover:not(.disabled) {
+    border-color: #f41b3b;
+    color: #f41b3b;
+}
+.my-ads-page-btn.disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+.my-ads-page-info {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+/* ═══ Delete Modal ═══ */
+.my-delete-modal {
+    border: none;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, .15);
+}
+.my-delete-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+.my-delete-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+.my-delete-text {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0 0 20px;
+}
+.my-delete-actions {
+    display: flex;
+    gap: 10px;
+}
+.my-delete-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all .15s;
+}
+.my-delete-btn-cancel {
+    background: #f1f5f9;
+    color: #475569;
+}
+.my-delete-btn-cancel:hover { background: #e2e8f0; }
+.my-delete-btn-danger {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, .3);
+}
+.my-delete-btn-danger:hover {
+    background: linear-gradient(135deg, #b91c1c, #dc2626);
+    box-shadow: 0 6px 16px rgba(220, 38, 38, .4);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+/* تبلت: ۲ ستون */
+@media (min-width: 768px) {
+    .my-ads-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* دسکتاپ بزرگ: ۳ ستون */
+@media (min-width: 1400px) {
+    .my-ads-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* تبلت کوچک */
+@media (max-width: 991px) {
+    .my-ads-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* موبایل: کارت افقی */
+@media (max-width: 767px) {
+    .my-ads-header-card {
+        padding: 16px;
+        border-radius: 12px;
+    }
+    .my-ads-header-top {
+        margin-bottom: 16px;
+    }
+    .my-ads-title { font-size: 18px; }
+    .my-ads-new-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 16px;
+    }
+    .my-ads-stats {
+        padding-top: 14px;
+        gap: 8px;
+    }
+    .my-ads-stat {
+        padding: 10px;
+    }
+    .my-ads-stat-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+    }
+    .my-ads-stat-value { font-size: 16px; }
+    .my-ads-stat-label { font-size: 10px; }
+
+    /* کارت افقی */
+    .my-ad-card {
+        flex-direction: row-reverse;
+        border-radius: 12px;
+        min-height: 0;
+    }
+    .my-ad-thumb {
+        width: 130px;
+        min-width: 130px;
+        aspect-ratio: 1 / 1;
+    }
+    .my-ad-thumb-empty { font-size: 28px; }
+    .my-ad-body {
+        padding: 12px;
+        gap: 6px;
+    }
+    .my-ad-title {
+        font-size: 13px;
+        min-height: 0;
+        -webkit-line-clamp: 2;
+    }
+    .my-ad-meta {
+        font-size: 10px;
+        gap: 6px 10px;
+    }
+    .my-ad-footer {
+        padding-top: 8px;
+    }
+    .my-ad-price-value { font-size: 14px; }
+    .my-ad-action {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+    }
+    .my-ad-stats-row {
+        display: none;   /* توی موبایل مخفی */
+    }
+}
+
+@media (max-width: 480px) {
+    .my-ad-thumb {
+        width: 110px;
+        min-width: 110px;
+    }
+    .my-ad-title { font-size: 12px; }
+    .my-ad-price-value { font-size: 13px; }
+    .my-ad-price-currency { font-size: 9px; }
+    .my-ad-date { font-size: 10px; }
+}
+</style>
+{% endblock %}
+{% block dashboard %}
+<div class="goodup-dashboard-content">
+
+    {# ═══ Header با آمار ═══ #}
+    <div class="my-ads-header-card">
+        <div class="my-ads-header-top">
+            <div>
+                <h1 class="my-ads-title">آگهی‌های من</h1>
+                <p class="my-ads-subtitle">مدیریت و پیگیری آگهی‌های ثبت‌شده</p>
+            </div>
+            <a href="{% url 'ad:choose-category' %}" class="my-ads-new-btn">
+                <i class="fas fa-plus"></i>
+                <span>ثبت آگهی جدید</span>
+            </a>
+        </div>
+
+        <div class="my-ads-stats">
+            <div class="my-ads-stat">
+                <div class="my-ads-stat-icon" style="background:#fff1f3;color:#f41b3b;">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="my-ads-stat-info">
+                    <div class="my-ads-stat-value">{{ stats.total|intcomma }}</div>
+                    <div class="my-ads-stat-label">کل آگهی‌ها</div>
+                </div>
+            </div>
+            <div class="my-ads-stat">
+                <div class="my-ads-stat-icon" style="background:#f0fdf4;color:#10b981;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="my-ads-stat-info">
+                    <div class="my-ads-stat-value">{{ stats.published|intcomma }}</div>
+                    <div class="my-ads-stat-label">منتشر شده</div>
+                </div>
+            </div>
+            <div class="my-ads-stat">
+                <div class="my-ads-stat-icon" style="background:#fef3c7;color:#d97706;">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="my-ads-stat-info">
+                    <div class="my-ads-stat-value">{{ stats.review|intcomma }}</div>
+                    <div class="my-ads-stat-label">در انتظار تأیید</div>
+                </div>
+            </div>
+            <div class="my-ads-stat">
+                <div class="my-ads-stat-icon" style="background:#fee2e2;color:#dc2626;">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="my-ads-stat-info">
+                    <div class="my-ads-stat-value">{{ stats.rejected|intcomma }}</div>
+                    <div class="my-ads-stat-label">رد شده</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ═══ فیلتر وضعیت ═══ #}
+    <div class="my-ads-tabs">
+        <a href="?" class="my-ads-tab {% if not status_filter %}active{% endif %}">
+            همه
+            <span>{{ stats.total }}</span>
+        </a>
+        <a href="?status=published" class="my-ads-tab {% if status_filter == 'published' %}active{% endif %}">
+            منتشر شده
+            <span>{{ stats.published }}</span>
+        </a>
+        <a href="?status=review" class="my-ads-tab {% if status_filter == 'review' %}active{% endif %}">
+            در انتظار
+            <span>{{ stats.review }}</span>
+        </a>
+        <a href="?status=rejected" class="my-ads-tab {% if status_filter == 'rejected' %}active{% endif %}">
+            رد شده
+            <span>{{ stats.rejected }}</span>
+        </a>
+        <a href="?status=draft" class="my-ads-tab {% if status_filter == 'draft' %}active{% endif %}">
+            پیش‌نویس
+            <span>{{ stats.draft }}</span>
+        </a>
+        <a href="?status=expired" class="my-ads-tab {% if status_filter == 'expired' %}active{% endif %}">
+            منقضی
+            <span>{{ stats.expired }}</span>
+        </a>
+    </div>
+
+    {# ═══ لیست آگهی‌ها ═══ #}
+    {% if ads %}
+        <div class="my-ads-grid">
+            {% for ad in ads %}
+                <div class="my-ad-card" data-ad-id="{{ ad.uuid }}">
+
+                    {# ─── Thumbnail ─── #}
+                    <a href="{% url 'ad:ad-detail' ad.uuid %}" class="my-ad-thumb">
+                        {% if ad.thumbnail %}
+                            <img src="{{ ad.thumbnail.url }}" alt="{{ ad.title }}" loading="lazy">
+                        {% elif ad.gallery.first %}
+                            <img src="{{ ad.gallery.first.image.url }}" alt="{{ ad.title }}" loading="lazy">
+                        {% else %}
+                            <div class="my-ad-thumb-empty">
+                                <i class="fas fa-image"></i>
+                            </div>
+                        {% endif %}
+
+                        {% if ad.is_special %}
+                            <span class="my-ad-thumb-star" title="ویژه">
+                                <i class="fas fa-star"></i>
+                            </span>
+                        {% endif %}
+
+                        {% with img_count=ad.gallery.all|length %}
+                            {% if img_count > 1 %}
+                                <span class="my-ad-thumb-count">
+                                    <i class="fas fa-images"></i> {{ img_count }}
+                                </span>
+                            {% endif %}
+                        {% endwith %}
+                    </a>
+
+                    {# ─── Body ─── #}
+                    <div class="my-ad-body">
+
+                        <div class="my-ad-status-row">
+                            <span class="my-ad-status my-ad-status-{{ ad.status }}">
+                                {% if ad.status == 'published' %}<i class="fas fa-check-circle"></i> منتشر شده
+                                {% elif ad.status == 'review' %}<i class="fas fa-clock"></i> در انتظار تأیید
+                                {% elif ad.status == 'rejected' %}<i class="fas fa-times-circle"></i> رد شده
+                                {% elif ad.status == 'draft' %}<i class="fas fa-file"></i> پیش‌نویس
+                                {% elif ad.status == 'expired' %}<i class="fas fa-calendar-times"></i> منقضی
+                                {% elif ad.status == 'archived' %}<i class="fas fa-archive"></i> آرشیو
+                                {% elif ad.status == 'wait_to_pay' %}<i class="fas fa-credit-card"></i> در انتظار پرداخت
+                                {% endif %}
+                            </span>
+                            <span class="my-ad-date">
+                                <i class="far fa-clock"></i>
+                                {{ ad.created_at|timesince }} پیش
+                            </span>
+                        </div>
+
+                        <h3 class="my-ad-title">
+                            <a href="{% url 'ad:ad-detail' ad.uuid %}">{{ ad.title }}</a>
+                        </h3>
+
+                        <div class="my-ad-meta">
+                            <span><i class="fas fa-tag"></i> {{ ad.category.title }}</span>
+                            <span>
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ ad.province.name }}، {{ ad.city.name }}
+                            </span>
+                        </div>
+
+                        <div class="my-ad-footer">
+                            <div class="my-ad-price">
+                                {% if ad.price %}
+                                    <span class="my-ad-price-value">{{ ad.price|intcomma:False }}</span>
+                                    <span class="my-ad-price-currency">تومان</span>
+                                    {% if ad.is_negotiable %}
+                                        <span class="my-ad-negotiable">توافقی</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="my-ad-price-negotiable">توافقی</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="my-ad-actions">
+                                <a href="{% url 'ad:ad-detail' ad.uuid %}"
+                                   class="my-ad-action my-ad-action-view" title="نمایش">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+
+{#                                {% if ad.status == 'draft' or ad.status == 'rejected' %}#}
+                                    <a href="{% url 'ad:ad-edit' ad.uuid %}"
+                                       class="my-ad-action my-ad-action-edit" title="ویرایش">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+{#                                {% endif %}#}
+
+                                <button type="button"
+                                        class="my-ad-action my-ad-action-delete js-delete-ad"
+                                        data-uuid="{{ ad.uuid }}"
+                                        data-title="{{ ad.title }}"
+                                        title="حذف">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {# ─── آمار (پایین کارت) ─── #}
+                    <div class="my-ad-stats-row">
+                        <span class="my-ad-stat-mini">
+                            <i class="far fa-eye"></i>
+                            {{ ad.views_count|intcomma:False }} بازدید
+                        </span>
+                        <span class="my-ad-stat-mini">
+                            <i class="far fa-comments"></i>
+                            {{ ad.chats_count|intcomma:False }} چت
+                        </span>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        {# ═══ Pagination ═══ #}
+        {% if page_obj.has_other_pages %}
+            <div class="my-ads-pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}"
+                       class="my-ads-page-btn">
+                        <i class="fas fa-chevron-right"></i>
+                        قبلی
+                    </a>
+                {% else %}
+                    <span class="my-ads-page-btn disabled">
+                        <i class="fas fa-chevron-right"></i>
+                        قبلی
+                    </span>
+                {% endif %}
+
+                <span class="my-ads-page-info">
+                    صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if status_filter %}&status={{ status_filter }}{% endif %}"
+                       class="my-ads-page-btn">
+                        بعدی
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                {% else %}
+                    <span class="my-ads-page-btn disabled">
+                        بعدی
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                {% endif %}
+            </div>
+        {% endif %}
+
+    {% else %}
+        {# ═══ Empty State ═══ #}
+        <div class="my-ads-empty">
+            <div class="my-ads-empty-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <h3>
+                {% if status_filter %}
+                    آگهی‌ای با این وضعیت وجود ندارد
+                {% else %}
+                    هنوز آگهی ثبت نکرده‌اید
+                {% endif %}
+            </h3>
+            <p>
+                {% if status_filter %}
+                    فیلتر را تغییر دهید یا همه آگهی‌ها را ببینید.
+                {% else %}
+                    با ثبت اولین آگهی، کالا یا خدمات خود را به هزاران نفر معرفی کنید.
+                {% endif %}
+            </p>
+            {% if status_filter %}
+                <a href="?" class="my-ads-new-btn">
+                    <i class="fas fa-list"></i>
+                    <span>نمایش همه آگهی‌ها</span>
+                </a>
+            {% else %}
+                <a href="{% url 'ad:choose-category' %}" class="my-ads-new-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>ثبت اولین آگهی</span>
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+
+{# ═══ Delete Modal ═══ #}
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content my-delete-modal">
+            <div class="my-delete-icon">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+            <h5 class="my-delete-title">حذف آگهی</h5>
+            <p class="my-delete-text">
+                آیا از حذف آگهی «<strong id="deleteAdTitle"></strong>» مطمئن هستید؟ این عمل قابل بازگشت نیست.
+            </p>
+            <div class="my-delete-actions">
+                <button type="button" class="my-delete-btn my-delete-btn-cancel" data-bs-dismiss="modal">
+                    انصراف
+                </button>
+                <button type="button" class="my-delete-btn my-delete-btn-danger" id="confirmDeleteBtn">
+                    <i class="fas fa-trash"></i>
+                    حذف کن
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% block extra_js %}
+    <script>
+$(function () {
+    // ═══ حذف آگهی ═══
+    let pendingUuid = null;
+    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+    $(document).on('click', '.js-delete-ad', function () {
+        pendingUuid = $(this).data('uuid');
+        $('#deleteAdTitle').text($(this).data('title') || 'این آگهی');
+        deleteModal.show();
+    });
+
+    $('#confirmDeleteBtn').on('click', function () {
+        if (!pendingUuid) return;
+        const $btn = $(this);
+        $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> در حال حذف...');
+
+        $.ajax({
+            url: '/account/ads/' + pendingUuid + '/delete/',
+            method: 'POST',
+            headers: { 'X-CSRFToken': getCookie('csrftoken') },
+            success: function () {
+                deleteModal.hide();
+                $(`.my-ad-card[data-ad-id="${pendingUuid}"]`).fadeOut(300, function () {
+                    $(this).remove();
+                });
+                $btn.prop('disabled', false).html('<i class="fas fa-trash"></i> حذف کن');
+            },
+            error: function (xhr) {
+                alert('خطا در حذف: ' + (xhr.responseJSON?.error || 'دوباره تلاش کنید'));
+                $btn.prop('disabled', false).html('<i class="fas fa-trash"></i> حذف کن');
+            }
+        });
+    });
+
+    function getCookie(name) {
+        const v = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return v ? v.pop() : '';
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

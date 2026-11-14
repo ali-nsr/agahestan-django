@@ -44,3 +44,10 @@ def header_categories(request):
     return {
         'header_categories': categories_tree
     }
+
+def menu_categories(request):
+    return {
+        'parent_categories': Category.objects.filter(
+            parent__isnull=True
+        ).prefetch_related('children').order_by('title'),
+    }

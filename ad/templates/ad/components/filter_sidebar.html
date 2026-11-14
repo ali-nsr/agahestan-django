@@ -1,0 +1,74 @@
+{% load ad_tags %}
+
+{% if cat_fields %}
+    <form method="get" action="{{ request.path }}">
+
+        {% if selected_cities and not city %}
+            <input type="hidden" name="cities" value="{{ selected_cities|join:',' }}">
+        {% endif %}
+
+        {% for field in cat_fields %}
+            <div class="mb-3 pb-3 {% if not forloop.last %}border-bottom{% endif %}">
+                <label class="form-label small fw-bold text-dark d-flex align-items-center justify-content-between mb-2">
+                    <span>{{ field.label }}</span>
+                    {% if request.GET|get_item:field.key %}
+                        <span class="rounded-circle d-inline-block" style="width:6px;height:6px;background:#f41b3b;"></span>
+                    {% endif %}
+                </label>
+
+                {% if field.type == 'choice' or field.type == 'multi_choice' %}
+                    <select name="{{ field.key }}" class="form-select form-select-sm" style="border-radius:10px;">
+                        <option value="">همه</option>
+                        {% for opt in field.data.options %}
+                            <option value="{{ opt }}" {% if request.GET|get_item:field.key == opt %}selected{% endif %}>
+                                {{ opt }}
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                {% elif field.type == 'int' or field.type == 'decimal' %}
+                    <input type="number"
+                           name="{{ field.key }}"
+                           class="form-control form-control-sm"
+                           style="border-radius:10px;"
+                           value="{{ request.GET|get_item:field.key }}"
+                           placeholder="{{ field.label }}">
+
+                {% elif field.type == 'bool' %}
+                    <div class="form-check form-switch">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               role="switch"
+                               name="{{ field.key }}"
+                               value="1"
+                               id="cf-{{ field.pk }}"
+                               {% if request.GET|get_item:field.key == '1' %}checked{% endif %}
+                               style="cursor:pointer;">
+                        <label class="form-check-label small text-muted" for="cf-{{ field.pk }}">
+                            بله
+                        </label>
+                    </div>
+
+                {% elif field.type == 'str' or field.type == 'text' %}
+                    <input type="text"
+                           name="{{ field.key }}"
+                           class="form-control form-control-sm"
+                           style="border-radius:10px;"
+                           value="{{ request.GET|get_item:field.key }}"
+                           placeholder="{{ field.label }}">
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn w-100 text-white fw-bold" style="background:#f41b3b;border-radius:10px;">
+            <i class="fas fa-check me-1"></i>
+            اعمال فیلتر
+        </button>
+
+    </form>
+{% else %}
+    <div class="text-center py-4 text-muted">
+        <i class="fas fa-filter fs-3 d-block mb-2 opacity-50"></i>
+        <p class="small mb-0">فیلتری برای این دسته تعریف نشده است</p>
+    </div>
+{% endif %}

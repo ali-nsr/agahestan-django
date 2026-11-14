@@ -23,3 +23,9 @@ def login(request):
             return redirect(request.META['HTTP_REFERER'])
 
     return render(request, 'accounts/auth/login.html')
+
+
+def logout(request):
+    lo(request)
+    messages.success(request, 'با موفقیت از حساب خود خارج شدید')
+    return redirect('accounts:login')

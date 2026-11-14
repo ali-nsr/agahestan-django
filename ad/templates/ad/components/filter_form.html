@@ -1,0 +1,83 @@
+{% load ad_tags %}
+
+{% if cat_fields %}
+    <form method="get" action="{{ request.path }}">
+
+        {% if selected_cities and not city %}
+            <input type="hidden" name="cities" value="{{ selected_cities|join:',' }}">
+        {% endif %}
+
+        {% for field in cat_fields %}
+            <div class="cf-item">
+                <div class="cf-label">
+                    <span>{{ field.label }}</span>
+                    {% if request.GET|get_item:field.key %}
+                        <span class="cf-dot"></span>
+                    {% endif %}
+                </div>
+
+                {% if field.type == 'choice' %}
+                    <select name="{{ field.key }}" class="form-select cf-input">
+                        <option value="">همه</option>
+                        {% for opt in field.data.options %}
+                            <option value="{{ opt }}"
+                                    {% if request.GET|get_item:field.key == opt %}selected{% endif %}>
+                                {{ opt }}
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                {% elif field.type == 'multi_choice' %}
+                    <select name="{{ field.key }}"
+                            class="form-select cf-input filter-multi"
+                            multiple
+                            data-placeholder="{{ field.label }}">
+                        {% for opt in field.data.options %}
+                            <option value="{{ opt }}"
+                                    {% is_selected field.key opt as selected %}{% if selected %}selected{% endif %}>
+                                {{ opt }}
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                {% elif field.type == 'int' or field.type == 'decimal' %}
+                    <input type="number"
+                           name="{{ field.key }}"
+                           class="cf-input"
+                           value="{{ request.GET|get_item:field.key }}"
+                           placeholder="{{ field.label }}">
+
+                {% elif field.type == 'bool' %}
+                    <label class="cf-toggle">
+                        <input type="checkbox"
+                               name="{{ field.key }}"
+                               value="1"
+                               {% if request.GET|get_item:field.key == '1' %}checked{% endif %}>
+                        <span class="cf-toggle-track">
+                            <span class="cf-toggle-thumb"></span>
+                        </span>
+                        <span class="cf-toggle-text">فعال</span>
+                    </label>
+
+                {% elif field.type == 'str' or field.type == 'text' %}
+                    <input type="text"
+                           name="{{ field.key }}"
+                           class="cf-input"
+                           value="{{ request.GET|get_item:field.key }}"
+                           placeholder="{{ field.label }}">
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="cf-submit">
+            <i class="fas fa-check ms-1"></i>
+            اعمال فیلتر
+        </button>
+
+    </form>
+{% else %}
+    <div class="cf-empty">
+        <i class="fas fa-filter"></i>
+        <p>فیلتری برای این دسته تعریف نشده است</p>
+    </div>
+{% endif %}

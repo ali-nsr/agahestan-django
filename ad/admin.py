@@ -23,12 +23,19 @@ class CategoryAdmin(admin.ModelAdmin):
     autocomplete_fields = ('parent',)  # جلوگیری از لود دراپ‌دان‌های بزرگ در دسته‌بندی‌های چند سطحی
     inlines = (CategoryFieldInline,)
 
+
+from django_json_widget.widgets import JSONEditorWidget
+
 @admin.register(CategoryField)
 class CategoryFieldAdmin(admin.ModelAdmin):
     list_display = ('label', 'key', 'category', 'type', 'is_required')
     list_filter = ('type', 'is_required', 'category')
     search_fields = ('label', 'key')
     autocomplete_fields = ('category',)  # فعال‌سازی جستجو برای فیلدهای وابسته
+
+    formfield_overrides = {
+        models.JSONField: {'widget': JSONEditorWidget},
+    }
 
 
 @admin.register(AdViews)

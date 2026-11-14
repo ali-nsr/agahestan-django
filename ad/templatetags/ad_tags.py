@@ -1,4 +1,5 @@
 from django import template
+from django.shortcuts import reverse
 
 register = template.Library()
 
@@ -28,3 +29,17 @@ def attr_icon(field_type):
 @register.filter
 def attr_is_multiline(field_type):
     return field_type in ('multi_choice', 'text')
+
+@register.simple_tag(takes_context=True)
+def is_selected(context, key, value):
+    request = context.get('request')
+    if not request:
+        return False
+    return value in request.GET.getlist(key)
+
+@register.filter
+def get_item(dictionary, key):
+    """دسترسی به مقدار dict از کلید در template."""
+    if not dictionary:
+        return ''
+    return dictionary.get(key, '')

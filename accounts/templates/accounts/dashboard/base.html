@@ -37,14 +37,14 @@
             <div class="goodup-dashboard-nav sticky-top">
                 <div class="goodup-dashboard-inner">
                     <ul data-submenu-title="منو">
+                        {#                        <li class="active">#}
+                        {#                            <a href="{% url 'accounts:dashboard' %}">#}
+                        {#                                <i class="lni lni-dashboard ms-2"></i>#}
+                        {#                                داشبورد#}
+                        {#                            </a>#}
+                        {#                        </li>#}
                         <li class="active">
                             <a href="{% url 'accounts:dashboard' %}">
-                                <i class="lni lni-dashboard ms-2"></i>
-                                داشبورد
-                            </a>
-                        </li>
-                        <li>
-                            <a href="dashboard-my-listings.html">
                                 <i class="lni lni-files ms-2"></i>
                                 آگهی های من
                             </a>
@@ -68,11 +68,14 @@
                         </li>
                     </ul>
                     <ul data-submenu-title="حساب کاربری">
-                        <li><a href="dashboard-my-profile.html"><i class="lni lni-user ms-2"></i>تنظیمات </a></li>
-                        <li><a href="dashboard-change-password.html"><i class="lni lni-lock-alt ms-2"></i>تغییر رمز عبور</a>
+                        <li><a href="#"><i class="lni lni-user ms-2"></i>تنظیمات </a></li>
+                        <li><a href="#"><i class="lni lni-lock-alt ms-2"></i>تغییر رمز عبور</a>
                         </li>
-                        <li><a href="javascript:void(0);"><i class="lni lni-trash-can ms-2"></i>حذف اکانت</a></li>
-                        <li><a href="login.html"><i class="lni lni-power-switch ms-2"></i>خروج</a></li>
+                        <li>
+                            <a href="{% url 'accounts:logout' %}">
+                                <i class="lni lni-power-switch ms-2"></i>خروج
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

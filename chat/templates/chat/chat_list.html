@@ -1,185 +1,377 @@
-{% extends 'accounts/dashboard/base.html' %}
+{% extends 'base.html' %}
+{% load static humanize %}
 
+{% block content %}
 
-{% block dashboard %}
-    <div class="goodup-dashboard-content">
-        <div class="dashboard-tlbar d-block mb-5">
-            <div class="row">
-                <div class="colxl-12 col-lg-12 col-md-12">
-                    <h1 class="ft-medium fs-lg">پیام ها</h1>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item text-muted"><a href="#">خانه</a></li>
-                            <li class="breadcrumb-item text-muted"><a href="#">داشبورد</a></li>
-                            <li class="breadcrumb-item"><a href="#" class="theme-cl">پیام ها</a></li>
-                        </ol>
-                    </nav>
+    <div class="chat-list-wrap">
+        <div class="container">
+
+            <!-- Header -->
+            <div class="chat-header">
+                <div>
+                    <h1 class="chat-title">پیام‌ها</h1>
+                    <p class="chat-subtitle">
+                        {% if total_unread %}
+                            <span class="chat-subtitle-badge">{{ total_unread }}</span>
+                            پیام خوانده‌نشده دارید
+                        {% else %}
+                            همه پیام‌ها خوانده شده
+                        {% endif %}
+                    </p>
                 </div>
             </div>
-        </div>
 
-        <div class="dashboard-widg-bar d-block">
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="_dashboard_content bg-white rounded mb-4">
+            {% if chat_data %}
+                <div class="chat-list">
+                    {% for item in chat_data %}
+                        <a href="{% url 'chat:chat-detail' item.chat.uuid %}"
+                           class="chat-item {% if item.unread_count %}has-unread{% endif %}">
 
-                        <div class="_dashboard_content_body">
-                            <!-- Convershion -->
-                            <div class="messages-container margin-top-0">
-                                <div class="messages-headline">
-                                    <h4 class="">شادی عظیمی</h4>
-                                    <a href="#" class="message-action"><i class="ti-trash"></i> حذف پیام ها</a>
-                                </div>
-
-                                <div class="messages-container-inner">
-
-                                    <!-- Messages -->
-                                    <div class="dash-msg-inbox">
-                                        <ul>
-                                            {% for chat in chats %}
-                                                {#                                                <li class="active-message">#}
-                                                <li>
-                                                    <a href="{% url 'chat:chat-detail' chat.uuid %}">
-                                                        {#                                                        <div class="dash-msg-avatar">#}
-                                                        {#                                                            <img src="assets/img/t-2.png" alt="">#}
-                                                        {#                                                            <span class="_user_status offline"></span>#}
-                                                        {#                                                        </div>#}
-
-                                                        <div class="message-by">
-                                                            <div class="message-by-headline">
-                                                                <h5>
-                                                                    {{ chat.sender.phone }}
-                                                                </h5>
-                                                                <span>
-                                                                    {{ chat.created_at|timesince }}
-                                                                </span>
-                                                            </div>
-                                                            <p>
-                                                                {{ chat.messages.last.text|truncatechars:10 }}
-                                                            </p>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-
-                                        </ul>
-                                    </div>
-                                    <!-- Messages / End -->
-
-                                    <!-- Message Content -->
-                                    <div class="dash-msg-content">
-
-                                        <div class="message-plunch">
-                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
-                                            <div class="dash-msg-text"><p>سلام، برخلاف تصور عمومی، لورم ایپسوم یک متن
-                                                تصادفی نیست. ریشه در یک قطعه لاتین کلاسیک دارد</p></div>
-                                        </div>
-
-                                        <div class="message-plunch me">
-                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>
-                                            <div class="dash-msg-text"><p>طراحان رایانه ای علی الخصوص طراحان خلاقی و
-                                                فرهنگ پیشرو در زبان فارسی ایجاد کرد</p></div>
-                                        </div>
-
-                                        <div class="message-plunch">
-                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
-                                            <div class="dash-msg-text"><p>اگر می خواهید از گذرگاه لورم ایپسوم استفاده
-                                                کنید، باید مطمئن شوید که هیچ چیز شرم آور وجود ندارد.</p></div>
-                                        </div>
-
-                                        <div class="message-plunch me">
-                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>
-                                            <div class="dash-msg-text"><p>لطفاً برای کمک به پرداخت هزینه هاستینگ و
-                                                صورتحساب پهنای باند، مبلغ کمی را اهدا کنید</p></div>
-                                        </div>
-
-                                        <div class="message-plunch">
-                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
-                                            <div class="dash-msg-text"><p>برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای
-                                                متنوع با هدف بهبود ابزارهای کاربردی می باشد</p></div>
-                                        </div>
-
-                                        <div class="message-plunch me">
-                                            <div class="dash-msg-avatar"><img src="assets/img/user-8.jpg" alt=""></div>
-                                            <div class="dash-msg-text"><p>برای طراحان رایانه ای علی الخصوص طراحان خلاقی
-                                                و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="message-plunch">
-                                            <div class="dash-msg-avatar"><img src="assets/img/user-1.jpg" alt=""></div>
-                                            <div class="dash-msg-text"><p>جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
-                                                اساسا مورد استفاده قرار گیرد</p></div>
-                                        </div>
-
-                                        <!-- Reply Area -->
-                                        <div class="clearfix"></div>
-                                        <div class="message-reply">
-                                            <textarea cols="40" rows="3" class="form-control with-light"
-                                                      placeholder="متن پیام..."></textarea>
-                                            <button type="submit" class="btn theme-bg text-white">ارسال پیام</button>
-                                        </div>
-
-                                    </div>
-                                    <!-- Message Content -->
-
-                                </div>
-
+                            <!-- Avatar -->
+                            <div class="chat-avatar">
+                                {{ item.other_user.get_full_name|default:item.other_user.phone|slice:":1"|upper }}
+                                {% if item.other_user.is_online %}
+                                    <span class="chat-online" title="آنلاین"></span>
+                                {% endif %}
                             </div>
-                        </div>
-                    </div>
+
+                            <!-- Body -->
+                            <div class="chat-body">
+                                <div class="chat-top">
+                                <span class="chat-name">
+                                    {{ item.other_user.get_full_name|default:item.other_user.phone }}
+                                </span>
+                                    {% if item.chat.last_at %}
+                                        <span class="chat-time">{{ item.chat.last_at|timesince }} پیش</span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="chat-preview">
+                                    {% if item.chat.last_text %}
+                                        {% if item.is_mine %}<span class="chat-mine">شما: </span>{% endif %}
+                                        {{ item.chat.last_text|truncatechars:60 }}
+                                    {% else %}
+                                        <em class="chat-empty-text">هنوز پیامی رد و بدل نشده</em>
+                                    {% endif %}
+                                </div>
+
+                                <div class="chat-ad">
+                                    <i class="fas fa-tag"></i>
+                                    <span>{{ item.chat.ad.title|truncatechars:35 }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Unread badge -->
+                            {% if item.unread_count %}
+                                <span class="chat-badge">{{ item.unread_count }}</span>
+                            {% endif %}
+                        </a>
+                    {% endfor %}
                 </div>
-            </div>
+
+            {% else %}
+                <div class="chat-empty">
+                    <div class="chat-empty-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>هنوز چتی ندارید</h3>
+                    <p>برای شروع، از صفحه‌ی آگهی با فروشنده تماس بگیرید.</p>
+                    <a href="/" class="chat-empty-btn">
+                        <i class="fas fa-search"></i>
+                        دیدن آگهی‌ها
+                    </a>
+                </div>
+            {% endif %}
 
         </div>
-
-        <!-- footer -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="py-3">© 2022 Goodup ارائه شده در سایت <a href="https://rtl-theme.com/">راست چین</a></div>
-            </div>
-        </div>
-
     </div>
-{% endblock %}
 
-{#<div>#}
-{#    {{ request.user }} CHAT LIST#}
-{#    <hr>#}
-{#    <ol>#}
-{#        {% for chat in chats %}#}
-{#            <li>#}
-{#                {{ chat.uuid }} / {{ chat.sender }} -> {{ chat.ad.user }}#}
-{#            </li>#}
-{##}
-{#            <a href="{% url 'chat:chat-detail' chat.uuid %}">SEE</a>#}
-{##}
-{#            <hr>#}
-{#        {% endfor %}#}
-{#    </ol>#}
-{#</div>#}
+    <style>
+        .chat-list-wrap {
+            background: #f5f7fa;
+            padding: 32px 0 80px;
+            min-height: 80vh;
+        }
 
+        /* ─── Header ─── */
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
 
-<script>
-    const inboxSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/inbox/'
-    );
+        .chat-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 4px;
+        }
 
-    inboxSocket.onmessage = function (e) {
-        const data = JSON.parse(e.data);
+        .chat-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-        if (data.type === 'new_message') {
-            const chatItem = document.querySelector(`a[href$="/chat/${data.chat_uuid}/"]`);
-            if (chatItem) {
-                // اگه چت هست، متن رو آپدیت کن
-                const msgPreview = chatItem.querySelector('p');
-                if (msgPreview) {
-                    msgPreview.innerText = data.text.length > 25 ? data.text.slice(0, 25) + '...' : data.text;
-                }
-            } else {
-                // اگه چت نیست، می‌تونی append کنی به لیست (اختیاری)
-                // یا فقط نوتیف بزنی
+        .chat-subtitle-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            background: #f41b3b;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* ─── List ─── */
+        .chat-list {
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid #eef1f6;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            text-decoration: none;
+            color: inherit;
+            transition: background .15s;
+            position: relative;
+        }
+
+        .chat-item:last-child {
+            border-bottom: none;
+        }
+
+        .chat-item:hover {
+            background: #fafbfc;
+        }
+
+        .chat-item.has-unread {
+            background: #fff8f9;
+        }
+
+        .chat-item.has-unread:hover {
+            background: #fff1f3;
+        }
+
+        /* ─── Avatar ─── */
+        .chat-avatar {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+            color: #f41b3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .chat-online {
+            position: absolute;
+            bottom: 2px;
+            left: 2px;
+            width: 13px;
+            height: 13px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, .2);
+        }
+
+        /* ─── Body ─── */
+        .chat-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .chat-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chat-time {
+            font-size: 11px;
+            color: #94a3b8;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .chat-preview {
+            font-size: 12.5px;
+            color: #64748b;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 6px;
+        }
+
+        .chat-mine {
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .chat-empty-text {
+            color: #cbd5e1;
+        }
+
+        .chat-ad {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            max-width: 100%;
+            font-size: 11px;
+            color: #f41b3b;
+            background: #fff1f3;
+            padding: 2px 9px;
+            border-radius: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chat-ad i {
+            font-size: 9px;
+            flex-shrink: 0;
+        }
+
+        /* ─── Unread badge ─── */
+        .chat-badge {
+            flex-shrink: 0;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 7px;
+            background: #f41b3b;
+            color: #fff;
+            border-radius: 11px;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(244, 27, 59, .35);
+        }
+
+        /* ─── Empty ─── */
+        .chat-empty {
+            background: #fff;
+            border-radius: 16px;
+            border: 2px dashed #e5e7eb;
+            padding: 70px 24px;
+            text-align: center;
+        }
+
+        .chat-empty-icon {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #fff1f3;
+            color: #f41b3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .chat-empty h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 8px;
+        }
+
+        .chat-empty p {
+            font-size: 13px;
+            color: #64748b;
+            margin: 0 0 20px;
+        }
+
+        .chat-empty-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: #f41b3b;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all .15s;
+            box-shadow: 0 4px 14px rgba(244, 27, 59, .25);
+        }
+
+        .chat-empty-btn:hover {
+            background: #d3152f;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 575px) {
+            .chat-list-wrap {
+                padding: 20px 0 60px;
+            }
+
+            .chat-title {
+                font-size: 20px;
+            }
+
+            .chat-item {
+                padding: 12px 14px;
+                gap: 12px;
+            }
+
+            .chat-avatar {
+                width: 46px;
+                height: 46px;
+                font-size: 16px;
+            }
+
+            .chat-name {
+                font-size: 13px;
+            }
+
+            .chat-preview {
+                font-size: 12px;
+            }
+
+            .chat-ad {
+                font-size: 10px;
             }
         }
-    };
-</script>
+    </style>
+
+{% endblock %}

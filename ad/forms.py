@@ -28,6 +28,7 @@ class AdForm(forms.ModelForm):
             'title', 'description',
             'price', 'is_negotiable',
             'province', 'city', 'neighborhood', 'address',
+            'latitude', 'longitude',
         ]
         widgets = {
             'title': forms.TextInput(attrs={
@@ -38,9 +39,8 @@ class AdForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 5,
-                'placeholder': 'جزئیات ملک را کامل بنویسید...',
+                'placeholder': 'جزئیات آگهی را کامل بنویسید...',
             }),
-            # ⚠️ اینجا TextInput به جای NumberInput — مشکل اصلی قیمت
             'price': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'مثلاً ۲۵۰۰۰۰۰۰۰۰',
@@ -55,6 +55,8 @@ class AdForm(forms.ModelForm):
             'province': forms.Select(attrs={'class': 'form-select', 'id': 'id_province'}),
             'city': forms.Select(attrs={'class': 'form-select', 'id': 'id_city'}),
             'neighborhood': forms.Select(attrs={'class': 'form-select', 'id': 'id_neighborhood'}),
+            'latitude': forms.HiddenInput(attrs={'id': 'id_latitude'}),
+            'longitude': forms.HiddenInput(attrs={'id': 'id_longitude'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -66,21 +68,19 @@ class AdForm(forms.ModelForm):
         self.fields['city'].required = True
         self.fields['neighborhood'].required = False
         self.fields['address'].required = True
+        self.fields['latitude'].required = False
+        self.fields['longitude'].required = False
 
-        # ═══ تعیین province_id و city_id از POST یا instance ═══
         province_id = None
         city_id = None
 
         if self.is_bound:
-            # فرم POST شده → از داده‌های ارسالی
             province_id = self.data.get('province') or None
             city_id = self.data.get('city') or None
         elif self.instance and self.instance.pk:
-            # ویرایش → از instance
             province_id = self.instance.province_id
             city_id = self.instance.city_id
 
-        # ═══ پر کردن queryset بر اساس انتخاب فعلی ═══
         if province_id:
             self.fields['city'].queryset = City.objects.filter(province_id=province_id)
         else:
@@ -91,13 +91,10 @@ class AdForm(forms.ModelForm):
         else:
             self.fields['neighborhood'].queryset = Neighborhood.objects.none()
 
-
     def clean_price(self):
-        """حذف کاما از قیمت قبل از اعتبارسنجی."""
         price = self.cleaned_data.get('price')
         if price in (None, ''):
             return None
-        # اگر رشته است، کاما و فاصله رو حذف کن
         if isinstance(price, str):
             price = price.replace(',', '').replace('،', '').strip()
             if not price:
@@ -106,56 +103,69 @@ class AdForm(forms.ModelForm):
                 price = int(price)
             except ValueError:
                 raise ValidationError('قیمت باید عدد باشد.')
-        if price is not None and price < 0:
+        if price < 0:
             raise ValidationError('قیمت نمی‌تواند منفی باشد.')
         return price
 
     def clean(self):
         cd = super().clean()
         if cd.get('price') is None and not cd.get('is_negotiable'):
-            raise ValidationError('قیمت (یا ودیعه) را وارد کنید یا «توافقی» را انتخاب کنید.')
+            raise ValidationError('قیمت را وارد کنید یا «توافقی» را انتخاب کنید.')
         return cd
 
     @transaction.atomic
     def save(self, commit=True):
         ad = super().save(commit=False)
+
         if self.user and not ad.user_id:
             ad.user = self.user
+
         if self.fixed_category and not ad.category_id:
             ad.category = self.fixed_category
-        if not ad.pk:
+
+        if not ad.status or ad.status == Ad.Status.DRAFT:
             ad.status = Ad.Status.REVIEW
+
+        if not ad.expires_at:
             ad.expires_at = timezone.now() + timedelta(days=30)
+
         if commit:
             ad.save()
+
         return ad
 
 
 # ─── فرم داینامیک ───
-def _make_field_from_cf(cf):
+
+def _make_field_from_cf(cf,initial=None):
     data = cf.data or {}
     required = cf.is_required
 
-    # ═══ فیلد وابسته (مدل) ═══
     if data.get('depends_on'):
-        return forms.ChoiceField(
+        attrs = {
+            'class': 'form-select cascading-target',
+            'data-depends-on': data['depends_on'],
+            'data-field-key': cf.key,
+        }
+        if initial:
+            attrs['data-initial-value'] = initial
+        return forms.CharField(
             label=cf.label,
             required=required,
-            choices=[('', 'انتخاب کنید...')],
-            widget=forms.Select(attrs={
-                'class': 'form-select cascading-target',
-                'data-depends-on': data['depends_on'],
-                'data-field-key': cf.key,
-            }),
+            widget=forms.Select(attrs=attrs),
         )
 
-    # ═══ Choice (برند یا ساده) ═══
+    # برند (choice با models map) یا choice ساده
     if cf.type == cf.FieldType.CHOICE:
         options = [(o, o) for o in (data.get('options') or [])]
-        attrs = {'class': 'form-select', 'data-field-key': cf.key}
+        attrs = {
+            'class': 'form-select',
+            'data-field-key': cf.key,
+        }
         if data.get('models'):
             attrs['class'] = 'form-select cascading-source'
             attrs['data-models'] = json.dumps(data['models'], ensure_ascii=False)
+
         return forms.ChoiceField(
             label=cf.label,
             required=required,
@@ -163,34 +173,38 @@ def _make_field_from_cf(cf):
             widget=forms.Select(attrs=attrs),
         )
 
-    # بقیه انواع بدون تغییر...
     if cf.type == cf.FieldType.INTEGER:
         return forms.IntegerField(
             label=cf.label, required=required,
             min_value=data.get('min'), max_value=data.get('max'),
             widget=forms.NumberInput(attrs={'class': 'form-control', 'data-field-key': cf.key}),
         )
+
     if cf.type == cf.FieldType.DECIMAL:
         return forms.DecimalField(
             label=cf.label, required=required,
             min_value=data.get('min'), max_value=data.get('max'),
             widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'data-field-key': cf.key}),
         )
+
     if cf.type == cf.FieldType.BOOLEAN:
         return forms.BooleanField(
             label=cf.label, required=False,
             widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'data-field-key': cf.key}),
         )
+
     if cf.type == cf.FieldType.STRING:
         return forms.CharField(
             label=cf.label, required=required, max_length=255,
             widget=forms.TextInput(attrs={'class': 'form-control', 'data-field-key': cf.key}),
         )
+
     if cf.type == cf.FieldType.TEXT:
         return forms.CharField(
             label=cf.label, required=required,
             widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'data-field-key': cf.key}),
         )
+
     if cf.type == cf.FieldType.MULTI_CHOICE:
         options = [(o, o) for o in (data.get('options') or [])]
         return forms.MultipleChoiceField(
@@ -210,7 +224,9 @@ def _make_field_from_cf(cf):
 def build_category_form(category, data=None, initial=None):
     fields = {}
     for cf in category.get_category_fields():
-        fields[f'cf_{cf.pk}'] = _make_field_from_cf(cf)
+        field_name = f'cf_{cf.pk}'
+        init_val = (initial or {}).get(field_name)
+        fields[field_name] = _make_field_from_cf(cf, initial=init_val)
     FormClass = type('DynamicCategoryForm', (forms.Form,), fields)
     return FormClass(data=data, initial=initial)
 

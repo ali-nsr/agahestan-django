@@ -1,126 +1,279 @@
 {% load static %}
 
+{% block extra_css %}
+    <style>
+        /* ═══════════════════════════════════════════
+       Mobile Top Bar — Premium
+       ═══════════════════════════════════════════ */
+        .mtb {
+            display: none;
+        }
+
+        @media (max-width: 991px) {
+
+            :root {
+                --mtb-height: 64px;
+                --mtb-primary: #f41b3b;
+            }
+
+            /* ═══ خنثی کردن هدر اصلی ═══ */
+            .header, .navigation, .nav-header {
+                padding: 0 !important;
+                margin: 0 !important;
+                height: 0 !important;
+                min-height: 0 !important;
+                border: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                overflow: visible !important;
+            }
+
+            .header {
+                position: static !important;
+            }
+
+            /* ═══ نوار ثابت ═══ */
+            .mtb {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 998;
+                background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+                border-bottom: 1px solid rgba(244, 27, 59, .08);
+                box-shadow: 0 1px 3px rgba(15, 23, 42, .04),
+                0 4px 16px rgba(244, 27, 59, .06);
+                padding: 10px 12px;
+                height: var(--mtb-height);
+                backdrop-filter: saturate(180%) blur(20px);
+                -webkit-backdrop-filter: saturate(180%) blur(20px);
+            }
+
+            body {
+                padding-top: var(--mtb-height) !important;
+            }
+
+            /* ═══ دکمه شهر ═══ */
+            .mtb-city {
+                flex-shrink: 0;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 0 12px 0 10px;
+                height: 44px;
+                background: #fff;
+                border: 1.5px solid #eef1f6;
+                border-radius: 14px;
+                color: #1e293b;
+                font-size: 13px;
+                font-weight: 700;
+                text-decoration: none;
+                white-space: nowrap;
+                max-width: 46%;
+                transition: all .2s ease;
+                box-shadow: 0 1px 3px rgba(15, 23, 42, .04);
+            }
+
+            .mtb-city:hover,
+            .mtb-city:active {
+                border-color: var(--mtb-primary);
+                background: #fff8f9;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(244, 27, 59, .15);
+            }
+
+            .mtb-city-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 26px;
+                height: 26px;
+                border-radius: 8px;
+                background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+                color: var(--mtb-primary);
+                font-size: 12px;
+                flex-shrink: 0;
+            }
+
+            .mtb-city-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-width: 0;
+                line-height: 1;
+            }
+
+            .mtb-city-arrow {
+                font-size: 9px;
+                color: #94a3b8;
+                flex-shrink: 0;
+                transition: transform .2s;
+            }
+
+            .mtb-city:hover .mtb-city-arrow {
+                transform: translateY(1px);
+                color: var(--mtb-primary);
+            }
+
+            /* ═══ جستجو ═══ */
+            .mtb-search {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 0 14px;
+                background: #fff;
+                border: 1.5px solid #eef1f6;
+                border-radius: 14px;
+                height: 44px;
+                min-width: 0;
+                transition: all .25s cubic-bezier(.4, 0, .2, 1);
+                box-shadow: 0 1px 3px rgba(15, 23, 42, .04);
+            }
+
+            .mtb-search:focus-within {
+                border-color: var(--mtb-primary);
+                box-shadow: 0 0 0 4px rgba(244, 27, 59, .1),
+                0 4px 12px rgba(244, 27, 59, .08);
+                transform: translateY(-1px);
+            }
+
+            .mtb-search-icon {
+                color: #94a3b8;
+                font-size: 13px;
+                flex-shrink: 0;
+                transition: color .2s;
+            }
+
+            .mtb-search:focus-within .mtb-search-icon {
+                color: var(--mtb-primary);
+            }
+
+            .mtb-search input {
+                flex: 1;
+                border: none;
+                outline: none;
+                background: transparent;
+                font-family: inherit;
+                font-size: 13px;
+                color: #1e293b;
+                padding: 0;
+                min-width: 0;
+                height: 100%;
+                font-weight: 500;
+            }
+
+            .mtb-search input::placeholder {
+                color: #94a3b8;
+                font-weight: 400;
+            }
+
+            /* حذف دکمه clear در Safari */
+            .mtb-search input::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+            }
+        }
+
+        /* ═══ Landscape ═══ */
+        @media (max-width: 991px) and (orientation: landscape) {
+            :root {
+                --mtb-height: 56px;
+            }
+
+            .mtb {
+                padding: 8px 12px;
+            }
+
+            .mtb-city, .mtb-search {
+                height: 40px;
+            }
+        }
+
+        /* ═══ موبایل کوچک ═══ */
+        @media (max-width: 375px) {
+            .mtb {
+                gap: 6px;
+                padding: 8px 10px;
+            }
+
+            .mtb-city {
+                padding: 0 10px 0 8px;
+                max-width: 40%;
+            }
+
+            .mtb-city-text {
+                font-size: 12px;
+            }
+
+            .mtb-search {
+                padding: 0 10px;
+                gap: 6px;
+            }
+
+            .mtb-search input {
+                font-size: 12px;
+            }
+        }
+    </style>
+{% endblock %}
+
 <div class="header header-light dark-text">
     <div class="container">
         <nav id="navigation" class="navigation navigation-landscape">
+            {#            <div class="nav-header">#}
+            {#                <a class="nav-brand" href="{% url 'ad:index' %}">#}
+            {#                    <img src="{% if setting.logo %}{{ setting.logo.url }}{% endif %}" class="logo" alt="logo"/>#}
+            {#                </a>#}
+            {#                <div class="mobile_nav">#}
+            {#                </div>#}
+            {#            </div>#}
+
+
             <div class="nav-header">
-                <a class="nav-brand" href="{% url 'ad:index' %}">
-                    <img src="{% static '' %}img/logo.png" class="logo" alt="logo"/>
-                </a>
-                <div class="nav-toggle"></div>
-                <div class="mobile_nav">
-                    <ul>
-                        <li>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#login" class="theme-cl fs-lg">
-                                <i class="lni lni-user"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'ad:choose-category' %}" class="crs_yuo12 w-auto text-white theme-bg">
-                                <span class="embos_45"><i class="fas fa-plus ms-2"></i>افزودن آگهی</span>
-                            </a>
-                        </li>
-                    </ul>
+
+                {# ═══ Mobile Top Bar ═══ #}
+                <div class="mtb d-lg-none">
+                    {# ─── جستجو ─── #}
+                    <form action="" method="get" class="mtb-search">
+                        <i class="fas fa-magnifying-glass mtb-search-icon"></i>
+                        <input type="search"
+                               name="q"
+                               placeholder="جستجو در همه آگهی‌ها..."
+                               value="{{ request.GET.q|default:'' }}"
+                               autocomplete="off">
+                    </form>
+
+                    {# ─── دکمه شهر ─── #}
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#citySelectModal" class="mtb-city">
+            <span class="mtb-city-icon">
+                <i class="fas fa-location-dot"></i>
+            </span>
+                        <span class="mtb-city-text">
+                {% if selected_cities %}
+                    {{ selected_cities|length }} شهر
+                {% else %}
+                    شهر
+                {% endif %}
+            </span>
+                        <i class="fas fa-chevron-down mtb-city-arrow"></i>
+                    </a>
+
+
                 </div>
+
+                {# ═══ Desktop ═══ #}
+                <a class="nav-brand d-none d-lg-block" href="{% url 'ad:iran-landing' %}">
+                    <img src="{% if setting.logo %}{{ setting.logo.url }}{% endif %}" class="logo" alt="logo"/>
+                </a>
+
             </div>
+
+
             <div class="nav-menus-wrapper" style="transition-property: none;">
-                {#                <ul class="nav-menu">#}
-                {##}
-                {#                    <li class="active"><a href="javascript:void(0);">صفحه اصلی</a>#}
-                {#                        <ul class="nav-dropdown nav-submenu">#}
-                {#                            <li><a href="index.html">نسخه 1</a></li>#}
-                {#                            <li><a href="home-2.html">نسخه 2</a></li>#}
-                {#                            <li><a href="home-3.html">نسخه 3</a></li>#}
-                {#                            <li><a href="home-4.html">نسخه 4</a></li>#}
-                {#                            <li><a href="home-5.html">نسخه 5</a></li>#}
-                {#                        </ul>#}
-                {#                    </li>#}
-                {##}
-                {#                    <li><a href="javascript:void(0);">آگهی</a>#}
-                {#                        <ul class="nav-dropdown nav-submenu">#}
-                {#                            <li><a href="javascript:void(0);">شبکه ای</a>#}
-                {#                                <ul class="nav-dropdown nav-submenu">#}
-                {#                                    <li><a href="listing-search-v1.html">سایدبار نسخه 1</a></li>#}
-                {#                                    <li><a href="listing-search-v2.html">سایدبار نسخه 2</a></li>#}
-                {#                                    <li><a href="listing-search-v3.html">سایدبار نسخه 3</a></li>#}
-                {#                                    <li><a href="listing-search-with-map.html">تمام صفحه با نقشه</a></li>#}
-                {#                                </ul>#}
-                {#                            </li>#}
-                {#                            <li><a href="javascript:void(0);">لیست</a>#}
-                {#                                <ul class="nav-dropdown nav-submenu">#}
-                {#                                    <li><a href="listing-search-v4.html">با سایدبار</a></li>#}
-                {#                                    <li><a href="listing-search-v5.html">تمام صفحه</a></li>#}
-                {#                                    <li><a href="listing-search-with-map.html">تمام صفحه با نقشه</a></li>#}
-                {#                                </ul>#}
-                {#                            </li>#}
-                {#                            <li><a href="javascript:void(0);">با نقشه</a>#}
-                {#                                <ul class="nav-dropdown nav-submenu">#}
-                {#                                    <li><a href="half-map-search-1.html">نسخه 1</a></li>#}
-                {#                                    <li><a href="half-map-search-2.html">نسخه 2</a></li>#}
-                {#                                    <li><a href="half-map-search-3.html">نسخه 3</a></li>#}
-                {#                                </ul>#}
-                {#                            </li>#}
-                {#                            <li><a href="javascript:void(0);">جزئیات</a>#}
-                {#                                <ul class="nav-dropdown nav-submenu">#}
-                {#                                    <li><a href="single-listing-detail-1.html">نسخه 1</a></li>#}
-                {#                                    <li><a href="single-listing-detail-2.html">نسخه 2</a></li>#}
-                {#                                    <li><a href="single-listing-detail-3.html">نسخه 3</a></li>#}
-                {#                                    <li><a href="single-listing-detail-4.html">نسخه 4</a></li>#}
-                {#                                    <li><a href="single-listing-detail-5.html">نسخه 5</a></li>#}
-                {#                                    <li><a href="single-listing-detail-6.html">نسخه 6</a></li>#}
-                {#                                    <li><a href="single-listing-detail-7.html">نسخه 7</a></li>#}
-                {#                                    <li><a href="single-listing-detail-8.html">نسخه 8</a></li>#}
-                {#                                </ul>#}
-                {#                            </li>#}
-                {#                            <li><a href="author-detail.html">جرئیات آگهی دهنده</a>#}
-                {#                        </ul>#}
-                {#                    </li>#}
-                {##}
-                {#                    <li><a href="javascript:void(0);">پنل کاربری</a>#}
-                {#                        <ul class="nav-dropdown nav-submenu">#}
-                {#                            <li><a href="dashboard.html"><i class="lni lni-dashboard ms-2"></i>داشبورد</a></li>#}
-                {#                            <li><a href="dashboard-my-listings.html"><i class="lni lni-files ms-2"></i>آگهی های من</a>#}
-                {#                            </li>#}
-                {#                            <li><a href="dashboard-add-listings.html"><i class="lni lni-add-files ms-2"></i>افزودن آگهی</a>#}
-                {#                            </li>#}
-                {#                            <li><a href="dashboard-saved-listings.html"><i class="lni lni-bookmark ms-2"></i>علاقه مندی#}
-                {#                                ها</a></li>#}
-                {#                            <li><a href="dashboard-my-bookings.html"><i class="lni lni-briefcase ms-2"></i>رزروهای#}
-                {#                                من<span class="count-tag bg-warning">4</span></a></li>#}
-                {#                            <li><a href="dashboard-wallet.html"><i class="lni lni-mastercard ms-2"></i>کیف پول</a></li>#}
-                {#                            <li><a href="dashboard-messages.html"><i class="lni lni-envelope ms-2"></i>پیام ها<span#}
-                {#                                    class="count-tag bg-sky">4</span></a></li>#}
-                {#                            <li><a href="dashboard-my-profile.html"><i class="lni lni-user ms-2"></i>حساب من </a></li>#}
-                {#                            <li><a href="dashboard-change-password.html"><i class="lni lni-lock-alt ms-2"></i>تغییر رمز#}
-                {#                                عبور</a></li>#}
-                {#                        </ul>#}
-                {#                    </li>#}
-                {##}
-                {#                    <li><a href="javascript:void(0);">صفحات</a>#}
-                {#                        <ul class="nav-dropdown nav-submenu">#}
-                {#                            <li><a href="blog.html">وبلاگ</a></li>#}
-                {#                            <li><a href="about-us.html">درباره ما</a></li>#}
-                {#                            <li><a href="contact.html">تماس با ما</a></li>#}
-                {#                            <li><a href="checkout.html">تسویه حساب</a></li>#}
-                {#                            <li><a href="pricing.html">پکیج های قیمت گذاری</a></li>#}
-                {#                            <li><a href="signup.html">ثبت نام</a></li>#}
-                {#                            <li><a href="login.html">ورود</a></li>#}
-                {#                            <li><a href="privacy.html">شرایط و قوانین</a></li>#}
-                {#                            <li><a href="faq.html">سوالات متداول</a></li>#}
-                {##}
-                {#                            <li><a href="404.html">صفحه 404</a></li>#}
-                {#                        </ul>#}
-                {#                    </li>#}
-                {##}
-                {#                </ul>#}
 
                 <ul class="nav-menu nav-menu-social align-to-left">
-                    {#                    <li>#}
-                    {#                                            <a href="{% url 'accounts:login' %}" data-bs-toggle="modal" data-bs-target="#login" class="ft-bold">#}
-                    {#                            <i class="fas fa-sign-in-alt ms-1 theme-cl"></i>#}
-                    {#                            ورود#}
-                    {#                        </a>#}
-                    {#                    </li>#}
                     {% if request.user.is_authenticated and request.user.is_superuser %}
                         <li>
                             <a href="{% url 'admin:index' %}" class="ft-bold" target="_blank">
@@ -145,6 +298,15 @@
                         </li>
                     {% endif %}
 
+
+                    <li>
+                        <a href="{% url 'chat:chat-list' %}" class="ft-bold">
+                            <i class="fas fa-comments ms-1 theme-cl"></i>
+                            چت
+                            <span class="chat-nav-badge" id="globalUnreadBadge" style="display:none;">0</span>
+                        </a>
+                    </li>
+
                     {% include 'includes/city_selector.html' %}
 
 
@@ -155,4 +317,3 @@
 
     </div>
 </div>
-
