@@ -15,6 +15,8 @@ urlpatterns = [
 
     # ═══ ۳. مسیرهای خاص (قبل از <slug>/<slug>/) ═══
     path('city-select/', views.city_select, name='city-select'),
+    path('analytics/<uuid:ad_uuid>/', views.ad_analytics, name='ad-analytics'),
+    path('search/', views.search, name='search'),
     path('choose-category/', views.choose_category, name='choose-category'),
     path('create/<slug:category_slug>/', views.ad_create, name='ad-create'),
     path('ad/<uuid>/', views.ad_detail, name='ad-detail'),

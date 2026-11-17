@@ -1,0 +1,498 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="an-page">
+    <div class="container">
+
+        <!-- ═══ Header ═══ -->
+        <div class="an-header">
+            <div class="an-header-main">
+                <a href="{% url 'accounts:dashboard' %}" class="an-back">
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <div class="an-header-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <h1 class="an-title">آمار بازدید</h1>
+                    <p class="an-subtitle">{{ ad.title|truncatechars:50 }}</p>
+                </div>
+            </div>
+
+            <div class="an-range">
+                <a href="?days=7" class="an-range-btn {% if days == 7 %}active{% endif %}">۷ روز</a>
+                <a href="?days=30" class="an-range-btn {% if days == 30 %}active{% endif %}">۳۰ روز</a>
+                <a href="?days=90" class="an-range-btn {% if days == 90 %}active{% endif %}">۹۰ روز</a>
+            </div>
+        </div>
+
+        <!-- ═══ Stats ═══ -->
+        <div class="an-stats">
+            <div class="an-stat">
+                <div class="an-stat-icon" style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);color:#4f46e5;">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="an-stat-info">
+                    <div class="an-stat-label">کل بازدیدها</div>
+                    <div class="an-stat-value">{{ total_views|intcomma }}</div>
+                </div>
+            </div>
+
+            <div class="an-stat">
+                <div class="an-stat-icon" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);color:#10b981;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="an-stat-info">
+                    <div class="an-stat-label">بازدید یکتا</div>
+                    <div class="an-stat-value">{{ unique_total|intcomma }}</div>
+                </div>
+            </div>
+
+            <div class="an-stat">
+                <div class="an-stat-icon" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#d97706;">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+                <div class="an-stat-info">
+                    <div class="an-stat-label">امروز</div>
+                    <div class="an-stat-value">{{ today_views|intcomma }}</div>
+                </div>
+            </div>
+
+            <div class="an-stat">
+                <div class="an-stat-icon" style="background:linear-gradient(135deg,#fff1f3,#ffe0e6);color:#f41b3b;">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="an-stat-info">
+                    <div class="an-stat-label">۳۰ روز گذشته</div>
+                    <div class="an-stat-value">{{ month_views|intcomma }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ Line Chart ═══ -->
+        <div class="an-card">
+            <div class="an-card-head">
+                <div>
+                    <h3 class="an-card-title">
+                        <i class="fas fa-chart-area"></i>
+                        روند بازدید روزانه
+                    </h3>
+                    <p class="an-card-sub">{{ days }} روز گذشته</p>
+                </div>
+            </div>
+            <div class="an-card-body">
+                {% if has_data %}
+                    <div class="an-chart-wrap">
+                        <canvas id="viewsChart"></canvas>
+                    </div>
+                {% else %}
+                    <div class="an-empty">
+                        <div class="an-empty-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>هنوز بازدیدی ثبت نشده</h4>
+                        <p>به‌محض دریافت اولین بازدید، نمودار اینجا نمایش داده می‌شود.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+.an-page {
+    background: #f5f7fa;
+    padding: 28px 0 60px;
+    min-height: 85vh;
+}
+
+/* ═══ Header ═══ */
+.an-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+.an-header-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.an-back {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1.5px solid #eef1f6;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all .15s;
+    flex-shrink: 0;
+}
+.an-back:hover {
+    border-color: #f41b3b;
+    color: #f41b3b;
+}
+.an-header-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+    color: #f41b3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(244, 27, 59, .15);
+}
+.an-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px;
+}
+.an-subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+.an-range {
+    display: inline-flex;
+    background: #fff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 2px;
+}
+.an-range-btn {
+    padding: 8px 16px;
+    border-radius: 9px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #64748b;
+    text-decoration: none;
+    transition: all .15s;
+}
+.an-range-btn:hover { color: #f41b3b; }
+.an-range-btn.active {
+    background: linear-gradient(135deg, #f41b3b, #d3152f);
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(244, 27, 59, .25);
+}
+
+/* ═══ Stats ═══ */
+.an-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+.an-stat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: 16px;
+    padding: 16px;
+    transition: all .2s;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, .03);
+}
+.an-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, .06);
+}
+.an-stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.an-stat-info { min-width: 0; }
+.an-stat-label {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.an-stat-value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+/* ═══ Card ═══ */
+.an-card {
+    background: #fff;
+    border: 1px solid #eef1f6;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, .04);
+    margin-bottom: 20px;
+}
+.an-card-head {
+    padding: 18px 22px;
+    border-bottom: 1px solid #f1f5f9;
+    background: linear-gradient(135deg, #fafbfc 0%, #fff 100%);
+}
+.an-card-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.an-card-title i { color: #f41b3b; font-size: 13px; }
+.an-card-sub {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+}
+.an-card-body { padding: 20px; }
+
+.an-chart-wrap {
+    position: relative;
+    height: 340px;
+}
+
+/* ═══ Empty ═══ */
+.an-empty {
+    text-align: center;
+    padding: 40px 20px;
+}
+.an-empty-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #f8fafc;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+.an-empty h4 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px;
+}
+.an-empty p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ═══ Recent Views ═══ */
+.an-table {
+    display: flex;
+    flex-direction: column;
+}
+.an-view-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 4px;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background .15s;
+    border-radius: 8px;
+}
+.an-view-row:last-child { border-bottom: none; }
+.an-view-row:hover { background: #fafbfc; }
+
+.an-view-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+    color: #f41b3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.an-view-info { flex: 1; min-width: 0; }
+.an-view-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.an-view-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3px;
+    font-size: 11px;
+}
+.an-view-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+.an-view-badge-user {
+    background: #f0fdf4;
+    color: #059669;
+}
+.an-view-badge-guest {
+    background: #f1f5f9;
+    color: #64748b;
+}
+.an-view-ip {
+    color: #94a3b8;
+    font-family: monospace;
+    font-size: 10.5px;
+}
+.an-view-time {
+    font-size: 11px;
+    color: #94a3b8;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 991px) {
+    .an-stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 575px) {
+    .an-page { padding: 20px 0 40px; }
+    .an-header-icon { width: 44px; height: 44px; font-size: 18px; border-radius: 12px; }
+    .an-title { font-size: 18px; }
+    .an-back { width: 36px; height: 36px; }
+    .an-range { width: 100%; }
+    .an-range-btn { flex: 1; text-align: center; padding: 7px 10px; font-size: 12px; }
+
+    .an-stats { gap: 10px; }
+    .an-stat { padding: 12px; gap: 10px; }
+    .an-stat-icon { width: 40px; height: 40px; font-size: 16px; }
+    .an-stat-value { font-size: 18px; }
+
+    .an-card-head { padding: 14px 16px; }
+    .an-card-body { padding: 14px; }
+    .an-chart-wrap { height: 260px; }
+
+    .an-view-ip { display: none; }
+}
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+{% if has_data %}
+<script>
+(function () {
+    if (typeof Chart === 'undefined') return;
+
+    Chart.defaults.font.family = 'inherit';
+    Chart.defaults.font.size = 12;
+    Chart.defaults.color = '#64748b';
+
+    var labels = {{ labels_json|safe }};
+    var data = {{ data_json|safe }};
+
+    var canvas = document.getElementById('viewsChart');
+    if (!canvas) return;
+
+    var ctx = canvas.getContext('2d');
+    var gradient = ctx.createLinearGradient(0, 0, 0, 340);
+    gradient.addColorStop(0, 'rgba(244, 27, 59, 0.28)');
+    gradient.addColorStop(1, 'rgba(244, 27, 59, 0.01)');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'بازدید',
+                data: data,
+                borderColor: '#f41b3b',
+                backgroundColor: gradient,
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 0,
+                pointHoverRadius: 7,
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#f41b3b',
+                pointHoverBorderWidth: 3,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { intersect: false, mode: 'index' },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#0f172a',
+                    padding: 12,
+                    cornerRadius: 10,
+                    displayColors: false,
+                    callbacks: {
+                        label: function (item) {
+                            return '👁  ' + item.parsed.y + ' بازدید';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkip: true,
+                        maxTicksLimit: 10,
+                        font: { size: 11 },
+                        color: '#94a3b8',
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(226, 232, 240, 0.5)',
+                        drawTicks: false,
+                    },
+                    ticks: {
+                        padding: 8,
+                        font: { size: 11 },
+                        color: '#94a3b8',
+                        precision: 0,
+                    }
+                }
+            }
+        }
+    });
+})();
+</script>
+{% endif %}
+{% endblock %}

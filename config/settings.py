@@ -10,8 +10,8 @@ DEBUG = False
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['agahestan.nutrikala.com', 'https://agahestan.nutrikala.com']
-    CSRF_TRUSTED_ORIGINS = ['https://agahestan.nutrikala.com', 'https://agahestan.nutrikala.com']
+    ALLOWED_HOSTS = ['agahestan.com', 'https://agahestan.com']
+    CSRF_TRUSTED_ORIGINS = ['https://agahestan.com', 'https://agahestan.com']
 
 INSTALLED_APPS = [
     'daphne',  # async server
@@ -98,7 +98,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgresmwf_db',
+            'NAME': 'agahestan_db',
             'USER': 'postgres',
             'PASSWORD': 'vmf4SF3JTnzlBUkum9Yy',
             'HOST': 'postgres-application-uco-service',
@@ -318,7 +318,7 @@ if DEBUG == False:
     CORS_ALLOW_ALL_ORIGINS = False
 
     CORS_ALLOWED_ORIGINS = [
-        'https://agahestan.nutrikala.com'
+        'https://agahestan.com'
     ]
 
     CORS_ALLOW_CREDENTIALS = True  # ← این true هست
@@ -346,7 +346,7 @@ if DEBUG == False:
     ]
 
     CSRF_TRUSTED_ORIGINS = [
-        'https://agahestan.nutrikala.com'
+        'https://agahestan.com'
     ]
 
 # end cors headers

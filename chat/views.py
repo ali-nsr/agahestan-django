@@ -132,3 +132,4 @@ def chat_list(request):
         'chat_data': chat_data,
         'total_unread': sum(c['unread_count'] for c in chat_data),
     })
+

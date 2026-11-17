@@ -25,7 +25,7 @@ class UserAdmin(BaseUserAdmin):
     )
     search_fields = ('phone',)
     ordering = ('-created_at',)
-    readonly_fields = ('temp_code', 'password')
+    readonly_fields = ('password',)
     filter_horizontal = ()
 
 
@@ -35,7 +35,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(OTP)
 class OTPAdmin(admin.ModelAdmin):
-    list_display = ('username', 'code', 'created_at', 'expires_at')
+    list_display = ('user', 'code', 'created_at', 'expires_at')
 
 
 admin.site.register(User, UserAdmin)

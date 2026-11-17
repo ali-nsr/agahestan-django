@@ -1,0 +1,431 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+
+{% block content %}
+
+<div class="search-page">
+
+    <!-- ═══ Search Header ═══ -->
+    <section class="search-hero">
+        <div class="container">
+            <form action="{% url 'ad:search' %}" method="get" class="search-form">
+                <div class="search-group">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="search"
+                           name="q"
+                           value="{{ q }}"
+                           placeholder="جستجو در همه آگهی‌ها..."
+                           autocomplete="off"
+                           class="search-input"
+                           autofocus>
+                    {% if q %}
+                        <a href="{% url 'ad:search' %}" class="search-clear" title="پاک کردن">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    {% endif %}
+                    <button type="submit" class="search-submit">
+                        <span>جستجو</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ═══ Results ═══ -->
+    <section class="search-results">
+        <div class="container">
+
+            <div class="results-head">
+                <div>
+                    {% if q %}
+                        <h1 class="results-title">
+                            نتایج جستجو برای «<span>{{ q }}</span>»
+                        </h1>
+                    {% else %}
+                        <h1 class="results-title">همه آگهی‌ها</h1>
+                    {% endif %}
+                    <p class="results-count">
+                        <i class="fas fa-list-ul"></i>
+                        {{ total_count|intcomma }} آگهی یافت شد
+                    </p>
+                </div>
+
+                {% if selected_cities %}
+                    <div class="results-filters">
+                        <span class="filters-label">شهرها:</span>
+                        {% for slug in selected_cities %}
+                            <span class="filter-chip">{{ slug }}</span>
+                        {% endfor %}
+                        <a href="?q={{ q }}" class="filter-clear">
+                            <i class="fas fa-times"></i>
+                            پاک
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if ads %}
+                <div class="row g-3">
+                    {% for ad in ads %}
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+                            {% include 'ad/components/ad_card.html' %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if page_obj.has_other_pages %}
+                    <nav class="search-pagination">
+                        {% if page_obj.has_previous %}
+                            <a href="?q={{ q }}{% for c in selected_cities %}&cities={{ c }}{% endfor %}&page={{ page_obj.previous_page_number }}"
+                               class="pg-btn">
+                                <i class="fas fa-chevron-right"></i>
+                                قبلی
+                            </a>
+                        {% else %}
+                            <span class="pg-btn pg-disabled">
+                                <i class="fas fa-chevron-right"></i>
+                                قبلی
+                            </span>
+                        {% endif %}
+
+                        <div class="pg-numbers">
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if num == page_obj.number %}
+                                    <span class="pg-num active">{{ num }}</span>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                    <a href="?q={{ q }}{% for c in selected_cities %}&cities={{ c }}{% endfor %}&page={{ num }}"
+                                       class="pg-num">{{ num }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        {% if page_obj.has_next %}
+                            <a href="?q={{ q }}{% for c in selected_cities %}&cities={{ c }}{% endfor %}&page={{ page_obj.next_page_number }}"
+                               class="pg-btn">
+                                بعدی
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        {% else %}
+                            <span class="pg-btn pg-disabled">
+                                بعدی
+                                <i class="fas fa-chevron-left"></i>
+                            </span>
+                        {% endif %}
+                    </nav>
+                {% endif %}
+
+            {% else %}
+                <div class="search-empty">
+                    <div class="search-empty-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    {% if q %}
+                        <h3>نتیجه‌ای یافت نشد</h3>
+                        <p>برای «{{ q }}» آگهی‌ای پیدا نکردیم.</p>
+                        <div class="search-suggestions">
+                            <span>پیشنهاد:</span>
+                            <ul>
+                                <li>املای کلمه را چک کنید</li>
+                                <li>کلمات کلی‌تر استفاده کنید</li>
+                                <li>فیلترها را حذف کنید</li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <h3>چیزی برای جستجو بنویسید</h3>
+                        <p>عنوان، برند، یا نام شهر را جستجو کنید.</p>
+                    {% endif %}
+                    <a href="{% url 'ad:iran-landing' %}" class="search-empty-btn">
+                        <i class="fas fa-th-large"></i>
+                        دیدن همه آگهی‌ها
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+</div>
+
+<style>
+/* ═══ Hero ═══ */
+.search-hero {
+    background: linear-gradient(135deg, #f8fafc 0%, #fff1f3 100%);
+    padding: 28px 0;
+    border-bottom: 1px solid #eef1f6;
+}
+
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 6px 8px 6px 16px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, .06);
+    transition: all .2s;
+}
+.search-group:focus-within {
+    border-color: #f41b3b;
+    box-shadow: 0 0 0 4px rgba(244, 27, 59, .1);
+}
+
+.search-icon {
+    color: #94a3b8;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    color: #0f172a;
+    padding: 10px 0;
+    font-family: inherit;
+    min-width: 0;
+}
+.search-input::placeholder { color: #94a3b8; }
+
+.search-clear {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 11px;
+    flex-shrink: 0;
+    transition: all .15s;
+}
+.search-clear:hover { background: #fee2e2; color: #ef4444; }
+
+.search-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #f41b3b 0%, #d3152f 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .15s;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(244, 27, 59, .3);
+    font-family: inherit;
+}
+.search-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(244, 27, 59, .4);
+}
+
+/* ═══ Results ═══ */
+.search-results {
+    padding: 28px 0 60px;
+    background: #f5f7fa;
+    min-height: 50vh;
+}
+
+.results-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.results-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 6px;
+}
+.results-title span { color: #f41b3b; }
+
+.results-count {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.results-count i { color: #f41b3b; font-size: 11px; }
+
+.results-filters {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 12px;
+}
+.filters-label { color: #64748b; font-weight: 600; }
+.filter-chip {
+    display: inline-flex;
+    padding: 4px 12px;
+    background: #fff1f3;
+    color: #f41b3b;
+    border-radius: 20px;
+    font-weight: 600;
+}
+.filter-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 11px;
+}
+.filter-clear:hover { background: #e2e8f0; color: #0f172a; }
+
+/* ═══ Empty ═══ */
+.search-empty {
+    background: #fff;
+    border-radius: 16px;
+    border: 2px dashed #e5e7eb;
+    padding: 60px 24px;
+    text-align: center;
+    max-width: 500px;
+    margin: 40px auto;
+}
+.search-empty-icon {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #f8fafc;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+}
+.search-empty h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+.search-empty p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 16px;
+}
+.search-suggestions {
+    text-align: right;
+    font-size: 12px;
+    color: #64748b;
+    background: #fafbfc;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 0 0 20px;
+}
+.search-suggestions span { font-weight: 700; display: block; margin-bottom: 6px; color: #475569; }
+.search-suggestions ul {
+    margin: 0;
+    padding-right: 18px;
+    line-height: 1.9;
+}
+.search-empty-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: #f41b3b;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .15s;
+}
+.search-empty-btn:hover {
+    background: #d3152f;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* ═══ Pagination ═══ */
+.search-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+.pg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    background: #fff;
+    border: 1.5px solid #eef1f6;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .15s;
+}
+.pg-btn:hover:not(.pg-disabled) { border-color: #f41b3b; color: #f41b3b; }
+.pg-disabled { opacity: .4; cursor: not-allowed; }
+
+.pg-numbers { display: flex; gap: 6px; }
+.pg-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    background: #fff;
+    border: 1.5px solid #eef1f6;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .15s;
+}
+.pg-num:hover { border-color: #f41b3b; color: #f41b3b; }
+.pg-num.active {
+    background: #f41b3b;
+    border-color: #f41b3b;
+    color: #fff;
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 575px) {
+    .search-hero { padding: 16px 0; }
+    .search-group { padding: 4px 6px 4px 12px; border-radius: 14px; }
+    .search-input { font-size: 14px; padding: 8px 0; }
+    .search-submit { padding: 9px 14px; font-size: 12px; }
+    .search-submit span { display: none; }
+    .search-results { padding: 20px 0 40px; }
+    .results-title { font-size: 17px; }
+    .search-empty { padding: 40px 18px; margin: 20px auto; }
+    .search-empty-icon { width: 68px; height: 68px; font-size: 28px; }
+    .pg-btn span { display: none; }
+    .pg-btn { padding: 8px 12px; }
+    .pg-num { min-width: 34px; height: 34px; font-size: 12px; }
+}
+</style>
+
+{% endblock %}

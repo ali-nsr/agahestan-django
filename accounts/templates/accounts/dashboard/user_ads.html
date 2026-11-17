@@ -678,6 +678,11 @@
     .my-ad-price-currency { font-size: 9px; }
     .my-ad-date { font-size: 10px; }
 }
+.my-ad-action-analytics:hover {
+    border-color: #10b981;
+    color: #10b981;
+    background: #f0fdf4;
+}
 </style>
 {% endblock %}
 {% block dashboard %}
@@ -854,6 +859,12 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
 {#                                {% endif %}#}
+
+                                    <a href="{% url 'ad:ad-analytics' ad.uuid %}"
+                                           class="my-ad-action my-ad-action-analytics" title="آمار بازدید">
+                                            <i class="fas fa-chart-line"></i>
+                                        </a>
+
 
                                 <button type="button"
                                         class="my-ad-action my-ad-action-delete js-delete-ad"

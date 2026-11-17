@@ -9,3 +9,5 @@ from .index import *
 from .cities_by_province import *
 from .neighborhoods_by_city import *
 from .city_select import *
+from .search import *
+from .analytics import *

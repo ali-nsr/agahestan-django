@@ -62,12 +62,6 @@ class Category(models.Model):
         verbose_name_plural = _('دسته بندی ها')
         ordering = ['id']
 
-    # def get_category_fields(self):
-    #     from . import CategoryField
-    #
-    #     res = CategoryField.objects.filter(category=self)
-    #
-    #     return res
 
     def get_category_fields(self):
         from . import CategoryField
@@ -78,11 +72,3 @@ class Category(models.Model):
             p = p.parent
         return CategoryField.objects.filter(category__in=cats).order_by('id')
 
-    # def get_absolute_url(self):
-    #     # آدرس کامل با احتساب والدها (مثلاً 'vehicles/car')
-    #     path = self.slug
-    #     parent = self.parent
-    #     while parent:
-    #         path = f"{parent.slug}/{path}"
-    #         parent = parent.parent
-    #     return reverse('ad:hierarchical-landing', kwargs={'path': f"{path}"})

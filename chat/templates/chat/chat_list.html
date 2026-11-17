@@ -3,375 +3,412 @@
 
 {% block content %}
 
-    <div class="chat-list-wrap">
-        <div class="container">
+<div class="cl-page">
+    <div class="container">
 
-            <!-- Header -->
-            <div class="chat-header">
+        <!-- ═══ Header ═══ -->
+        <div class="cl-header">
+            <div class="cl-header-main">
+                <div class="cl-header-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
                 <div>
-                    <h1 class="chat-title">پیام‌ها</h1>
-                    <p class="chat-subtitle">
+                    <h1 class="cl-title">پیام‌ها</h1>
+                    <p class="cl-subtitle">
                         {% if total_unread %}
-                            <span class="chat-subtitle-badge">{{ total_unread }}</span>
+                            <span class="cl-unread-badge">{{ total_unread }}</span>
                             پیام خوانده‌نشده دارید
-                        {% else %}
+                        {% elif chat_data %}
                             همه پیام‌ها خوانده شده
+                        {% else %}
+                            شروع به گفتگو کنید
                         {% endif %}
                     </p>
                 </div>
             </div>
+        </div>
 
-            {% if chat_data %}
-                <div class="chat-list">
-                    {% for item in chat_data %}
-                        <a href="{% url 'chat:chat-detail' item.chat.uuid %}"
-                           class="chat-item {% if item.unread_count %}has-unread{% endif %}">
+        <!-- ═══ List ═══ -->
+        {% if chat_data %}
+            <div class="cl-list">
+                {% for item in chat_data %}
+                    <a href="{% url 'chat:chat-detail' item.chat.uuid %}"
+                       class="cl-item {% if item.unread_count %}has-unread{% endif %}">
 
-                            <!-- Avatar -->
-                            <div class="chat-avatar">
+                        <!-- Avatar -->
+                        <div class="cl-avatar">
+                            <span class="cl-avatar-text">
                                 {{ item.other_user.get_full_name|default:item.other_user.phone|slice:":1"|upper }}
-                                {% if item.other_user.is_online %}
-                                    <span class="chat-online" title="آنلاین"></span>
+                            </span>
+                            {% if item.other_user.is_online %}
+                                <span class="cl-online" title="آنلاین"></span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Body -->
+                        <div class="cl-body">
+                            <div class="cl-body-top">
+                                <span class="cl-name">
+                                    {{ item.other_user.get_full_name|default:item.other_user.phone }}
+                                </span>
+                                {% if item.chat.last_at %}
+                                    <span class="cl-time">{{ item.chat.last_at|timesince }} پیش</span>
+                                {% elif item.chat.updated_at %}
+                                    <span class="cl-time">{{ item.chat.updated_at|timesince }} پیش</span>
                                 {% endif %}
                             </div>
 
-                            <!-- Body -->
-                            <div class="chat-body">
-                                <div class="chat-top">
-                                <span class="chat-name">
-                                    {{ item.other_user.get_full_name|default:item.other_user.phone }}
-                                </span>
-                                    {% if item.chat.last_at %}
-                                        <span class="chat-time">{{ item.chat.last_at|timesince }} پیش</span>
+                            <div class="cl-preview">
+                                {% if item.chat.last_text %}
+                                    {% if item.is_mine %}
+                                        <span class="cl-mine">شما: </span>
                                     {% endif %}
-                                </div>
-
-                                <div class="chat-preview">
-                                    {% if item.chat.last_text %}
-                                        {% if item.is_mine %}<span class="chat-mine">شما: </span>{% endif %}
-                                        {{ item.chat.last_text|truncatechars:60 }}
-                                    {% else %}
-                                        <em class="chat-empty-text">هنوز پیامی رد و بدل نشده</em>
-                                    {% endif %}
-                                </div>
-
-                                <div class="chat-ad">
-                                    <i class="fas fa-tag"></i>
-                                    <span>{{ item.chat.ad.title|truncatechars:35 }}</span>
-                                </div>
+                                    {{ item.chat.last_text|truncatechars:60 }}
+                                {% else %}
+                                    <em class="cl-empty-text">هنوز پیامی رد و بدل نشده</em>
+                                {% endif %}
                             </div>
 
-                            <!-- Unread badge -->
-                            {% if item.unread_count %}
-                                <span class="chat-badge">{{ item.unread_count }}</span>
-                            {% endif %}
-                        </a>
-                    {% endfor %}
-                </div>
+                            <div class="cl-ad">
+                                <i class="fas fa-tag"></i>
+                                <span>{{ item.chat.ad.title|truncatechars:40 }}</span>
+                            </div>
+                        </div>
 
-            {% else %}
-                <div class="chat-empty">
-                    <div class="chat-empty-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h3>هنوز چتی ندارید</h3>
-                    <p>برای شروع، از صفحه‌ی آگهی با فروشنده تماس بگیرید.</p>
-                    <a href="/" class="chat-empty-btn">
-                        <i class="fas fa-search"></i>
-                        دیدن آگهی‌ها
+                        <!-- Right side -->
+                        {% if item.unread_count %}
+                            <span class="cl-badge">{{ item.unread_count }}</span>
+                        {% else %}
+                            <i class="fas fa-chevron-left cl-arrow"></i>
+                        {% endif %}
                     </a>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <div class="cl-empty">
+                <div class="cl-empty-icon">
+                    <i class="fas fa-comments"></i>
                 </div>
-            {% endif %}
+                <h3>هنوز چتی ندارید</h3>
+                <p>از صفحه‌ی هر آگهی، با فروشنده گفتگو کنید.</p>
+                <a href="{% url 'ad:iran-landing' %}" class="cl-empty-btn">
+                    <i class="fas fa-search"></i>
+                    دیدن آگهی‌ها
+                </a>
+            </div>
+        {% endif %}
 
-        </div>
     </div>
+</div>
 
-    <style>
-        .chat-list-wrap {
-            background: #f5f7fa;
-            padding: 32px 0 80px;
-            min-height: 80vh;
-        }
+<style>
+/* ═══ Page ═══ */
+.cl-page {
+    background: #f5f7fa;
+    padding: 28px 0 60px;
+    min-height: 85vh;
+}
 
-        /* ─── Header ─── */
-        .chat-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
+/* ═══ Header ═══ */
+.cl-header {
+    margin-bottom: 20px;
+}
+.cl-header-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.cl-header-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+    color: #f41b3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(244, 27, 59, .15);
+}
+.cl-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px;
+}
+.cl-subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.cl-unread-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #f41b3b, #d3152f);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    box-shadow: 0 2px 6px rgba(244, 27, 59, .3);
+}
 
-        .chat-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: #0f172a;
-            margin: 0 0 4px;
-        }
+/* ═══ List ═══ */
+.cl-list {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #eef1f6;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, .04);
+}
 
-        .chat-subtitle {
-            font-size: 13px;
-            color: #64748b;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+.cl-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+    color: inherit;
+    transition: background .15s;
+    position: relative;
+}
+.cl-item:last-child { border-bottom: none; }
+.cl-item:hover { background: #fafbfc; }
 
-        .chat-subtitle-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 20px;
-            height: 20px;
-            padding: 0 6px;
-            background: #f41b3b;
-            color: #fff;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 800;
-        }
+.cl-item.has-unread {
+    background: linear-gradient(90deg, #fff8f9 0%, #fff 60%);
+}
+.cl-item.has-unread::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    right: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+    background: #f41b3b;
+}
+.cl-item.has-unread:hover {
+    background: linear-gradient(90deg, #fff1f3 0%, #fff 70%);
+}
 
-        /* ─── List ─── */
-        .chat-list {
-            background: #fff;
-            border-radius: 16px;
-            border: 1px solid #eef1f6;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
-        }
+/* ═══ Avatar ═══ */
+.cl-avatar {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff1f3, #ffe0e6);
+    color: #f41b3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.cl-avatar-text {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+}
+.cl-online {
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+    width: 13px;
+    height: 13px;
+    background: #10b981;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, .15);
+}
 
-        .chat-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 18px;
-            border-bottom: 1px solid #f1f5f9;
-            text-decoration: none;
-            color: inherit;
-            transition: background .15s;
-            position: relative;
-        }
+/* ═══ Body ═══ */
+.cl-body {
+    flex: 1;
+    min-width: 0;
+}
+.cl-body-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.cl-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cl-time {
+    font-size: 11px;
+    color: #94a3b8;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: 500;
+}
+.cl-item.has-unread .cl-time {
+    color: #f41b3b;
+    font-weight: 700;
+}
 
-        .chat-item:last-child {
-            border-bottom: none;
-        }
+.cl-preview {
+    font-size: 12.5px;
+    color: #64748b;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 6px;
+}
+.cl-item.has-unread .cl-preview {
+    color: #475569;
+    font-weight: 600;
+}
+.cl-mine {
+    color: #94a3b8;
+    font-weight: 600;
+}
+.cl-empty-text { color: #cbd5e1; }
 
-        .chat-item:hover {
-            background: #fafbfc;
-        }
+.cl-ad {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    font-size: 11px;
+    color: #f41b3b;
+    background: #fff1f3;
+    padding: 3px 10px;
+    border-radius: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+}
+.cl-ad i { font-size: 9px; flex-shrink: 0; }
+.cl-ad span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-        .chat-item.has-unread {
-            background: #fff8f9;
-        }
+/* ═══ Badge ═══ */
+.cl-badge {
+    flex-shrink: 0;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 7px;
+    background: linear-gradient(135deg, #f41b3b, #d3152f);
+    color: #fff;
+    border-radius: 11px;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(244, 27, 59, .4);
+}
 
-        .chat-item.has-unread:hover {
-            background: #fff1f3;
-        }
+.cl-arrow {
+    color: #cbd5e1;
+    font-size: 11px;
+    flex-shrink: 0;
+    transition: all .15s;
+}
+.cl-item:hover .cl-arrow {
+    color: #f41b3b;
+    transform: translateX(-3px);
+}
 
-        /* ─── Avatar ─── */
-        .chat-avatar {
-            position: relative;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #fff1f3, #ffe0e6);
-            color: #f41b3b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
+/* ═══ Empty ═══ */
+.cl-empty {
+    background: #fff;
+    border-radius: 16px;
+    border: 2px dashed #e5e7eb;
+    padding: 60px 24px;
+    text-align: center;
+}
+.cl-empty-icon {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #fff1f3;
+    color: #f41b3b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+}
+.cl-empty h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+.cl-empty p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 20px;
+}
+.cl-empty-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    background: #f41b3b;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .15s;
+    box-shadow: 0 4px 14px rgba(244, 27, 59, .25);
+}
+.cl-empty-btn:hover {
+    background: #d3152f;
+    color: #fff;
+    transform: translateY(-1px);
+}
 
-        .chat-online {
-            position: absolute;
-            bottom: 2px;
-            left: 2px;
-            width: 13px;
-            height: 13px;
-            background: #10b981;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, .2);
-        }
+/* ═══ Responsive ═══ */
+@media (max-width: 575px) {
+    .cl-page { padding: 20px 0 40px; }
+    .cl-header-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        border-radius: 12px;
+    }
+    .cl-title { font-size: 20px; }
 
-        /* ─── Body ─── */
-        .chat-body {
-            flex: 1;
-            min-width: 0;
-        }
+    .cl-item { padding: 12px 14px; gap: 12px; }
+    .cl-avatar { width: 46px; height: 46px; }
+    .cl-avatar-text { font-size: 16px; }
+    .cl-name { font-size: 13px; }
+    .cl-preview { font-size: 12px; }
+    .cl-ad { font-size: 10px; padding: 2px 8px; }
+    .cl-badge {
+        min-width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
 
-        .chat-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-
-        .chat-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0f172a;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .chat-time {
-            font-size: 11px;
-            color: #94a3b8;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .chat-preview {
-            font-size: 12.5px;
-            color: #64748b;
-            line-height: 1.5;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            margin-bottom: 6px;
-        }
-
-        .chat-mine {
-            color: #94a3b8;
-            font-weight: 600;
-        }
-
-        .chat-empty-text {
-            color: #cbd5e1;
-        }
-
-        .chat-ad {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            max-width: 100%;
-            font-size: 11px;
-            color: #f41b3b;
-            background: #fff1f3;
-            padding: 2px 9px;
-            border-radius: 6px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .chat-ad i {
-            font-size: 9px;
-            flex-shrink: 0;
-        }
-
-        /* ─── Unread badge ─── */
-        .chat-badge {
-            flex-shrink: 0;
-            min-width: 22px;
-            height: 22px;
-            padding: 0 7px;
-            background: #f41b3b;
-            color: #fff;
-            border-radius: 11px;
-            font-size: 11px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(244, 27, 59, .35);
-        }
-
-        /* ─── Empty ─── */
-        .chat-empty {
-            background: #fff;
-            border-radius: 16px;
-            border: 2px dashed #e5e7eb;
-            padding: 70px 24px;
-            text-align: center;
-        }
-
-        .chat-empty-icon {
-            width: 84px;
-            height: 84px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            background: #fff1f3;
-            color: #f41b3b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 34px;
-        }
-
-        .chat-empty h3 {
-            font-size: 17px;
-            font-weight: 800;
-            color: #0f172a;
-            margin: 0 0 8px;
-        }
-
-        .chat-empty p {
-            font-size: 13px;
-            color: #64748b;
-            margin: 0 0 20px;
-        }
-
-        .chat-empty-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 20px;
-            background: #f41b3b;
-            color: #fff;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all .15s;
-            box-shadow: 0 4px 14px rgba(244, 27, 59, .25);
-        }
-
-        .chat-empty-btn:hover {
-            background: #d3152f;
-            color: #fff;
-            transform: translateY(-1px);
-        }
-
-        /* ─── Responsive ─── */
-        @media (max-width: 575px) {
-            .chat-list-wrap {
-                padding: 20px 0 60px;
-            }
-
-            .chat-title {
-                font-size: 20px;
-            }
-
-            .chat-item {
-                padding: 12px 14px;
-                gap: 12px;
-            }
-
-            .chat-avatar {
-                width: 46px;
-                height: 46px;
-                font-size: 16px;
-            }
-
-            .chat-name {
-                font-size: 13px;
-            }
-
-            .chat-preview {
-                font-size: 12px;
-            }
-
-            .chat-ad {
-                font-size: 10px;
-            }
-        }
-    </style>
+    .cl-empty { padding: 40px 18px; }
+    .cl-empty-icon { width: 68px; height: 68px; font-size: 28px; }
+}
+</style>
 
 {% endblock %}

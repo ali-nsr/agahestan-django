@@ -17,9 +17,7 @@ class AdChat(models.Model):
         unique_together = ('ad', 'sender')
         verbose_name = _('چت')
         verbose_name_plural = _('چت ها')
-        indexes = [
-            models.Index(fields=['uuid'])
-        ]
+
 
 
 class AdMessage(models.Model):
@@ -32,3 +30,6 @@ class AdMessage(models.Model):
     class Meta:
         verbose_name = _('پیام')
         verbose_name_plural = _('پیام ها')
+        indexes = [
+            models.Index(fields=['chat', 'timestamp']),
+        ]
