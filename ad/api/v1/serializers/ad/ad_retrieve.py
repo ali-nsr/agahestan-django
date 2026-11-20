@@ -4,7 +4,7 @@ from ad.models import Ad, Gallery, AdAttribute, CategoryField, Category
 
 from utils.mixins import PersianTimeMixin
 from chat.models import AdChat
-from social.models import Follow
+# from social.models import Follow
 
 
 class GallerySerializer(serializers.ModelSerializer):
@@ -85,8 +85,8 @@ class AdDetailSerializer(PersianTimeMixin, serializers.ModelSerializer):
         }
 
     def get_seller(self, obj):
-        user_followers = Follow.objects.filter(following_id=obj.user.id).count()
-        user_followings = Follow.objects.filter(follower_id=obj.user.id).count()
+        # user_followers = Follow.objects.filter(following_id=obj.user.id).count()
+        # user_followings = Follow.objects.filter(follower_id=obj.user.id).count()
         user_ads_count = Ad.objects.filter(user_id=obj.user.id).count()
 
         return {
@@ -94,8 +94,8 @@ class AdDetailSerializer(PersianTimeMixin, serializers.ModelSerializer):
             'name': obj.user.phone,
             'join_date': obj.user.created_at,
             'avatar': obj.user.profile.image.url if obj.user.profile.image else None,
-            'followers_count': user_followers,
-            'followings_count': user_followings,
+            # 'followers_count': user_followers,
+            # 'followings_count': user_followings,
             'ads_count': user_ads_count
         }
 

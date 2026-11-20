@@ -36,6 +36,10 @@ class CategoryManager(models.Manager):
 
         return roots
 
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
+
 
 class Category(models.Model):
     parent = models.ForeignKey('self', default=None, null=True, blank=True, on_delete=models.CASCADE,
@@ -72,3 +76,4 @@ class Category(models.Model):
             p = p.parent
         return CategoryField.objects.filter(category__in=cats).order_by('id')
 
+    

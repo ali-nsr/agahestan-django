@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+class CategoryFieldManager(models.Manager):
+    def get_by_natural_key(self, key):
+        return self.get(key=key)
 
 class CategoryField(models.Model):
     class FieldType(models.TextChoices):

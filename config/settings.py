@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'accounts',
     'ad',
     'location',
-    'social',
     'chat',
     'utils',
     'core',

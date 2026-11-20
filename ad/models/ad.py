@@ -48,10 +48,10 @@ class Ad(models.Model):
                                      verbose_name=_('محله'))
     address = models.CharField(max_length=100, verbose_name=_('آدرس'))
     latitude = models.DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_('عرض جغرافیایی'),
+        max_digits=22, decimal_places=16, null=True, blank=True, verbose_name=_('عرض جغرافیایی'),
     )
     longitude = models.DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_('طول جغرافیایی'),
+        max_digits=22, decimal_places=16, null=True, blank=True, verbose_name=_('طول جغرافیایی'),
     )
 
     # ─── قیمت ───

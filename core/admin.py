@@ -114,3 +114,8 @@ class ContactMessageAdmin(admin.ModelAdmin):
 class SliderAdmin(admin.ModelAdmin):
     # list_display = ('title',)
     ...
+
+
+admin.site.site_header = 'مدیریت آگهستان'
+admin.site.site_title = 'پنل مدیریت'
+admin.site.index_title = 'پنل مدیریت'

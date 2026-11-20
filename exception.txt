@@ -1,9 +1,417 @@
-{
-    "success": false,
-    "message": "price: Price must be greater than zero",
-    "errors": {
-        "price": ["Price must be greater than zero"],
-        "title": ["Title must be at least 3 characters long"]
-    },
-    "status_code": 400
-}
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+from django.contrib.postgres.indexes import GinIndex
+import uuid
+
+
+from jalali_date import datetime2jalali
+
+
+class AdManager(models.Manager):
+    def published(self):
+        return self.filter(status=Ad.Status.PUBLISHED)
+
+    def get_related_ads(self, category_id, exclude_id=None, limit=8):
+        qs = self.published().filter(category_id=category_id)
+        if exclude_id:
+            qs = qs.exclude(id=exclude_id)
+        return qs.order_by('-published_at')[:limit]
+
+
+class Ad(models.Model):
+    class Status(models.TextChoices):
+        DRAFT = 'draft', _('پیش نویس')
+        REVIEW = 'review', _('در حال بررسی')
+        PUBLISHED = 'published', _('منتشر شده')
+        REJECTED = 'rejected', _('رد شده')
+        EXPIRED = 'expired', _('منقضی شده')
+        ARCHIVED = 'archived', _('آرشیو')
+        WAIT_TO_PAY = 'wait_to_pay', _('در انتظار پرداخت')
+
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name=_('UUID'))
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE,related_name='ads', verbose_name=_('کاربر'))
+    title = models.CharField(max_length=100, verbose_name=_('عنوان'))
+    description = models.TextField(verbose_name=_('توضیحات'))
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category_ads',
+                                 verbose_name=_('دسته بندی'))
+    thumbnail = models.ImageField(upload_to='%Y/%m/%d/thumbnails/', null=True, blank=True,
+                                  verbose_name=_('تصویر بند انگشتی'))
+
+    # ─── موقعیت ───
+    province = models.ForeignKey('location.Province', on_delete=models.CASCADE, related_name='province_ads',
+                                 verbose_name=_('استان'))
+    city = models.ForeignKey('location.City', on_delete=models.CASCADE, related_name='city_ads',
+                             verbose_name=_('شهر'))
+    neighborhood = models.ForeignKey('location.Neighborhood', on_delete=models.CASCADE, null=True, blank=True,
+                                     related_name='neighborhood_ads',
+                                     verbose_name=_('محله'))
+    address = models.CharField(max_length=100, verbose_name=_('آدرس'))
+    latitude = models.DecimalField(
+        max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_('عرض جغرافیایی'),
+    )
+    longitude = models.DecimalField(
+        max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_('طول جغرافیایی'),
+    )
+
+    # ─── قیمت ───
+    price = models.PositiveBigIntegerField(null=True, blank=True, verbose_name=_('قیمت'))
+    is_negotiable = models.BooleanField(default=False, verbose_name=_('قابل مذاکره'))
+
+    # ─── وضعیت ───
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT, verbose_name=_('وضعیت'))
+    is_paid = models.BooleanField(default=False, verbose_name=_('پرداخت شده'))
+    rejection_reason = models.TextField(null=True, blank=True, verbose_name=_('دلیل رد'))
+
+    # ─── زمان‌ها ───
+    published_at = models.DateTimeField(null=True, blank=True, verbose_name=_('تاریخ انتشار'))
+    expires_at = models.DateTimeField(verbose_name=_('تاریخ انتقضا'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
+    bumped_at = models.DateTimeField(null=True, blank=True, verbose_name=_('تاریخ پله'))
+
+    # ─── کش‌ها (فقط برای سرعت) ───
+    views_count = models.PositiveIntegerField(default=0, verbose_name=_('تعداد بازدید'))
+    chats_count = models.PositiveIntegerField(default=0, verbose_name=_('تعداد چت'))
+    attributes_cache = models.JSONField(null=True, blank=True, verbose_name=_('اتریبیوت ها'))
+
+    objects = AdManager()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _('آگهی')
+        verbose_name_plural = _('آگهی ها')
+        ordering = ('-published_at', '-created_at')
+
+        indexes = [
+            models.Index(fields=['status', '-published_at']),
+            models.Index(fields=['category', 'status']),
+            models.Index(fields=['city', 'status']),
+            models.Index(fields=['user', '-created_at']),
+            models.Index(fields=['price']),
+            GinIndex(fields=['attributes_cache']),
+        ]
+
+    def save(self, *args, **kwargs):
+        # expires_at خالی → ۳۰ روز بعد
+        if not self.expires_at:
+            self.expires_at = timezone.now() + timezone.timedelta(
+                days=30,
+            )
+
+        # آگهی جدید → REVIEW (تا ادمین تأیید کنه)
+        if not self.pk and self.status == self.Status.DRAFT:
+            self.status = self.Status.REVIEW
+
+        super().save(*args, **kwargs)
+
+    @property
+    def is_expired(self):
+        return bool(self.expires_at and timezone.now() > self.expires_at)
+
+    @property
+    def is_published(self):
+        return self.status == self.Status.PUBLISHED and not self.is_expired
+
+    @property
+    def is_special(self):
+        return self.category.is_special or self.is_paid
+
+    @property
+    def price_per_meter(self):
+        """قیمت هر متر — فقط اگه دسته‌اش فیلد متراژ داشته باشه."""
+        if not self.price:
+            return None
+        area = self._get_attribute_value('area')
+        if area and str(area).isdigit():
+            return self.price // int(area)
+        return None
+
+    @property
+    def main_image(self):
+        """اولویت: thumbnail → اولین عکس گالری."""
+        if self.thumbnail:
+            return self.thumbnail
+        first = self.gallery.order_by('-is_main', 'id').first()
+        return first.image if first else None
+
+    # ═══════════════════════════════════════════
+    # آدرس
+    # ═══════════════════════════════════════════
+
+    def get_full_address(self):
+        parts = [self.province.name, self.city.name]
+        if self.neighborhood:
+            parts.append(self.neighborhood.name)
+        parts.append(self.address)
+        return ' '.join(parts)
+
+    # ═══════════════════════════════════════════
+    # اتریبیوت‌ها
+    # ═══════════════════════════════════════════
+
+    def _get_attribute_value(self, key_suffix):
+        """مثلاً area → مقدار فیلد متراژ دسته‌اش."""
+        if not self.category_id:
+            return None
+
+        attr = (
+            self.ad_attributes
+            .filter(category_field__key=f'{self.category.slug}__{key_suffix}')
+            .first()
+        )
+        return attr.value if attr else None
+
+    def get_field_values(self):
+        return [
+            {
+                'id': v.category_field.id,
+                'label': v.category_field.label,
+                'type': v.category_field.type,
+                'value': v.value,
+                'data': v.category_field.data,
+            }
+            for v in self.ad_attributes.select_related('category_field').all()
+        ]
+
+    def api_ad_list_field_values(self):
+        """برای API — سریع، از cache."""
+        if not self.attributes_cache:
+            return []
+        return [
+            {'label': v.get('label', ''), 'value': v.get('value', '')}
+            for v in self.attributes_cache
+        ]
+
+    # ═══════════════════════════════════════════
+    # تاریخ شمسی
+    # ═══════════════════════════════════════════
+
+    def api_ad_created_at(self):
+        return datetime2jalali(self.created_at)
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+
+class AdAttribute(models.Model):
+    category_field = models.ForeignKey('ad.CategoryField', on_delete=models.CASCADE, verbose_name=_('فیلد دسته بندی'))
+    ad = models.ForeignKey('ad.Ad', on_delete=models.CASCADE, related_name='ad_attributes', verbose_name=_('آگهی'))
+    value = models.CharField(max_length=500, verbose_name=_('مقدار'))
+
+    class Meta:
+        verbose_name = _('اتریبیوت آگهی')
+        verbose_name_plural = _('اتریبیوت های آگهی')
+
+        indexes = [
+            models.Index(fields=['ad', 'category_field']),
+        ]
+        unique_together = ('ad', 'category_field')  # هر فیلد در هر آگهی فقط یک مقدار
+
+    def __str__(self):
+        return f"{self.category_field} - {self.value}"
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class AdReport(models.Model):
+    reason = models.ForeignKey('ad.AdReportReason', on_delete=models.CASCADE, verbose_name=_('علت'))
+    reporter = models.ForeignKey('accounts.User', on_delete=models.CASCADE, verbose_name=_('گزارش دهنده'))
+    ad = models.ForeignKey('ad.Ad', on_delete=models.CASCADE, verbose_name=_('آگهی'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('توضیحات'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+
+    def __str__(self):
+        return f'{self.reporter} - {self.ad}'
+
+    class Meta:
+        verbose_name = _('گزارش')
+        verbose_name_plural = _('گزارش ها')
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class AdReportReason(models.Model):
+    reason = models.CharField(max_length=50, verbose_name=_('علت'))
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = _('علت گزارش')
+        verbose_name_plural = _('علت های گزارش')
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
+
+
+
+
+class AdViews(models.Model):
+    ip = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('IP'))
+    session_key = models.CharField(max_length=40, null=True, blank=True, verbose_name=_('سشن'))
+    ad = models.ForeignKey('ad.Ad', on_delete=models.CASCADE, verbose_name=_('آگهی'))
+    user = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='ad_views',
+                             verbose_name=_('کاربر')
+                             )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+
+    class Meta:
+        verbose_name = _('بازدید آگهی')
+        verbose_name_plural = _('بازدید های آگهی')
+        indexes = [models.Index(fields=['ad', 'created_at'])]
+
+    def __str__(self):
+        return self.ad.title
+
+from django.db import models
+from django.shortcuts import reverse
+from django.utils.translation import gettext_lazy as _
+
+
+
+
+class CategoryManager(models.Manager):
+    def get_all_categories(self):
+        # فقط یک کوئری
+        rows = list(
+            self.all()
+            .values('id', 'title', 'slug', 'parent_id', 'icon')
+            .order_by('id')
+        )
+
+        # ساخت درخت بدون O(n^2)
+        nodes = {}
+        roots = []
+        for r in rows:
+            r['children'] = []
+            nodes[r['id']] = r
+
+        for r in rows:
+            pid = r['parent_id']
+            if pid:
+                # ممکنه parent قبل یا بعد دیده شود، ولی چون nodes کامل است، مشکلی نیست
+                nodes[pid]['children'].append(r)
+            else:
+                roots.append(r)
+
+        # مرتب‌سازی ایمن برای هر سطح (در صورت نیاز)
+        for n in nodes.values():
+            n['children'].sort(key=lambda x: (x['id']))
+        roots.sort(key=lambda x: (x['id']))
+
+        return roots
+
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
+
+
+class Category(models.Model):
+    parent = models.ForeignKey('self', default=None, null=True, blank=True, on_delete=models.CASCADE,
+                               related_name='children', verbose_name=_('والد'))
+    title = models.CharField(max_length=50, verbose_name=_('عنوان'))
+    slug = models.SlugField(max_length=50, unique=True, allow_unicode=True, verbose_name=_('اسلاگ'))
+    icon = models.ImageField(upload_to='category/icon/', null=True, blank=True, verbose_name='آیکون')
+    is_payable = models.BooleanField(default=False, verbose_name=_('پولی'))
+    is_special = models.BooleanField(default=False, verbose_name=_('ویژه'))
+    price = models.PositiveBigIntegerField(default=0, verbose_name=_('قیمت'))
+
+    objects = CategoryManager()
+
+    def __str__(self):
+        full_path = [self.title]
+        k = self.parent
+        while k is not None:
+            full_path.append(k.title)
+            k = k.parent
+        return ' / '.join(full_path[::-1])
+
+    class Meta:
+        verbose_name = _('دسته بندی')
+        verbose_name_plural = _('دسته بندی ها')
+        ordering = ['id']
+
+
+    def get_category_fields(self):
+        from . import CategoryField
+        cats = [self]
+        p = self.parent
+        while p:
+            cats.append(p)
+            p = p.parent
+        return CategoryField.objects.filter(category__in=cats).order_by('id')
+
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class CategoryFieldManager(models.Manager):
+    def get_by_natural_key(self, key):
+        return self.get(key=key)
+
+class CategoryField(models.Model):
+    class FieldType(models.TextChoices):
+        INTEGER = 'int', _('Integer')
+        DECIMAL = 'decimal', _('Decimal')
+        BOOLEAN = 'bool', _('Boolean')
+        STRING = 'str', _('String')
+        TEXT = 'text', _('Text')
+        CHOICE = 'choice', _('Choice')
+        MULTI_CHOICE = 'multi_choice', _('Multi Choice')
+
+    category = models.ForeignKey('ad.Category', on_delete=models.CASCADE, related_name='fields', verbose_name=_('دسته بندی'))
+    key = models.SlugField(max_length=100, unique=True, verbose_name=_('کلید'))
+    label = models.CharField(max_length=100, verbose_name=_('لیبل'))
+    type = models.CharField(max_length=20, choices=FieldType.choices, verbose_name=_('نوع'))
+    is_required = models.BooleanField(default=True, verbose_name=_('اجباری'))
+    data = models.JSONField(null=True, blank=True, verbose_name=_('دیتا'))
+
+    # پیشنهاد: {"options":[...], "unit":"m2", "min":0, "max":1000, "widget":"range"}
+
+    class Meta:
+        verbose_name = _('فیلد دسته بندی')
+        verbose_name_plural = _('فیلد های دسته بندی')
+        indexes = [
+            models.Index(fields=['category'])
+        ]
+
+    def __str__(self):
+        return f"{self.category} - {self.label}"
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.db.models import Q
+
+
+class Gallery(models.Model):
+    ad = models.ForeignKey('ad.Ad', on_delete=models.CASCADE, related_name='gallery', verbose_name=_('آگهی'))
+    image = models.ImageField(upload_to='ads/%Y/%m/%d/', verbose_name=_('تصویر'))
+    is_main = models.BooleanField(default=False, verbose_name=_('تصویر اصلی'))
+
+    class Meta:
+        verbose_name = _('گالری')
+        verbose_name_plural = _('گالری ها')
+        indexes = [models.Index(fields=['ad', 'is_main'])]
+        constraints = [
+            # فقط یک تصویر اصلی برای هر آگهی
+            models.UniqueConstraint(
+                fields=['ad', 'is_main'],
+                condition=Q(is_main=True),
+                name='uniq_main_image_per_ad'
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.ad_id} - {('MAIN ' if self.is_main else '')}{self.image.name}"
+
+    def save(self, *args, **kwargs):
+        if self.is_main:
+            Gallery.objects.filter(ad=self.ad, is_main=True).update(is_main=False)
+        super().save(*args, **kwargs)

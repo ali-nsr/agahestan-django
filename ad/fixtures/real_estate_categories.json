@@ -1,0 +1,6703 @@
+[
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": null,
+      "title": "املاک",
+      "slug": "real-estate",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate"
+      ],
+      "title": "فروش",
+      "slug": "real-estate-sale",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "آپارتمان",
+      "slug": "real-estate-sale-apartment",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "خانه ویلایی",
+      "slug": "real-estate-sale-villa",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "باغ",
+      "slug": "real-estate-sale-garden",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "زمین",
+      "slug": "real-estate-sale-land",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "مغازه و تجاری",
+      "slug": "real-estate-sale-shop",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "دفتر اداری",
+      "slug": "real-estate-sale-office",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "کارگاه و سوله",
+      "slug": "real-estate-sale-workshop",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "انبار",
+      "slug": "real-estate-sale-warehouse",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-sale"
+      ],
+      "title": "پیش‌فروش آپارتمان",
+      "slug": "real-estate-sale-presale",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate"
+      ],
+      "title": "اجاره",
+      "slug": "real-estate-rent",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "آپارتمان",
+      "slug": "real-estate-rent-apartment",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "خانه ویلایی",
+      "slug": "real-estate-rent-villa",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "مغازه و تجاری",
+      "slug": "real-estate-rent-shop",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "دفتر اداری",
+      "slug": "real-estate-rent-office",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "کارگاه و سوله",
+      "slug": "real-estate-rent-workshop",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "انبار",
+      "slug": "real-estate-rent-warehouse",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "اتاق و خوابگاه",
+      "slug": "real-estate-rent-room",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-rent"
+      ],
+      "title": "اجاره کوتاه‌مدت (سوئیت و آپارتمان)",
+      "slug": "real-estate-rent-short-term",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate"
+      ],
+      "title": "مشارکت در ساخت",
+      "slug": "real-estate-partnership",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-partnership"
+      ],
+      "title": "آپارتمان",
+      "slug": "real-estate-partnership-apartment",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-partnership"
+      ],
+      "title": "خانه ویلایی",
+      "slug": "real-estate-partnership-villa",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-partnership"
+      ],
+      "title": "باغ",
+      "slug": "real-estate-partnership-garden",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.category",
+    "fields": {
+      "parent": [
+        "real-estate-partnership"
+      ],
+      "title": "زمین",
+      "slug": "real-estate-partnership-land",
+      "icon": null,
+      "is_payable": false,
+      "is_special": false,
+      "price": 0
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__build_year",
+      "label": "سال ساخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز (۱۴۰۴ به بعد)",
+          "1403",
+          "1402",
+          "1401",
+          "1400",
+          "1399",
+          "1398",
+          "1397",
+          "1396",
+          "1395",
+          "1394",
+          "1393",
+          "1392",
+          "1391",
+          "1390",
+          "۱۳۸۵ تا ۱۳۸۹",
+          "۱۳۸۰ تا ۱۳۸۴",
+          "۱۳۷۵ تا ۱۳۷۹",
+          "۱۳۷۰ تا ۱۳۷۴",
+          "۱۳۶۵ تا ۱۳۶۹",
+          "۱۳۶۰ تا ۱۳۶۴",
+          "قبل از ۱۳۶۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__unit_type",
+      "label": "نوع واحد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "همکف",
+          "میانی",
+          "آخر",
+          "پنت‌هاوس",
+          "دوبلکس",
+          "زیرزمین",
+          "سوئیت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__direction",
+      "label": "جهت ساختمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شمالی",
+          "جنوبی",
+          "شرقی",
+          "غربی",
+          "شمال‌شرقی",
+          "شمال‌غربی",
+          "جنوب‌شرقی",
+          "جنوب‌غربی",
+          "دو نبش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__heating",
+      "label": "سیستم گرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شوفاژ",
+          "پکیج",
+          "بخاری",
+          "گرمایش از کف",
+          "رادیاتور",
+          "فن کوئل",
+          "بدون گرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__cooling",
+      "label": "سیستم سرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کولر گازی",
+          "کولر آبی",
+          "اسپلیت",
+          "فن کوئل",
+          "چیلر",
+          "بدون سرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__view",
+      "label": "چشم‌انداز",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "کوهستان",
+          "دریا",
+          "پارک",
+          "بدون چشم‌انداز"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__elevator",
+      "label": "آسانسور",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__balcony",
+      "label": "بالکن",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__apartment_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "استخر",
+          "سونا",
+          "جکوزی",
+          "نگهبان",
+          "لابی",
+          "روف گاردن",
+          "کابینت",
+          "کمد دیواری",
+          "شومینه",
+          "سیستم امنیتی",
+          "دوربین مدار بسته",
+          "درب ضد سرقت",
+          "پارکینگ مهمان",
+          "فضای سبز",
+          "رختکن"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-apartment"
+      ],
+      "key": "real-estate-sale-apartment__negotiable_note",
+      "label": "توضیح قیمت",
+      "type": "str",
+      "is_required": false,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__build_year",
+      "label": "سال ساخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز (۱۴۰۴ به بعد)",
+          "1403",
+          "1402",
+          "1401",
+          "1400",
+          "1399",
+          "1398",
+          "1397",
+          "1396",
+          "1395",
+          "1394",
+          "1393",
+          "1392",
+          "1391",
+          "1390",
+          "۱۳۸۵ تا ۱۳۸۹",
+          "۱۳۸۰ تا ۱۳۸۴",
+          "۱۳۷۵ تا ۱۳۷۹",
+          "۱۳۷۰ تا ۱۳۷۴",
+          "۱۳۶۵ تا ۱۳۶۹",
+          "۱۳۶۰ تا ۱۳۶۴",
+          "قبل از ۱۳۶۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__yard_area",
+      "label": "متراژ حیاط",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__villa_type",
+      "label": "نوع ویلا",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "ویلای شهری",
+          "ویلای باغ",
+          "ویلای ساحلی",
+          "ویلای کوهستانی",
+          "باغ‌ویلا"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__direction",
+      "label": "جهت ساختمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شمالی",
+          "جنوبی",
+          "شرقی",
+          "غربی",
+          "شمال‌شرقی",
+          "شمال‌غربی",
+          "جنوب‌شرقی",
+          "جنوب‌غربی",
+          "دو نبش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__heating",
+      "label": "سیستم گرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شوفاژ",
+          "پکیج",
+          "بخاری",
+          "گرمایش از کف",
+          "رادیاتور",
+          "فن کوئل",
+          "بدون گرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__cooling",
+      "label": "سیستم سرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کولر گازی",
+          "کولر آبی",
+          "اسپلیت",
+          "فن کوئل",
+          "چیلر",
+          "بدون سرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__pool",
+      "label": "استخر",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__water_source",
+      "label": "منبع آب",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "چاه",
+          "قنات",
+          "چاه و قنات",
+          "رودخانه",
+          "بدون آب"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__villa_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "استخر",
+          "سونا",
+          "جکوزی",
+          "شومینه",
+          "آلاچیق",
+          "باربیکیو",
+          "فضای سبز",
+          "محوطه",
+          "سیستم امنیتی",
+          "دوربین مدار بسته",
+          "نگهبان",
+          "انبار حیاط",
+          "پارکینگ مسقف"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-villa"
+      ],
+      "key": "real-estate-sale-villa__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__building_area",
+      "label": "متراژ بنا",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__fruit_trees",
+      "label": "درختان میوه",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "سیب",
+          "گلابی",
+          "هلو",
+          "آلو",
+          "گردو",
+          "بادام",
+          "پسته",
+          "زیتون",
+          "مرکبات",
+          "انگور",
+          "انار",
+          "انجیر",
+          "درخت مثمر متنوع",
+          "بدون درخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__water_source",
+      "label": "منبع آب",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "چاه",
+          "قنات",
+          "چاه و قنات",
+          "رودخانه",
+          "بدون آب"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__well",
+      "label": "چاه آب",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__road_width",
+      "label": "عرض معبر (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۶ متر",
+          "۶ تا ۸ متر",
+          "۸ تا ۱۲ متر",
+          "۱۲ تا ۲۰ متر",
+          "۲۰ تا ۳۰ متر",
+          "بیش از ۳۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__electricity",
+      "label": "انشعاب برق",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-garden"
+      ],
+      "key": "real-estate-sale-garden__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__land_use",
+      "label": "کاربری",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "مسکونی",
+          "تجاری",
+          "کشاورزی",
+          "باغ",
+          "صنعتی",
+          "مختلط",
+          "اداری",
+          "گردشگری"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__is_kolangi",
+      "label": "کلنگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__frontage",
+      "label": "طول بر (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۵ متر",
+          "۵ تا ۱۰ متر",
+          "۱۰ تا ۲۰ متر",
+          "۲۰ تا ۵۰ متر",
+          "بیش از ۵۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__road_width",
+      "label": "عرض معبر (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۶ متر",
+          "۶ تا ۸ متر",
+          "۸ تا ۱۲ متر",
+          "۱۲ تا ۲۰ متر",
+          "۲۰ تا ۳۰ متر",
+          "بیش از ۳۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__land_shape",
+      "label": "شکل زمین",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "مربع",
+          "مستطیل",
+          "ذوزنقه",
+          "نامنظم",
+          "L شکل"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__slope",
+      "label": "شیب زمین",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "مسطح",
+          "شیب ملایم",
+          "شیب تند",
+          "سراشیب"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__land_utilities",
+      "label": "انشعابات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "برق",
+          "آب",
+          "گاز",
+          "فاضلاب",
+          "تلفن"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-land"
+      ],
+      "key": "real-estate-sale-land__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__shop_frontage",
+      "label": "طول نما (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۳ متر",
+          "۳ تا ۵ متر",
+          "۵ تا ۱۰ متر",
+          "۱۰ تا ۲۰ متر",
+          "بیش از ۲۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__ceiling_height",
+      "label": "ارتفاع سقف (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۲٫۵ متر",
+          "۲٫۵ تا ۳ متر",
+          "۳ تا ۴ متر",
+          "۴ تا ۶ متر",
+          "بیش از ۶ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__business_type",
+      "label": "نوع کسب‌وکار",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "خواربارفروشی",
+          "پوشاک",
+          "رستوران",
+          "کافه",
+          "آرایشگاه",
+          "داروخانه",
+          "سوپرمارکت",
+          "عمومی"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__usage_permit",
+      "label": "مجوز کسب‌وکار",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__shop_utilities",
+      "label": "انشعابات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "برق",
+          "آب",
+          "گاز",
+          "فاضلاب",
+          "تلفن",
+          "کانال هواساز"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-shop"
+      ],
+      "key": "real-estate-sale-shop__key_money",
+      "label": "سرقفلی",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__office_layout",
+      "label": "چیدمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "باز",
+          "اتاقک‌دار",
+          "ترکیبی"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__workstations",
+      "label": "تعداد میز کار",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱ تا ۳",
+          "۴ تا ۶",
+          "۷ تا ۱۰",
+          "۱۱ تا ۲۰",
+          "۲۱ تا ۵۰",
+          "بیش از ۵۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__elevator",
+      "label": "آسانسور",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__office_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نگهبان",
+          "لابی",
+          "آسانسور",
+          "کابینت",
+          "سیستم امنیتی",
+          "تهویه مرکزی",
+          "سالن کنفرانس",
+          "اینترنت",
+          "انشعاب تلفن",
+          "کفپوش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-office"
+      ],
+      "key": "real-estate-sale-office__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__ceiling_height",
+      "label": "ارتفاع سقف (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۲٫۵ متر",
+          "۲٫۵ تا ۳ متر",
+          "۳ تا ۴ متر",
+          "۴ تا ۶ متر",
+          "بیش از ۶ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__loading_dock",
+      "label": "رمپ بارگیری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__crane",
+      "label": "جرثقیل سقفی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__three_phase",
+      "label": "برق سه‌فاز",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__power_capacity",
+      "label": "ظرفیت برق (کیلووات)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۱۰ کیلووات",
+          "۱۰ تا ۲۵",
+          "۲۵ تا ۵۰",
+          "۵۰ تا ۱۰۰",
+          "۱۰۰ تا ۲۵۰",
+          "بیش از ۲۵۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__workshop_office",
+      "label": "دفتر اداری داخل سوله",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-workshop"
+      ],
+      "key": "real-estate-sale-workshop__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-warehouse"
+      ],
+      "key": "real-estate-sale-warehouse__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-warehouse"
+      ],
+      "key": "real-estate-sale-warehouse__ceiling_height",
+      "label": "ارتفاع سقف (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۲٫۵ متر",
+          "۲٫۵ تا ۳ متر",
+          "۳ تا ۴ متر",
+          "۴ تا ۶ متر",
+          "بیش از ۶ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-warehouse"
+      ],
+      "key": "real-estate-sale-warehouse__loading_dock",
+      "label": "رمپ بارگیری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-warehouse"
+      ],
+      "key": "real-estate-sale-warehouse__three_phase",
+      "label": "برق سه‌فاز",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-warehouse"
+      ],
+      "key": "real-estate-sale-warehouse__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-warehouse"
+      ],
+      "key": "real-estate-sale-warehouse__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-warehouse"
+      ],
+      "key": "real-estate-sale-warehouse__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-presale"
+      ],
+      "key": "real-estate-sale-presale__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-presale"
+      ],
+      "key": "real-estate-sale-presale__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-presale"
+      ],
+      "key": "real-estate-sale-presale__project_name",
+      "label": "نام پروژه",
+      "type": "str",
+      "is_required": false,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-presale"
+      ],
+      "key": "real-estate-sale-presale__delivery_date",
+      "label": "تاریخ تحویل",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "widget": "input",
+        "placeholder": "مثلاً ۱۴۰۷/۰۶"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-presale"
+      ],
+      "key": "real-estate-sale-presale__construction_stage",
+      "label": "مرحله ساخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "فونداسیون",
+          "اسکلت",
+          "نازک‌کاری",
+          "کامل شده"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-presale"
+      ],
+      "key": "real-estate-sale-presale__payment_plan",
+      "label": "شرایط پرداخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نقد",
+          "اقساطی",
+          "نقد و اقساط",
+          "پیش‌پرداخت و اقساط",
+          "معاوضه"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-sale-presale"
+      ],
+      "key": "real-estate-sale-presale__price_negotiable",
+      "label": "قابل مذاکره",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__build_year",
+      "label": "سال ساخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز (۱۴۰۴ به بعد)",
+          "1403",
+          "1402",
+          "1401",
+          "1400",
+          "1399",
+          "1398",
+          "1397",
+          "1396",
+          "1395",
+          "1394",
+          "1393",
+          "1392",
+          "1391",
+          "1390",
+          "۱۳۸۵ تا ۱۳۸۹",
+          "۱۳۸۰ تا ۱۳۸۴",
+          "۱۳۷۵ تا ۱۳۷۹",
+          "۱۳۷۰ تا ۱۳۷۴",
+          "۱۳۶۵ تا ۱۳۶۹",
+          "۱۳۶۰ تا ۱۳۶۴",
+          "قبل از ۱۳۶۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__unit_type",
+      "label": "نوع واحد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "همکف",
+          "میانی",
+          "آخر",
+          "پنت‌هاوس",
+          "دوبلکس",
+          "زیرزمین",
+          "سوئیت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__direction",
+      "label": "جهت ساختمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شمالی",
+          "جنوبی",
+          "شرقی",
+          "غربی",
+          "شمال‌شرقی",
+          "شمال‌غربی",
+          "جنوب‌شرقی",
+          "جنوب‌غربی",
+          "دو نبش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__heating",
+      "label": "سیستم گرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شوفاژ",
+          "پکیج",
+          "بخاری",
+          "گرمایش از کف",
+          "رادیاتور",
+          "فن کوئل",
+          "بدون گرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__cooling",
+      "label": "سیستم سرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کولر گازی",
+          "کولر آبی",
+          "اسپلیت",
+          "فن کوئل",
+          "چیلر",
+          "بدون سرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__view",
+      "label": "چشم‌انداز",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "کوهستان",
+          "دریا",
+          "پارک",
+          "بدون چشم‌انداز"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__elevator",
+      "label": "آسانسور",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__balcony",
+      "label": "بالکن",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__apartment_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "استخر",
+          "سونا",
+          "جکوزی",
+          "نگهبان",
+          "لابی",
+          "روف گاردن",
+          "کابینت",
+          "کمد دیواری",
+          "شومینه",
+          "سیستم امنیتی",
+          "دوربین مدار بسته",
+          "درب ضد سرقت",
+          "پارکینگ مهمان",
+          "فضای سبز",
+          "رختکن"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__deposit",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__monthly_rent",
+      "label": "اجاره ماهانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__contract_duration",
+      "label": "مدت قرارداد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "یک‌ماهه",
+          "شش‌ماهه",
+          "یک‌ساله",
+          "بیش از یک‌ساله",
+          "قابل مذاکره"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__pets_allowed",
+      "label": "مجاز به نگهداری حیوان خانگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-apartment"
+      ],
+      "key": "real-estate-rent-apartment__furnished",
+      "label": "مبله",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__build_year",
+      "label": "سال ساخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز (۱۴۰۴ به بعد)",
+          "1403",
+          "1402",
+          "1401",
+          "1400",
+          "1399",
+          "1398",
+          "1397",
+          "1396",
+          "1395",
+          "1394",
+          "1393",
+          "1392",
+          "1391",
+          "1390",
+          "۱۳۸۵ تا ۱۳۸۹",
+          "۱۳۸۰ تا ۱۳۸۴",
+          "۱۳۷۵ تا ۱۳۷۹",
+          "۱۳۷۰ تا ۱۳۷۴",
+          "۱۳۶۵ تا ۱۳۶۹",
+          "۱۳۶۰ تا ۱۳۶۴",
+          "قبل از ۱۳۶۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__yard_area",
+      "label": "متراژ حیاط",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__villa_type",
+      "label": "نوع ویلا",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "ویلای شهری",
+          "ویلای باغ",
+          "ویلای ساحلی",
+          "ویلای کوهستانی",
+          "باغ‌ویلا"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__direction",
+      "label": "جهت ساختمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شمالی",
+          "جنوبی",
+          "شرقی",
+          "غربی",
+          "شمال‌شرقی",
+          "شمال‌غربی",
+          "جنوب‌شرقی",
+          "جنوب‌غربی",
+          "دو نبش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__heating",
+      "label": "سیستم گرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شوفاژ",
+          "پکیج",
+          "بخاری",
+          "گرمایش از کف",
+          "رادیاتور",
+          "فن کوئل",
+          "بدون گرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__cooling",
+      "label": "سیستم سرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کولر گازی",
+          "کولر آبی",
+          "اسپلیت",
+          "فن کوئل",
+          "چیلر",
+          "بدون سرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__pool",
+      "label": "استخر",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__water_source",
+      "label": "منبع آب",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "چاه",
+          "قنات",
+          "چاه و قنات",
+          "رودخانه",
+          "بدون آب"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__villa_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "استخر",
+          "سونا",
+          "جکوزی",
+          "شومینه",
+          "آلاچیق",
+          "باربیکیو",
+          "فضای سبز",
+          "محوطه",
+          "سیستم امنیتی",
+          "دوربین مدار بسته",
+          "نگهبان",
+          "انبار حیاط",
+          "پارکینگ مسقف"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__deposit",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__monthly_rent",
+      "label": "اجاره ماهانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__contract_duration",
+      "label": "مدت قرارداد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "یک‌ماهه",
+          "شش‌ماهه",
+          "یک‌ساله",
+          "بیش از یک‌ساله",
+          "قابل مذاکره"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__pets_allowed",
+      "label": "مجاز به نگهداری حیوان خانگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-villa"
+      ],
+      "key": "real-estate-rent-villa__furnished",
+      "label": "مبله",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__shop_frontage",
+      "label": "طول نما (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۳ متر",
+          "۳ تا ۵ متر",
+          "۵ تا ۱۰ متر",
+          "۱۰ تا ۲۰ متر",
+          "بیش از ۲۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__ceiling_height",
+      "label": "ارتفاع سقف (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۲٫۵ متر",
+          "۲٫۵ تا ۳ متر",
+          "۳ تا ۴ متر",
+          "۴ تا ۶ متر",
+          "بیش از ۶ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__business_type",
+      "label": "نوع کسب‌وکار",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "خواربارفروشی",
+          "پوشاک",
+          "رستوران",
+          "کافه",
+          "آرایشگاه",
+          "داروخانه",
+          "سوپرمارکت",
+          "عمومی"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__usage_permit",
+      "label": "مجوز کسب‌وکار",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__shop_utilities",
+      "label": "انشعابات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "برق",
+          "آب",
+          "گاز",
+          "فاضلاب",
+          "تلفن",
+          "کانال هواساز"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__deposit",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__monthly_rent",
+      "label": "اجاره ماهانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__contract_duration",
+      "label": "مدت قرارداد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "یک‌ماهه",
+          "شش‌ماهه",
+          "یک‌ساله",
+          "بیش از یک‌ساله",
+          "قابل مذاکره"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__pets_allowed",
+      "label": "مجاز به نگهداری حیوان خانگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-shop"
+      ],
+      "key": "real-estate-rent-shop__key_money",
+      "label": "سرقفلی",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__office_layout",
+      "label": "چیدمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "باز",
+          "اتاقک‌دار",
+          "ترکیبی"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__workstations",
+      "label": "تعداد میز کار",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱ تا ۳",
+          "۴ تا ۶",
+          "۷ تا ۱۰",
+          "۱۱ تا ۲۰",
+          "۲۱ تا ۵۰",
+          "بیش از ۵۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__elevator",
+      "label": "آسانسور",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__office_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نگهبان",
+          "لابی",
+          "آسانسور",
+          "کابینت",
+          "سیستم امنیتی",
+          "تهویه مرکزی",
+          "سالن کنفرانس",
+          "اینترنت",
+          "انشعاب تلفن",
+          "کفپوش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__deposit",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__monthly_rent",
+      "label": "اجاره ماهانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__contract_duration",
+      "label": "مدت قرارداد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "یک‌ماهه",
+          "شش‌ماهه",
+          "یک‌ساله",
+          "بیش از یک‌ساله",
+          "قابل مذاکره"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__pets_allowed",
+      "label": "مجاز به نگهداری حیوان خانگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-office"
+      ],
+      "key": "real-estate-rent-office__key_money",
+      "label": "سرقفلی",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__ceiling_height",
+      "label": "ارتفاع سقف (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۲٫۵ متر",
+          "۲٫۵ تا ۳ متر",
+          "۳ تا ۴ متر",
+          "۴ تا ۶ متر",
+          "بیش از ۶ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__loading_dock",
+      "label": "رمپ بارگیری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__crane",
+      "label": "جرثقیل سقفی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__three_phase",
+      "label": "برق سه‌فاز",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__power_capacity",
+      "label": "ظرفیت برق (کیلووات)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۱۰ کیلووات",
+          "۱۰ تا ۲۵",
+          "۲۵ تا ۵۰",
+          "۵۰ تا ۱۰۰",
+          "۱۰۰ تا ۲۵۰",
+          "بیش از ۲۵۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__workshop_office",
+      "label": "دفتر اداری داخل سوله",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__deposit",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__monthly_rent",
+      "label": "اجاره ماهانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__contract_duration",
+      "label": "مدت قرارداد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "یک‌ماهه",
+          "شش‌ماهه",
+          "یک‌ساله",
+          "بیش از یک‌ساله",
+          "قابل مذاکره"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__pets_allowed",
+      "label": "مجاز به نگهداری حیوان خانگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-workshop"
+      ],
+      "key": "real-estate-rent-workshop__key_money",
+      "label": "سرقفلی",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__ceiling_height",
+      "label": "ارتفاع سقف (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۲٫۵ متر",
+          "۲٫۵ تا ۳ متر",
+          "۳ تا ۴ متر",
+          "۴ تا ۶ متر",
+          "بیش از ۶ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__loading_dock",
+      "label": "رمپ بارگیری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__three_phase",
+      "label": "برق سه‌فاز",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__deposit",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__monthly_rent",
+      "label": "اجاره ماهانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__contract_duration",
+      "label": "مدت قرارداد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "یک‌ماهه",
+          "شش‌ماهه",
+          "یک‌ساله",
+          "بیش از یک‌ساله",
+          "قابل مذاکره"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-warehouse"
+      ],
+      "key": "real-estate-rent-warehouse__pets_allowed",
+      "label": "مجاز به نگهداری حیوان خانگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__shared_bathroom",
+      "label": "سرویس بهداشتی مشترک",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__shared_kitchen",
+      "label": "آشپزخانه مشترک",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__gender_allowed",
+      "label": "جنسیت مجاز",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "آقا",
+          "خانم",
+          "مختلط"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__furnished",
+      "label": "مبله",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__meal_included",
+      "label": "وعده غذایی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__deposit",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__monthly_rent",
+      "label": "اجاره ماهانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-room"
+      ],
+      "key": "real-estate-rent-room__contract_duration",
+      "label": "مدت قرارداد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "یک‌ماهه",
+          "شش‌ماهه",
+          "یک‌ساله",
+          "بیش از یک‌ساله",
+          "قابل مذاکره"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__guest_capacity",
+      "label": "ظرفیت نفرات",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "۱ تا ۲ نفر",
+          "۳ تا ۴ نفر",
+          "۵ تا ۶ نفر",
+          "۷ تا ۱۰ نفر",
+          "۱۱ تا ۲۰ نفر",
+          "بیش از ۲۰ نفر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__elevator",
+      "label": "آسانسور",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__short_term_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "تلویزیون",
+          "اینترنت",
+          "ماشین لباسشویی",
+          "یخچال",
+          "کولر",
+          "پکیج",
+          "آشپزخانه مجهز",
+          "پارکینگ",
+          "استخر",
+          "نگهبان",
+          "پذیرایی ۲۴ ساعته"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__minimum_nights",
+      "label": "حداقل مدت اقامت (شب)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱ شب",
+          "۲ شب",
+          "۳ شب",
+          "۴ تا ۷ شب",
+          "بیش از یک هفته"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__daily_price",
+      "label": "قیمت روزانه",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__weekend_price",
+      "label": "قیمت آخر هفته",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-rent-short-term"
+      ],
+      "key": "real-estate-rent-short-term__min_deposit_short",
+      "label": "ودیعه",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "تومان",
+        "min": 0,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__build_year",
+      "label": "سال ساخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز (۱۴۰۴ به بعد)",
+          "1403",
+          "1402",
+          "1401",
+          "1400",
+          "1399",
+          "1398",
+          "1397",
+          "1396",
+          "1395",
+          "1394",
+          "1393",
+          "1392",
+          "1391",
+          "1390",
+          "۱۳۸۵ تا ۱۳۸۹",
+          "۱۳۸۰ تا ۱۳۸۴",
+          "۱۳۷۵ تا ۱۳۷۹",
+          "۱۳۷۰ تا ۱۳۷۴",
+          "۱۳۶۵ تا ۱۳۶۹",
+          "۱۳۶۰ تا ۱۳۶۴",
+          "قبل از ۱۳۶۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__floor",
+      "label": "طبقه",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "زیرزمین ۲",
+          "زیرزمین ۱",
+          "همکف",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__unit_type",
+      "label": "نوع واحد",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "همکف",
+          "میانی",
+          "آخر",
+          "پنت‌هاوس",
+          "دوبلکس",
+          "زیرزمین",
+          "سوئیت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__direction",
+      "label": "جهت ساختمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شمالی",
+          "جنوبی",
+          "شرقی",
+          "غربی",
+          "شمال‌شرقی",
+          "شمال‌غربی",
+          "جنوب‌شرقی",
+          "جنوب‌غربی",
+          "دو نبش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__heating",
+      "label": "سیستم گرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شوفاژ",
+          "پکیج",
+          "بخاری",
+          "گرمایش از کف",
+          "رادیاتور",
+          "فن کوئل",
+          "بدون گرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__cooling",
+      "label": "سیستم سرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کولر گازی",
+          "کولر آبی",
+          "اسپلیت",
+          "فن کوئل",
+          "چیلر",
+          "بدون سرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__view",
+      "label": "چشم‌انداز",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "کوهستان",
+          "دریا",
+          "پارک",
+          "بدون چشم‌انداز"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__elevator",
+      "label": "آسانسور",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__balcony",
+      "label": "بالکن",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__apartment_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "استخر",
+          "سونا",
+          "جکوزی",
+          "نگهبان",
+          "لابی",
+          "روف گاردن",
+          "کابینت",
+          "کمد دیواری",
+          "شومینه",
+          "سیستم امنیتی",
+          "دوربین مدار بسته",
+          "درب ضد سرقت",
+          "پارکینگ مهمان",
+          "فضای سبز",
+          "رختکن"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__partnership_type",
+      "label": "نوع مشارکت",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "ارائه زمین توسط مالک",
+          "ارائه سرمایه توسط مالک",
+          "پیش‌فروش واحد",
+          "سهم‌الشرکه"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__landowner_share",
+      "label": "سهم مالک زمین",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__contractor_share",
+      "label": "سهم سازنده",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-apartment"
+      ],
+      "key": "real-estate-partnership-apartment__landowner_units",
+      "label": "تعداد واحد مالک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶ تا ۱۰",
+          "بیش از ۱۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__area",
+      "label": "متراژ",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__build_year",
+      "label": "سال ساخت",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز (۱۴۰۴ به بعد)",
+          "1403",
+          "1402",
+          "1401",
+          "1400",
+          "1399",
+          "1398",
+          "1397",
+          "1396",
+          "1395",
+          "1394",
+          "1393",
+          "1392",
+          "1391",
+          "1390",
+          "۱۳۸۵ تا ۱۳۸۹",
+          "۱۳۸۰ تا ۱۳۸۴",
+          "۱۳۷۵ تا ۱۳۷۹",
+          "۱۳۷۰ تا ۱۳۷۴",
+          "۱۳۶۵ تا ۱۳۶۹",
+          "۱۳۶۰ تا ۱۳۶۴",
+          "قبل از ۱۳۶۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__rooms",
+      "label": "تعداد اتاق",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "بدون اتاق",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__bathrooms",
+      "label": "تعداد سرویس بهداشتی",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵ و بیشتر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__total_floors",
+      "label": "تعداد کل طبقات",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+          "۱۰",
+          "۱۱ تا ۱۵",
+          "۱۶ تا ۲۰",
+          "بیش از ۲۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__yard_area",
+      "label": "متراژ حیاط",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__villa_type",
+      "label": "نوع ویلا",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "ویلای شهری",
+          "ویلای باغ",
+          "ویلای ساحلی",
+          "ویلای کوهستانی",
+          "باغ‌ویلا"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__direction",
+      "label": "جهت ساختمان",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شمالی",
+          "جنوبی",
+          "شرقی",
+          "غربی",
+          "شمال‌شرقی",
+          "شمال‌غربی",
+          "جنوب‌شرقی",
+          "جنوب‌غربی",
+          "دو نبش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__heating",
+      "label": "سیستم گرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شوفاژ",
+          "پکیج",
+          "بخاری",
+          "گرمایش از کف",
+          "رادیاتور",
+          "فن کوئل",
+          "بدون گرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__cooling",
+      "label": "سیستم سرمایش",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کولر گازی",
+          "کولر آبی",
+          "اسپلیت",
+          "فن کوئل",
+          "چیلر",
+          "بدون سرمایش"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__parking",
+      "label": "پارکینگ",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__storage",
+      "label": "انباری",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__pool",
+      "label": "استخر",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__water_source",
+      "label": "منبع آب",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "چاه",
+          "قنات",
+          "چاه و قنات",
+          "رودخانه",
+          "بدون آب"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__villa_amenities",
+      "label": "امکانات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "استخر",
+          "سونا",
+          "جکوزی",
+          "شومینه",
+          "آلاچیق",
+          "باربیکیو",
+          "فضای سبز",
+          "محوطه",
+          "سیستم امنیتی",
+          "دوربین مدار بسته",
+          "نگهبان",
+          "انبار حیاط",
+          "پارکینگ مسقف"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__partnership_type",
+      "label": "نوع مشارکت",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "ارائه زمین توسط مالک",
+          "ارائه سرمایه توسط مالک",
+          "پیش‌فروش واحد",
+          "سهم‌الشرکه"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__landowner_share",
+      "label": "سهم مالک زمین",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__contractor_share",
+      "label": "سهم سازنده",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-villa"
+      ],
+      "key": "real-estate-partnership-villa__landowner_units",
+      "label": "تعداد واحد مالک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶ تا ۱۰",
+          "بیش از ۱۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__building_area",
+      "label": "متراژ بنا",
+      "type": "int",
+      "is_required": false,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__fruit_trees",
+      "label": "درختان میوه",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "سیب",
+          "گلابی",
+          "هلو",
+          "آلو",
+          "گردو",
+          "بادام",
+          "پسته",
+          "زیتون",
+          "مرکبات",
+          "انگور",
+          "انار",
+          "انجیر",
+          "درخت مثمر متنوع",
+          "بدون درخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__water_source",
+      "label": "منبع آب",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "شهری",
+          "چاه",
+          "قنات",
+          "چاه و قنات",
+          "رودخانه",
+          "بدون آب"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__well",
+      "label": "چاه آب",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__road_width",
+      "label": "عرض معبر (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۶ متر",
+          "۶ تا ۸ متر",
+          "۸ تا ۱۲ متر",
+          "۱۲ تا ۲۰ متر",
+          "۲۰ تا ۳۰ متر",
+          "بیش از ۳۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__electricity",
+      "label": "انشعاب برق",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__property_status",
+      "label": "وضعیت ملک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "نوساز",
+          "در حد نو",
+          "کارکرده",
+          "بازسازی شده",
+          "نیازمند بازسازی",
+          "اسکلت",
+          "در حال ساخت"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__partnership_type",
+      "label": "نوع مشارکت",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "ارائه زمین توسط مالک",
+          "ارائه سرمایه توسط مالک",
+          "پیش‌فروش واحد",
+          "سهم‌الشرکه"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__landowner_share",
+      "label": "سهم مالک زمین",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__contractor_share",
+      "label": "سهم سازنده",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-garden"
+      ],
+      "key": "real-estate-partnership-garden__landowner_units",
+      "label": "تعداد واحد مالک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶ تا ۱۰",
+          "بیش از ۱۰"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__land_area",
+      "label": "متراژ زمین",
+      "type": "int",
+      "is_required": true,
+      "data": {
+        "unit": "متر مربع",
+        "min": 1,
+        "widget": "input"
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__land_use",
+      "label": "کاربری",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "مسکونی",
+          "تجاری",
+          "کشاورزی",
+          "باغ",
+          "صنعتی",
+          "مختلط",
+          "اداری",
+          "گردشگری"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__is_kolangi",
+      "label": "کلنگی",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__frontage",
+      "label": "طول بر (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۵ متر",
+          "۵ تا ۱۰ متر",
+          "۱۰ تا ۲۰ متر",
+          "۲۰ تا ۵۰ متر",
+          "بیش از ۵۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__road_width",
+      "label": "عرض معبر (متر)",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "کمتر از ۶ متر",
+          "۶ تا ۸ متر",
+          "۸ تا ۱۲ متر",
+          "۱۲ تا ۲۰ متر",
+          "۲۰ تا ۳۰ متر",
+          "بیش از ۳۰ متر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__land_shape",
+      "label": "شکل زمین",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "مربع",
+          "مستطیل",
+          "ذوزنقه",
+          "نامنظم",
+          "L شکل"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__slope",
+      "label": "شیب زمین",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "مسطح",
+          "شیب ملایم",
+          "شیب تند",
+          "سراشیب"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__land_utilities",
+      "label": "انشعابات",
+      "type": "multi_choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "برق",
+          "آب",
+          "گاز",
+          "فاضلاب",
+          "تلفن"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__document_type",
+      "label": "نوع سند",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "شش‌دانگ",
+          "تک‌برگ",
+          "مشاع",
+          "قولنامه‌ای",
+          "وکالتی",
+          "در دست اقدام",
+          "کاداستر"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__exchange",
+      "label": "معاوضه",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__loan_eligible",
+      "label": "قابل وام",
+      "type": "bool",
+      "is_required": false,
+      "data": null
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__partnership_type",
+      "label": "نوع مشارکت",
+      "type": "choice",
+      "is_required": true,
+      "data": {
+        "options": [
+          "ارائه زمین توسط مالک",
+          "ارائه سرمایه توسط مالک",
+          "پیش‌فروش واحد",
+          "سهم‌الشرکه"
+        ]
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__landowner_share",
+      "label": "سهم مالک زمین",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__contractor_share",
+      "label": "سهم سازنده",
+      "type": "str",
+      "is_required": true,
+      "data": {
+        "max_length": 100
+      }
+    }
+  },
+  {
+    "model": "ad.categoryfield",
+    "fields": {
+      "category": [
+        "real-estate-partnership-land"
+      ],
+      "key": "real-estate-partnership-land__landowner_units",
+      "label": "تعداد واحد مالک",
+      "type": "choice",
+      "is_required": false,
+      "data": {
+        "options": [
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶ تا ۱۰",
+          "بیش از ۱۰"
+        ]
+      }
+    }
+  }
+]

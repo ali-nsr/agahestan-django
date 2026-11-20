@@ -33,7 +33,7 @@ class AdForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'مثلاً: آپارتمان ۱۲۰ متری نوساز',
+                'placeholder': 'عنوان آگهی',
                 'maxlength': 100,
             }),
             'description': forms.Textarea(attrs={

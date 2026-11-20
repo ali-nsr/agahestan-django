@@ -1,10 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+class ProvinceManager(models.Manager):
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
 
 class Province(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name=_('نام'))
     slug = models.SlugField(max_length=50, unique=True, verbose_name=_('اسلاگ'))
+
+    objects = ProvinceManager()
 
     def __str__(self):
         return self.name
@@ -16,10 +21,17 @@ class Province(models.Model):
         indexes = [models.Index(fields=['slug'])]  # unique خودش ایندکس می‌سازد؛ این صرفاً صریح‌ترش می‌کند
 
 
+class CityManager(models.Manager):
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
 class City(models.Model):
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='cities', verbose_name=_('استان'))
     name = models.CharField(max_length=50, verbose_name=_('نام'))
     slug = models.SlugField(max_length=50, unique=True, verbose_name=_('اسلاگ'))
+
+    objects = CityManager()
+
 
     def __str__(self):
         return self.name
@@ -34,10 +46,16 @@ class City(models.Model):
         ]
 
 
+class NeighborhoodManager(models.Manager):
+    def get_by_natural_key(self, slug):
+        return self.get(slug=slug)
+
 class Neighborhood(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='neighborhoods', verbose_name=_('شهر'))
     name = models.CharField(max_length=50, verbose_name=_('نام'))
     slug = models.SlugField(max_length=50, unique=True, verbose_name=_('اسلاگ'))
+
+    objects = NeighborhoodManager()
 
     def __str__(self):
         return self.name

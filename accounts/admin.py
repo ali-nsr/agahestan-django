@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 
-from .models import User, Profile, Bookmark, OTP
+from .models import User, Profile, OTP
 from .forms import UserCreateForm, UserChangeForm
 
 
@@ -14,7 +14,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('phone', 'is_active')
     fieldsets = (
         ('Infos', {'fields': ('phone', 'password', 'is_online',)}),
-        ('Permissions', {'fields': ('is_active', 'is_verified', 'is_superuser',)}),
+        ('Permissions', {'fields': ('is_active', 'is_verified', 'is_superuser', 'is_staff',)}),
         ('Dates', {'fields': ('last_login',)}),
     )
 
@@ -35,10 +35,9 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(OTP)
 class OTPAdmin(admin.ModelAdmin):
-    list_display = ('user', 'code', 'created_at', 'expires_at')
+    list_display = ('username', 'code', 'created_at', 'expires_at')
 
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(Bookmark)
 admin.site.unregister(Group)

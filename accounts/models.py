@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.validators import RegexValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import now
 
 import uuid
 from .manager import UserManager
@@ -72,73 +73,24 @@ class Profile(models.Model):
 
 
 class OTP(models.Model):
-    class Purpose(models.TextChoices):
-        LOGIN = 'login', _('ورود')
-        REGISTER = 'register', _('ثبت نام')
-        RESET = 'reset', _('بازیابی رمز')
-
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=True, blank=True,
-        related_name='otps', verbose_name=_('کاربر'),
-    )
-    phone = models.CharField(
-        max_length=11, db_index=True, validators=[PHONE_VALIDATOR], verbose_name=_('موبایل'),
-    )
-    code = models.CharField(max_length=6, verbose_name=_('کد'))
-    purpose = models.CharField(
-        max_length=10, choices=Purpose.choices, default=Purpose.LOGIN,
-        verbose_name=_('هدف'),
-    )
-    attempts = models.PositiveSmallIntegerField(default=0, verbose_name=_('تلاش ها'))
-    is_used = models.BooleanField(default=False, verbose_name=_('استفاده شده'))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
-    expires_at = models.DateTimeField(verbose_name=_('تاریخ انقضا'))
+    username = models.CharField(max_length=50, verbose_name='نام کاربری')
+    code = models.CharField(max_length=255, verbose_name='کد')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')
+    expires_at = models.DateTimeField(verbose_name='تاریخ انقضا')
+    is_used = models.BooleanField(default=False, verbose_name='استفاده شده')
 
     class Meta:
         verbose_name = _('کد یک‌بار مصرف')
         verbose_name_plural = _('کدهای یک‌بار مصرف')
         indexes = [
-            models.Index(fields=['phone', 'is_used', 'expires_at']),
+            models.Index(fields=['username', 'is_used', 'expires_at']),
         ]
         ordering = ('-created_at',)
 
     def __str__(self):
-        return f'{self.phone} - {self.purpose}'
+        return f"{self.username} - {self.code}"
 
-    @property
     def is_expired(self):
-        return timezone.now() > self.expires_at
-
-    @property
-    def is_valid(self):
-        return (
-            not self.is_used
-            and not self.is_expired
-            and self.attempts < 5
-        )
-
-class Bookmark(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='bookmarks', verbose_name=_('کاربر'),
-    )
-    ad = models.ForeignKey(
-        'ad.Ad', on_delete=models.CASCADE, related_name='bookmarks', verbose_name=_('آگهی'),
-    )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
-
-    class Meta:
-        verbose_name = _('نشان شده')
-        verbose_name_plural = _('نشان شده ها')
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'ad'], name='unique_user_ad_bookmark',
-            ),
-        ]
-        indexes = [
-            models.Index(fields=['user', '-created_at']),
-            models.Index(fields=['ad']),
-        ]
-        ordering = ('-created_at',)
-
-    def __str__(self):
-        return f'{self.user_id} - {self.ad_id}'
+        if self.expires_at >= now():
+            return False
+        return True

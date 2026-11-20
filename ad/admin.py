@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import Count
 
 from .models import Ad, Gallery, AdAttribute, CategoryField
+from django_json_widget.widgets import JSONEditorWidget
 
 from .models import *
 
@@ -13,6 +14,10 @@ from .models import *
 class CategoryFieldInline(admin.TabularInline):
     model = CategoryField
     extra = 0
+
+    formfield_overrides = {
+        models.JSONField: {'widget': JSONEditorWidget},
+    }
 
 
 @admin.register(Category)
@@ -24,7 +29,6 @@ class CategoryAdmin(admin.ModelAdmin):
     inlines = (CategoryFieldInline,)
 
 
-from django_json_widget.widgets import JSONEditorWidget
 
 @admin.register(CategoryField)
 class CategoryFieldAdmin(admin.ModelAdmin):
